@@ -835,7 +835,7 @@ describe('Tile Class Tests:', () => {
             expect(result).to.equal(undefined);
         });
         it('H11 should return undefined', () => {
-            let result = board.getTileFromCoord('C8').getForwardRight(undefined, boundary_data);
+            let result = board.getTileFromCoord('H11').getForwardRight(undefined, boundary_data);
             expect(result).to.equal(undefined);
         });
     });

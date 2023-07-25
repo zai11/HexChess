@@ -25,9 +25,6 @@ export class Tile {
 
     getForwardLeft = (context = undefined, boundary_tiles = undefined) => {
         let file = this.coordinate[0];
-        let previousFile = file.charCodeAt(0) - 66;
-
-        console.log(boundary_tiles);
 
         if (boundary_tiles === undefined)
             boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
@@ -38,9 +35,7 @@ export class Tile {
             forwardLeftLinear = coordinateToLinear(this.coordinate) - fileLength(file);
         else
             forwardLeftLinear = coordinateToLinear(this.coordinate) - (fileLength(file)+1);
-        
-        console.log('File Length: ' + fileLength(file));
-        console.log(this.coordinate + ': ' + forwardLeftLinear);
+
         let forwardLeftCoord = linearToCoordinate(forwardLeftLinear, context, boundary_tiles);
 
         if (!boundary_tiles.includes(forwardLeftLinear) && isValidCoord(forwardLeftCoord))
@@ -50,13 +45,20 @@ export class Tile {
         return undefined;
     }
 
-    getForwardRight = () => {
+    getForwardRight = (context = undefined, boundary_tiles = undefined) => {
         let file = this.coordinate[0];
 
-        let boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
+        if (boundary_tiles === undefined)
+            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
 
-        let forwardLeftLinear = coordinateToLinear(this.coordinate) + fileLength(file)
-        let forwardLeftCoord = linearToCoordinate(forwardLeftLinear);
+        let forwardLeftLinear;
+
+        if (file.charCodeAt(0) - 65 <= 5)
+            forwardLeftLinear = coordinateToLinear(this.coordinate) + fileLength(file) + 2;
+        else
+            forwardLeftLinear = coordinateToLinear(this.coordinate) + (fileLength(file)+1);
+            
+        let forwardLeftCoord = linearToCoordinate(forwardLeftLinear, context, boundary_tiles);
 
         if (!boundary_tiles.includes(forwardLeftLinear) && isValidCoord(forwardLeftCoord))
             return forwardLeftCoord;
@@ -222,7 +224,7 @@ export class Board
             if (tile.colour === 'white')
                 style.color = '#000';
             context.add.image(tile.x, tile.y, 'spr_tile_' + tile.colour + (tile.selected ? '_selected' : '') + (tile.valid ? '_valid' : '')).setScale(tile.scale);
-            context.add.text(tile.x, tile.y, tile.coordinate, style).setOrigin(0.5, 0.5);
+            context.add.text(tile.x, tile.y, coordinateToLinear(tile.coordinate), style).setOrigin(0.5, 0.5);
         });
 
         this.coordinates.forEach((coordinate) => {
