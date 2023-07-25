@@ -28,12 +28,8 @@ export class Tile {
 
         let boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
 
-        console.log(coordinateToLinear(this.coordinate));
-
         let forwardLeftLinear = coordinateToLinear(this.coordinate) - fileLength(file)
         let forwardLeftCoord = linearToCoordinate(forwardLeftLinear, context);
-
-        console.log(forwardLeftLinear)
 
         if (!boundary_tiles.includes(forwardLeftLinear) && isValidCoord(forwardLeftCoord))
             return forwardLeftCoord;
@@ -96,14 +92,14 @@ export class Board
         }
 
         if (tiles_data === undefined)
-            tiles_data = Object.values(context.cache.json.get('json_tile_data').tiles);
+            tiles_data = context.cache.json.get('json_tile_data');
 
         tiles_data.forEach((tile) => {
             this.tiles.push(new Tile(this, Number(tile.x), Number(tile.y), Number(tile.colour), tile.coordinate, Number(tile.size)));
         }, this);
 
         if (coords_data === undefined)
-            coords_data = Object.values(context.cache.json.get('json_coord_data').coordinates);
+            coords_data = context.cache.json.get('json_coord_data');
 
         coords_data.forEach((coord) => {
             this.coordinates.push(new Coordinate(coord.x, coord.y, coord.content));

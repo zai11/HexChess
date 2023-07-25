@@ -1,5 +1,5 @@
 //import Phaser from '../lib/phaser.js'
-import Board from '../Board.js'
+import { Board } from '../Board.js'
 import { fileLength, isValidCoord } from '../Utilities.js';
 
 export default class GameScene extends Phaser.Scene
@@ -54,7 +54,6 @@ export default class GameScene extends Phaser.Scene
         board.render(this);
 
         let tile = board.getTileFromCoord('H9');
-        console.log('The forward-left tile from H9 is: ' + tile.getForwardLeft(this));
 
         //this.add.image(400, 300, 'spr_hex_black').setScale(0.25);
         //this.add.image(400+(128-32), 300-64, 'spr_hex_grey').setScale(0.25);
