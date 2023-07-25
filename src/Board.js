@@ -23,13 +23,25 @@ export class Tile {
             (this.size == tile.size) && (this.scale == tile.scale) && (this.selected == tile.selected) && (this.valid == tile.valid)
     }
 
-    getForwardLeft = (context) => {
+    getForwardLeft = (context = undefined, boundary_tiles = undefined) => {
         let file = this.coordinate[0];
+        let previousFile = file.charCodeAt(0) - 66;
 
-        let boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
+        console.log(boundary_tiles);
 
-        let forwardLeftLinear = coordinateToLinear(this.coordinate) - fileLength(file)
-        let forwardLeftCoord = linearToCoordinate(forwardLeftLinear, context);
+        if (boundary_tiles === undefined)
+            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
+
+        let forwardLeftLinear;
+
+        if (file.charCodeAt(0) - 65 <= 5)
+            forwardLeftLinear = coordinateToLinear(this.coordinate) - fileLength(file);
+        else
+            forwardLeftLinear = coordinateToLinear(this.coordinate) - (fileLength(file)+1);
+        
+        console.log('File Length: ' + fileLength(file));
+        console.log(this.coordinate + ': ' + forwardLeftLinear);
+        let forwardLeftCoord = linearToCoordinate(forwardLeftLinear, context, boundary_tiles);
 
         if (!boundary_tiles.includes(forwardLeftLinear) && isValidCoord(forwardLeftCoord))
             return forwardLeftCoord;
@@ -210,7 +222,7 @@ export class Board
             if (tile.colour === 'white')
                 style.color = '#000';
             context.add.image(tile.x, tile.y, 'spr_tile_' + tile.colour + (tile.selected ? '_selected' : '') + (tile.valid ? '_valid' : '')).setScale(tile.scale);
-            context.add.text(tile.x, tile.y, coordinateToLinear(tile.coordinate), style).setOrigin(0.5, 0.5);
+            context.add.text(tile.x, tile.y, tile.coordinate, style).setOrigin(0.5, 0.5);
         });
 
         this.coordinates.forEach((coordinate) => {

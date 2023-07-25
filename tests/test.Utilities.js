@@ -9,7 +9,7 @@ let boundary_data = [
     ];
 
 describe('Utility Class Tests:', () => {
-    describe('LinearToCoordinate', () => {
+    describe('linearToCoordinate(linearValue:Integer)', () => {
         it('11 should return A5', () => {
             let result = linearToCoordinate(11, undefined, boundary_data);
             expect(result).to.equal('A5');
@@ -31,7 +31,7 @@ describe('Utility Class Tests:', () => {
             expect(result).to.equal(undefined);
         });
     });
-    describe('CoordinateToLinear', () => {
+    describe('coordinateToLinear(coordinate:String)', () => {
         it('A5 should return 11', () => {
             let result = coordinateToLinear('A5');
             expect(result).to.equal(11);
@@ -53,7 +53,7 @@ describe('Utility Class Tests:', () => {
             expect(result).to.equal(undefined);
         });
     });
-    describe('FileLength', () => {
+    describe('fileLength(file:String)', () => {
         it('A should return 6', () => {
             let result = fileLength('A');
             expect(result).to.equal(6);
@@ -99,7 +99,7 @@ describe('Utility Class Tests:', () => {
             expect(result).to.equal(6);
         });
     });
-    describe('IsValidCoord', () => {
+    describe('isValidCoord(coordinate:String)', () => {
         it('A1 should return true', () => {
             let result = isValidCoord('A1');
             expect(result).to.equal(true);

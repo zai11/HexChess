@@ -759,7 +759,7 @@ let coords_data = [
 let board = new Board(undefined, tiles_data, coords_data);
 
 describe('Board Class Tests:', () => {
-    describe('getTileFromCoord', () => {
+    describe('getTileFromCoord(coordinate:String)', () => {
         it('B2 should return correct B2 Tile Object', () => {
             let expected = new Tile(board, 448, 518, 2, "B2", 64);
             let result = board.getTileFromCoord('B2');
@@ -788,7 +788,7 @@ describe('Board Class Tests:', () => {
         });
     });
 
-    describe('getPositionsFromCoord', () => {
+    describe('getPositionsFromCoord(coordinate:String)', () => {
         it('B2 should return { x: \'448\', y: \'518\' }', () => {
             let result = board.getPositionsFromCoord('B2');
             expect(result.x).to.equal(448);
@@ -817,7 +817,7 @@ describe('Board Class Tests:', () => {
         });
     });
 
-    describe('getTileFromPositions', () => {
+    describe('getTileFromPositions(x:Integer, y:Integer)', () => {
         it('x: 448, y: 518 should return correct B2 Tile object', () => {
             let expected = new Tile(board, 448, 518, 2, "B2", 64);
             let result = board.getTileFromPositions(448, 518);
@@ -842,7 +842,7 @@ describe('Board Class Tests:', () => {
         });
     });
 
-    describe('getCoordFromPositions', () => {
+    describe('getCoordFromPositions(x:Integer, y:Integer)', () => {
         it('x: 448, y: 518 should return B2', () => {
             let result = board.getCoordFromPositions(448, 518);
             expect(result).to.equal('B2');
