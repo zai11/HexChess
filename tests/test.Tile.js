@@ -897,7 +897,7 @@ describe('Tile Class Tests:', () => {
             expect(result).to.equal('A4');
         });
         it('K11 should return undefined', () => {
-            let result = board.getTileFromCoord('K10').getForward(undefined, boundary_data);
+            let result = board.getTileFromCoord('K11').getForward(undefined, boundary_data);
             expect(result).to.equal(undefined);
         });
         it('C8 should return undefined', () => {

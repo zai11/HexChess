@@ -111,12 +111,12 @@ export class Tile {
         return undefined;
     }
 
-    getForward = () => {
-        return linearToCoordinate(coordinateToLinear(this.coordinate) + 1);
+    getForward = (context = undefined, boundary_tiles = undefined) => {
+        return linearToCoordinate(coordinateToLinear(this.coordinate) + 1, context, boundary_tiles);
     }
 
-    getBackward = () => {
-        return linearToCoordinate(coordinateToLinear(this.coordinate) - 1);
+    getBackward = (context = undefined, boundary_tiles = undefined) => {
+        return linearToCoordinate(coordinateToLinear(this.coordinate) - 1, context, boundary_tiles);
     }
 }
 
