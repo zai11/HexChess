@@ -89,8 +89,26 @@ export class Tile {
         return undefined;
     }
 
-    getBackwardRight = () => {
+    getBackwardRight = (context = undefined, boundary_tiles = undefined) => {
+        let file = this.coordinate[0];
 
+        if (boundary_tiles === undefined)
+            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
+
+        let forwardLeftLinear;
+
+        if (file.charCodeAt(0) - 65 <= 5)
+            forwardLeftLinear = coordinateToLinear(this.coordinate) + (fileLength(file)+1);
+        else
+            forwardLeftLinear = coordinateToLinear(this.coordinate) + (fileLength(file));
+            
+        let forwardLeftCoord = linearToCoordinate(forwardLeftLinear, context, boundary_tiles);
+
+        if (!boundary_tiles.includes(forwardLeftLinear) && isValidCoord(forwardLeftCoord))
+            return forwardLeftCoord;
+
+        console.warn('There is no tile in the forward left direction from: ' + this.coordinate);
+        return undefined;
     }
 
     getForward = () => {

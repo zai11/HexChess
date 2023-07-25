@@ -879,7 +879,7 @@ describe('Tile Class Tests:', () => {
             expect(result).to.equal(undefined);
         });
         it('G2 should return undefined', () => {
-            let result = board.getTileFromCoord('C8').getBackwardRight(undefined, boundary_data);
+            let result = board.getTileFromCoord('G2').getBackwardRight(undefined, boundary_data);
             expect(result).to.equal(undefined);
         });
     });
