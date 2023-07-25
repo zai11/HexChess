@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<title>HexChess</title>
+		<link rel="stylesheet" href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" />
+		<script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+	</head>
+	<body>
+
+		<a href="./index.html" style="display:block;margin: 20px 0;padding-left: 50px;">Index</a>
+
+		<div id="mocha"></div>
+
+		<script src="https://unpkg.com/chai/chai.js"></script>
+		<script src="https://unpkg.com/mocha/mocha.js"></script>
+	
+		<script class="mocha-init">
+		  mocha.setup('bdd');
+		  mocha.checkLeaks();
+		</script>
+		
+		<script type="module" src="./tests/test.Utilities.js"></script>
+		<script type="module" src="./tests/test.Board.js"></script>
+		<!--<script type="module" src="./tests/test.Tile.js"></script>-->
+		<!--<script type="module" src="./tests/test.Pawn.js"></script>
+		<script type="module" src="./tests/test.Bishop.js"></script>
+		<script type="module" src="./tests/test.Knight.js"></script>
+		<script type="module" src="./tests/test.Rook.js"></script>
+		<script type="module" src="./tests/test.Queen.js"></script>
+		<script type="module" src="./tests/test.King.js"></script>-->
+		
+		<script class="mocha-exec">
+		  mocha.run();
+		</script>
+	</body>
+</html>
