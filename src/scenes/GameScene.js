@@ -49,7 +49,7 @@ export default class GameScene extends Phaser.Scene
 
         let board = new Board(this, undefined, undefined);
 
-        //board.init(this);
+        board.init(this);
 
         board.render(this);
 

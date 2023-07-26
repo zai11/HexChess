@@ -1,5 +1,7 @@
-import { Board, Tile } from "../src/Board.js";
-import { Pawn, King } from '../src/Piece.js';
+
+import { coordinateToLinear, fileLength, isValidCoord, linearToCoordinate } from "../src/Utilities.js";
+import { Board } from '../src/Board.js';
+import { Pawn } from '../src/Piece.js';
 
 let expect = chai.expect;
 
@@ -758,129 +760,164 @@ let coords_data = [
 
 let board = new Board(undefined, tiles_data, coords_data);
 
-describe('Board Class Tests:', () => {
-    describe('getTileFromCoord(coordinate:String)', () => {
-        it('B2 should return correct B2 Tile Object', () => {
-            let expected = new Tile(board, 448, 518, 2, "B2", 64);
-            let result = board.getTileFromCoord('B2');
-            expect(result.equals(expected)).to.equal(true);
+describe('Pawn Class Tests:', () => {
+    describe('getValidMoves()', () => {
+        it('C2, white, cannot take should return [C3, C4]', () => {
+            let expected = ['C3', 'C4'];
+            board.addPiece(new Pawn(board, 'C2', 'white'));
+            let pawn = board.getPieceFromCoord('C2');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-        it('H7 should return correct H7 Tile Object', () => {
-            let expected = new Tile(board, 736, 390, 1, "H7", 64);
-            let result = board.getTileFromCoord('H7');
-            expect(result.equals(expected)).to.equal(true);
+        it('C2, white, can take on D3 should return [C3, C4, D3]', () => {
+            let expected = ['C3', 'C4', 'D3'];
+            board.addPiece(new Pawn(board, 'C2', 'white'));
+            board.addPiece(new Pawn(board, 'D3', 'black'));
+            let pawn = board.getPieceFromCoord('C2');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-        it('A-1 should return undefined', () => {
-            let result = board.getTileFromCoord('A-1');
-            expect(result).to.equal(undefined);
+        it('C2, white, can take on B2 should return [C3, C4, B2]', () => {
+            let expected = ['C3', 'C4', 'B2'];
+            board.addPiece(new Pawn(board, 'C2', 'white'));
+            board.addPiece(new Pawn(board, 'B2', 'black'));
+            let pawn = board.getPieceFromCoord('C2');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-        it('A7 should return undefined', () => {
-            let result = board.getTileFromCoord('A7');
-            expect(result).to.equal(undefined);
+        it('C2, white, can take on D3 en passant should return [C3, C4, D3]', () => {
+            let expected = ['C3', 'C4', 'D3'];
+            board.addPiece(new Pawn(board, 'C2', 'white'));
+            board.addPiece(new Pawn(board, 'D2', 'black'));
+            let pawn = board.getPieceFromCoord('C2');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-        it('K2 should return undefined', () => {
-            let result = board.getTileFromCoord('K2');
-            expect(result).to.equal(undefined);
+        it('C2, white, can take on B2 en passant should return [C3, C4, B2]', () => {
+            let expected = ['C3', 'C4', 'B2'];
+            board.addPiece(new Pawn(board, 'C2', 'white'));
+            board.addPiece(new Pawn(board, 'B1', 'black'));
+            let pawn = board.getPieceFromCoord('C2');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-        it('K12 should return undefined', () => {
-            let result = board.getTileFromCoord('K12');
-            expect(result).to.equal(undefined);
+        it('C3, white, cannot take should return [C4]', () => {
+            let expected = ['C4'];
+            board.addPiece(new Pawn(board, 'C3', 'white'));
+            let pawn = board.getPieceFromCoord('C3');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-    });
+        it('C3, white, can take on D4 should return [C4, D4]', () => {
+            let expected = ['C4', 'D4'];
+            board.addPiece(new Pawn(board, 'C3', 'white'));
+            board.addPiece(new Pawn(board, 'D4', 'black'));
+            let pawn = board.getPieceFromCoord('C3');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
+        });
+        it('C3, white, can take on B3 should return [C4, B3]', () => {
+            let expected = ['C4', 'B3'];
+            board.addPiece(new Pawn(board, 'C3', 'white'));
+            board.addPiece(new Pawn(board, 'B3', 'black'));
+            let pawn = board.getPieceFromCoord('C3');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
+        });
+        it('C3, white, can take on D4 en passant should return [C4, D4]', () => {
+            let expected = ['C4', 'D4'];
+            board.addPiece(new Pawn(board, 'C3', 'white'));
+            board.addPiece(new Pawn(board, 'D3', 'black'));
+            let pawn = board.getPieceFromCoord('C3');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
+        });
+        it('C3, white, can take on B3 en passant should return [C4, B3]', () => {
+            let expected = ['C4', 'B3'];
+            board.addPiece(new Pawn(board, 'C3', 'white'));
+            board.addPiece(new Pawn(board, 'B2', 'black'));
+            let pawn = board.getPieceFromCoord('C3');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
+        });
 
-    describe('getPositionsFromCoord(coordinate:String)', () => {
-        it('B2 should return { x: \'448\', y: \'518\' }', () => {
-            let result = board.getPositionsFromCoord('B2');
-            expect(result.x).to.equal(448);
-            expect(result.y).to.equal(518);
+        it('C7, black, cannot take should return [C6, C5]', () => {
+            let expected = ['C6', 'C5'];
+            board.addPiece(new Pawn(board, 'C9', 'black'));
+            let pawn = board.getPieceFromCoord('C9');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-        it('H7 should return { x: \'736\', y: \'390\' }', () => {
-            let result = board.getPositionsFromCoord('H7');
-            expect(result.x).to.equal(736);
-            expect(result.y).to.equal(390);
+        it('C7, black, can take on D7 should return [C6, C5, D7]', () => {
+            let expected = ['C6', 'C5', 'D7'];
+            board.addPiece(new Pawn(board, 'C8', 'black'));
+            board.addPiece(new Pawn(board, 'D7', 'white'));
+            let pawn = board.getPieceFromCoord('C7');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-        it('A-1 should return undefined', () => {
-            let result = board.getPositionsFromCoord('A-1');
-            expect(result).to.equal(undefined);
+        it('C7, black, can take on B6 should return [C6, C5, B6]', () => {
+            let expected = ['C6', 'C5', 'B6'];
+            board.addPiece(new Pawn(board, 'C7', 'black'));
+            board.addPiece(new Pawn(board, 'B6', 'white'));
+            let pawn = board.getPieceFromCoord('C2');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-        it('A7 should return undefined', () => {
-            let result = board.getPositionsFromCoord('A7');
-            expect(result).to.equal(undefined);
+        it('C7, black, can take on D7 en passant should return [C6, C5, D7]', () => {
+            let expected = ['C6', 'C5', 'D7'];
+            board.addPiece(new Pawn(board, 'C7', 'black'));
+            board.addPiece(new Pawn(board, 'D8', 'white'));
+            let pawn = board.getPieceFromCoord('C2');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-        it('K2 should return undefined', () => {
-            let result = board.getPositionsFromCoord('K2');
-            expect(result).to.equal(undefined);
+        it('C7, black, can take on B6 en passant should return [C6, C5, B6]', () => {
+            let expected = ['C6', 'C5', 'B6'];
+            board.addPiece(new Pawn(board, 'C7', 'black'));
+            board.addPiece(new Pawn(board, 'B7', 'white'));
+            let pawn = board.getPieceFromCoord('C7');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-        it('K12 should return undefined', () => {
-            let result = board.getPositionsFromCoord('K12');
-            expect(result).to.equal(undefined);
+        it('C6, black, cannot take should return [C5]', () => {
+            let expected = ['C5'];
+            board.addPiece(new Pawn(board, 'C6', 'black'));
+            let pawn = board.getPieceFromCoord('C6');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-    });
-
-    describe('getTileFromPositions(x:Integer, y:Integer)', () => {
-        it('x: 448, y: 518 should return correct B2 Tile object', () => {
-            let expected = new Tile(board, 448, 518, 2, "B2", 64);
-            let result = board.getTileFromPositions(448, 518);
-            expect(result.equals(expected)).to.equal(true);
+        it('C6, black, can take on D6 should return [C5, D6]', () => {
+            let expected = ['C5', 'D6'];
+            board.addPiece(new Pawn(board, 'C6', 'black'));
+            board.addPiece(new Pawn(board, 'D6', 'white'));
+            let pawn = board.getPieceFromCoord('C6');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-        it('x: 736, y: 390 should return correct H7 Tile Object', () => {
-            let expected = new Tile(board, 736, 390, 1, "H7", 64);
-            let result = board.getTileFromPositions(736, 390);
-            expect(result.equals(expected)).to.equal(true);
+        it('C6, black, can take on B5 should return [C5, B5]', () => {
+            let expected = ['C5', 'B5'];
+            board.addPiece(new Pawn(board, 'C6', 'black'));
+            board.addPiece(new Pawn(board, 'B5', 'white'));
+            let pawn = board.getPieceFromCoord('C6');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-        it('x: 0, y: 0 should return undefined', () => {
-            let result = board.getTileFromPositions(0, 0);
-            expect(result).to.equal(undefined);
+        it('C6, black, can take on D6 en passant should return [C5, D6]', () => {
+            let expected = ['C5', 'D6'];
+            board.addPiece(new Pawn(board, 'C6', 'black'));
+            board.addPiece(new Pawn(board, 'D7', 'white'));
+            let pawn = board.getPieceFromCoord('C6');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
-        it('x: Infinity, y: Infinity should return undefined', () => {
-            let result = board.getTileFromPositions(Infinity, Infinity);
-            expect(result).to.equal(undefined);
-        });
-        it('x: -500, y: 500 should return undefined', () => {
-            let result = board.getTileFromPositions(-500, 500);
-            expect(result).to.equal(undefined);
-        });
-    });
-
-    describe('getCoordFromPositions(x:Integer, y:Integer)', () => {
-        it('x: 448, y: 518 should return B2', () => {
-            let result = board.getCoordFromPositions(448, 518);
-            expect(result).to.equal('B2');
-        });
-        it('x: 736, y: 390 should return H7', () => {
-            let result = board.getCoordFromPositions(736, 390);
-            expect(result).to.equal('H7');
-        });
-        it('x: 0, y: 0 should return undefined', () => {
-            let result = board.getCoordFromPositions(0, 0);
-            expect(result).to.equal(undefined);
-        });
-        it('x: Infinity, y: Infinity should return undefined', () => {
-            let result = board.getCoordFromPositions(Infinity, Infinity);
-            expect(result).to.equal(undefined);
-        });
-        it('x: -500, y: 500 should return undefined', () => {
-            let result = board.getCoordFromPositions(-500, 500);
-            expect(result).to.equal(undefined);
-        });
-    });
-
-    describe('getPieceFromCoord(coordinate:String)', () => {
-        it('B2 should return correct Pawn object', () => {
-            let expected = new Pawn(board, 'B2', 'white')
-            board.addPiece(expected);
-            let result = board.getPieceFromCoord('B2');
-            expect(result.equals(expected)).to.equal(true);
-        });
-        it('F7 should return correct Pawn object', () => {
-            let expected = new Pawn(board, 'F7', 'black')
-            board.addPiece(expected);
-            let result = board.getPieceFromCoord('F7');
-            expect(result.equals(expected)).to.equal(true);
-        });
-        it('Empty tile coordinate should return undefined', () => {
-            let result = board.getPieceFromCoord('A5');
-            expect(result).to.equal(undefined);
+        it('C6, black, can take on B5 en passant should return [C5, B5]', () => {
+            let expected = ['C5', 'B5'];
+            board.addPiece(new Pawn(board, 'C6', 'black'));
+            board.addPiece(new Pawn(board, 'B6', 'white'));
+            let pawn = board.getPieceFromCoord('C6');
+            let result = pawn.getValidMoves();
+            expect(result).to.equal(expected);
         });
     });
 });

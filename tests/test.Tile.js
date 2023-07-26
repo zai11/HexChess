@@ -1,6 +1,5 @@
 import { Board, Tile } from "../src/Board.js";
 
-let should = chai.should();
 let expect = chai.expect;
 
 let tiles_data = [

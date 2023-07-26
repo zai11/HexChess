@@ -1,7 +1,6 @@
 
 import { coordinateToLinear, fileLength, isValidCoord, linearToCoordinate } from "../src/Utilities.js";
 
-let should = chai.should();
 let expect = chai.expect;
 
 let boundary_data = [
