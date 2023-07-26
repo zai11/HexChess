@@ -277,7 +277,7 @@ export class Board
             if (tile.colour === 'white')
                 style.color = '#000';
             context.add.image(tile.x, tile.y, 'spr_tile_' + tile.colour + (tile.selected ? '_selected' : '') + (tile.valid ? '_valid' : '')).setScale(tile.scale);
-            //context.add.text(tile.x, tile.y, coordinateToLinear(tile.coordinate), style).setOrigin(0.5, 0.5);
+            context.add.text(tile.x, tile.y, tile.coordinate, style).setOrigin(0.5, 0.5);
         });
 
         this.coordinates.forEach((coordinate) => {
