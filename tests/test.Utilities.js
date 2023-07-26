@@ -1,11 +1,8 @@
 
 import { coordinateToLinear, fileLength, isValidCoord, linearToCoordinate } from "../src/Utilities.js";
+import { boundary_data } from './test.data.js'
 
 let expect = chai.expect;
-
-let boundary_data = [
-        0, 1, 2, 3, 4, 5, 6, 13, 21, 30, 40, 51, 63, 73, 83, 92, 100, 107, 108, 109, 110, 111, 112, 113, 114
-    ];
 
 describe('Utility Class Tests:', () => {
     describe('linearToCoordinate(linearValue:Integer)', () => {
