@@ -38,7 +38,8 @@ describe('Tile Class Tests:', () => {
             expect(tile1.equals(tile2)).to.equal(false);
         })
     });
-    describe('getForwardLeft(coordinate:String)', () => {
+
+    describe('getForwardLeft()', () => {
         it('B2 should return A2', () => {
             let result = board.getTileFromCoord('B2').getForwardLeft(undefined, boundary_data);
             expect(result).to.equal('A2');
@@ -60,7 +61,8 @@ describe('Tile Class Tests:', () => {
             expect(result).to.equal(undefined);
         });
     });
-    describe('getForwardRight(coordinate:String)', () => {
+
+    describe('getForwardRight()', () => {
         it('B2 should return C3', () => {
             let result = board.getTileFromCoord('B2').getForwardRight(undefined, boundary_data);
             expect(result).to.equal('C3');
@@ -82,7 +84,8 @@ describe('Tile Class Tests:', () => {
             expect(result).to.equal(undefined);
         });
     });
-    describe('getBackwardLeft(coordinate:String)', () => {
+
+    describe('getBackwardLeft()', () => {
         it('B2 should return A1', () => {
             let result = board.getTileFromCoord('B2').getBackwardLeft(undefined, boundary_data);
             expect(result).to.equal('A1');
@@ -104,7 +107,8 @@ describe('Tile Class Tests:', () => {
             expect(result).to.equal(undefined);
         });
     });
-    describe('getBackwardRight(coordinate:String)', () => {
+
+    describe('getBackwardRight()', () => {
         it('B2 should return C2', () => {
             let result = board.getTileFromCoord('B2').getBackwardRight(undefined, boundary_data);
             expect(result).to.equal('C2');
@@ -126,7 +130,8 @@ describe('Tile Class Tests:', () => {
             expect(result).to.equal(undefined);
         });
     });
-    describe('getForward(coordinate:String)', () => {
+
+    describe('getForward()', () => {
         it('B2 should return B3', () => {
             let result = board.getTileFromCoord('B2').getForward(undefined, boundary_data);
             expect(result).to.equal('B3');
@@ -148,7 +153,8 @@ describe('Tile Class Tests:', () => {
             expect(result).to.equal(undefined);
         });
     });
-    describe('getBackward(coordinate:String)', () => {
+
+    describe('getBackward()', () => {
         it('B2 should return B1', () => {
             let result = board.getTileFromCoord('B2').getBackward(undefined, boundary_data);
             expect(result).to.equal('B1');
@@ -168,6 +174,144 @@ describe('Tile Class Tests:', () => {
         it('C1 should return undefined', () => {
             let result = board.getTileFromCoord('C1').getBackward(undefined, boundary_data);
             expect(result).to.equal(undefined);
+        });
+    });
+
+    describe('getForwardLeftDiagonal()', () => {
+        it('D5 should return C6', () => {
+            let result = board.getTileFromCoord('D5').getForwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal('C6');
+        });
+        it('G10 should return F11', () => {
+            let result = board.getTileFromCoord('G10').getForwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal('F11');
+        });
+        it('G3 should return F4', () => {
+            let result = board.getTileFromCoord('G3').getForwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal('F4');
+        });
+        it('E2 should return D3', () => {
+            let result = board.getTileFromCoord('E2').getForwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal('D3');
+        });
+        it('E9 should return undefined', () => {
+            let result = board.getTileFromCoord('E9').getForwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal(undefined);
+        });
+    });
+
+    describe('getForwardRightDiagonal()', () => {
+        it('D5 should return C6', () => {
+            let result = board.getTileFromCoord('D5').getForwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal('C6');
+        });
+        it('G3 should return H5', () => {
+            let result = board.getTileFromCoord('G3').getForwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal('H5');
+        });
+        it('E2 should return F4', () => {
+            let result = board.getTileFromCoord('E2').getForwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal('F4');
+        });
+        it('E9 should return F11', () => {
+            let result = board.getTileFromCoord('F11').getForwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal('F11');
+        });
+        it('G10 should return undefined', () => {
+            let result = board.getTileFromCoord('G10').getForwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal(undefined);
+        });
+    });
+
+    describe('getBackwardLeftDiagonal()', () => {
+        it('D5 should return C3', () => {
+            let result = board.getTileFromCoord('D5').getBackwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal('C3');
+        });
+        it('G10 should return F8', () => {
+            let result = board.getTileFromCoord('G10').getBackwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal('F8');
+        });
+        it('G3 should return F1', () => {
+            let result = board.getTileFromCoord('G3').getBackwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal('F1');
+        });
+        it('E9 should return D7', () => {
+            let result = board.getTileFromCoord('E9').getBackwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal('D7');
+        });
+        it('E2 should return undefined', () => {
+            let result = board.getTileFromCoord('E2').getBackwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal(undefined);
+        });
+    });
+
+    describe('getBackwardRightDiagonal()', () => {
+        it('D5 should return E4', () => {
+            let result = board.getTileFromCoord('D5').getBackwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal('E4');
+        });
+        it('E2 should return F1', () => {
+            let result = board.getTileFromCoord('E2').getBackwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal('F1');
+        });
+        it('E9 should return F11', () => {
+            let result = board.getTileFromCoord('F11').getBackwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal('F8');
+        });
+        it('G10 should return H9', () => {
+            let result = board.getTileFromCoord('G10').getBackwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal('H9');
+        });
+        it('G3 should return undefined', () => {
+            let result = board.getTileFromCoord('G3').getBackwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal(undefined);
+        });
+    });
+
+    describe('getLeftDiagonal()', () => {
+        it('D5 should return B4', () => {
+            let result = board.getTileFromCoord('D5').getBackwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal('B4');
+        });
+        it('G10 should return E9', () => {
+            let result = board.getTileFromCoord('G10').getBackwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal('E9');
+        });
+        it('G3 should return E2', () => {
+            let result = board.getTileFromCoord('G3').getBackwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal('E2');
+        });
+        it('E9 should return C8', () => {
+            let result = board.getTileFromCoord('E9').getBackwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal('C8');
+        });
+        it('E2 should return C1', () => {
+            let result = board.getTileFromCoord('E2').getBackwardLeftDiagonal(undefined, boundary_data);
+            expect(result).to.equal('C1');
+        });
+    });
+
+    describe('getRightDiagonal()', () => {
+        it('D5 should return F6', () => {
+            let result = board.getTileFromCoord('D5').getBackwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal('F6');
+        });
+        it('E2 should return G3', () => {
+            let result = board.getTileFromCoord('E2').getBackwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal('G3');
+        });
+        it('E9 should return G10', () => {
+            let result = board.getTileFromCoord('F11').getBackwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal('G10');
+        });
+        it('G10 should return I11', () => {
+            let result = board.getTileFromCoord('G10').getBackwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal('I11');
+        });
+        it('G3 should return I4', () => {
+            let result = board.getTileFromCoord('G3').getBackwardRightDiagonal(undefined, boundary_data);
+            expect(result).to.equal('I4');
         });
     });
 });
