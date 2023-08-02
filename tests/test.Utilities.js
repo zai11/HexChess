@@ -10,9 +10,45 @@ describe('Utility Class Tests:', () => {
             let result = linearToCoordinate(11, undefined, boundary_data);
             expect(result).to.equal('A5');
         });
-        it('68 should return G7', () => {
-            let result = linearToCoordinate(68, undefined, boundary_data);
+        it('20 should return B7', () => {
+            let result = linearToCoordinate(20, undefined, boundary_data);
+            expect(result).to.equal('B7');
+        });
+        it('28 should return C7', () => {
+            let result = linearToCoordinate(28, undefined, boundary_data);
+            expect(result).to.equal('C7');
+        });
+        it('37 should return D7', () => {
+            let result = linearToCoordinate(37, undefined, boundary_data);
+            expect(result).to.equal('D7');
+        });
+        it('47 should return E7', () => {
+            let result = linearToCoordinate(47, undefined, boundary_data);
+            expect(result).to.equal('E7');
+        });
+        it('58 should return F7', () => {
+            let result = linearToCoordinate(58, undefined, boundary_data);
+            expect(result).to.equal('F7');
+        });
+        it('69 should return G7', () => {
+            let result = linearToCoordinate(69, undefined, boundary_data);
             expect(result).to.equal('G7');
+        });
+        it('79 should return H7', () => {
+            let result = linearToCoordinate(79, undefined, boundary_data);
+            expect(result).to.equal('H7');
+        });
+        it('88 should return I7', () => {
+            let result = linearToCoordinate(88, undefined, boundary_data);
+            expect(result).to.equal('I7');
+        });
+        it('96 should return J7', () => {
+            let result = linearToCoordinate(96, undefined, boundary_data);
+            expect(result).to.equal('J7');
+        });
+        it('103 should return K7', () => {
+            let result = linearToCoordinate(103, undefined, boundary_data);
+            expect(result).to.equal('K7');
         });
         it('3 should return undefined', () => {
             let result = linearToCoordinate(3, undefined, boundary_data);
@@ -32,9 +68,9 @@ describe('Utility Class Tests:', () => {
             let result = coordinateToLinear('A5');
             expect(result).to.equal(11);
         });
-        it('G7 should return 68', () => {
+        it('G7 should return 69', () => {
             let result = coordinateToLinear('G7');
-            expect(result).to.equal(68);
+            expect(result).to.equal(69);
         });
         it('A-1 should return undefined', () => {
             let result = coordinateToLinear('A-1');

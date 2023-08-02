@@ -6,35 +6,44 @@ export function linearToCoordinate(id, context=undefined, boundary_data=undefine
     }
     
     if (boundary_data === undefined)
-        boundary_data = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
+        boundary_data = context.cache.json.get('json_boundary_tiles');
 
     if (boundary_data.includes(id) || id < 1 || id > 107) {
         console.warn('Invalid value for linear coordinate: ' + id);
         return undefined;
     }
 
+    let result;
+
     if (id <= 12)
-        return "A" + (id - 6);
+        result = "A" + (id - 6);
     else if (id <= 20)
-        return "B" + (id - 13);
+        result = "B" + (id - 13);
     else if (id <= 29)
-        return "C" + (id - 21);
+        result = "C" + (id - 21);
     else if (id <= 39)
-        return "D" + (id - 30);
+        result = "D" + (id - 30);
     else if (id <= 50)
-        return "E" + (id - 40);
+        result = "E" + (id - 40);
     else if (id <= 62)
-        return "F" + (id - 51);
-    else if (id <= 72)
-        return "G" + (id - 61);
-    else if (id <= 82)
-        return "H" + (id - 71);
-    else if (id <= 91)
-        return "I" + (id - 80);
-    else if (id <= 99)
-        return "J" + (id - 88);
+        result = "F" + (id - 51);
+    else if (id <= 73)
+        result = "G" + (id - 62);
+    else if (id <= 83)
+        result = "H" + (id - 72);
+    else if (id <= 92)
+        result = "I" + (id - 81);
+    else if (id <= 100)
+        result = "J" + (id - 89);
     else
-        return "K" + (id - 95);
+        result = "K" + (id - 96);
+
+    if (!isValidCoord(result)) {
+        console.warn('Resulting coordinate is invalid: ' + result);
+        return undefined;
+    }
+    
+    return result;
 }
 
 export function coordinateToLinear(coordinate) {
@@ -56,15 +65,15 @@ export function coordinateToLinear(coordinate) {
         case 'F':
             return 52 + Number(coordinate.slice(1)) - 1;
         case 'G':
-            return 63 + Number(coordinate.slice(1)) - 2;
+            return 64 + Number(coordinate.slice(1)) - 2;
         case 'H':
-            return 74 + Number(coordinate.slice(1)) - 3;
+            return 75 + Number(coordinate.slice(1)) - 3;
         case 'I':
-            return 84 + Number(coordinate.slice(1)) - 4;
+            return 85 + Number(coordinate.slice(1)) - 4;
         case 'J':
-            return 93 + Number(coordinate.slice(1)) - 5;
+            return 94 + Number(coordinate.slice(1)) - 5;
         case 'K':
-            return 101 + Number(coordinate.slice(1)) - 6;
+            return 102 + Number(coordinate.slice(1)) - 6;
         default:
             console.warn('Invalid coordinate provided: ' + coordinate);
             return undefined;
@@ -79,6 +88,9 @@ export function fileLength(file) {
 }
 
 export function isValidCoord(coord) {
+    if (coord === undefined)
+        return false;
+
     let file = coord[0];
     let rank = Number(coord.slice(1));
 

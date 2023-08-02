@@ -53,7 +53,7 @@ export default class GameScene extends Phaser.Scene
 
         board.render(this);
 
-        let tile = board.getTileFromCoord('H9');
+        let tile = board.getTileFromCoord('G10').getForwardRight(this);
 
         //this.add.image(400, 300, 'spr_hex_black').setScale(0.25);
         //this.add.image(400+(128-32), 300-64, 'spr_hex_grey').setScale(0.25);
