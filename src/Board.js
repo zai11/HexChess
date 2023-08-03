@@ -6,7 +6,7 @@ export class Tile {
     // 0 = Black,
     // 1 = Grey,
     // 2 = White
-    constructor(board, x, y, colour, coordinate, size) {
+    constructor(board, x, y, colour, coordinate, size, pawnStartingTile) {
         this.board = board;
         this.x = x;
         this.y = y;
@@ -14,6 +14,7 @@ export class Tile {
         this.coordinate = coordinate;
         this.size = size;
         this.scale = size/512;
+        this.pawnStartingTile = pawnStartingTile;
         this.selected = false;
         this.valid = false;
     }
@@ -21,6 +22,26 @@ export class Tile {
     equals = (tile) => {
         return (this.board == tile.board) && (this.x == tile.x) && (this.y == tile.y) && (this.colour == tile.colour) && (this.coordinate == tile.coordinate) &&
             (this.size == tile.size) && (this.scale == tile.scale) && (this.selected == tile.selected) && (this.valid == tile.valid)
+    }
+
+    hasPiece = () => {
+        return !(this.piece === undefined);
+    }
+
+    getPiece = () => {
+        return this.piece;
+    }
+
+    setPiece = (piece) => {
+        this.piece = piece;
+    }
+
+    removePiece = () => {
+        this.piece = undefined;
+    }
+
+    isPawnStartingTile = () => {
+        return this.pawnStartingTile;
     }
 
     getForwardLeft = (context = undefined, boundary_tiles = undefined) => {
@@ -96,7 +117,7 @@ export class Tile {
             boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
 
         let forwardLeftLinear;
-        
+
         if (file.charCodeAt(0) - 65 <= 4)
             forwardLeftLinear = coordinateToLinear(this.coordinate) + (fileLength(file)+1);
         else
@@ -199,7 +220,7 @@ export class Board
             tiles_data = context.cache.json.get('json_tile_data');
 
         tiles_data.forEach((tile) => {
-            this.tiles.push(new Tile(this, Number(tile.x), Number(tile.y), Number(tile.colour), tile.coordinate, Number(tile.size)));
+            this.tiles.push(new Tile(this, Number(tile.x), Number(tile.y), Number(tile.colour), tile.coordinate, Number(tile.size), tile.pawnStartingTile));
         }, this);
 
         if (coords_data === undefined)
@@ -252,6 +273,7 @@ export class Board
 
     addPiece = (piece) => {
         this.pieces.push(piece);
+        this.getTileFromCoord(piece.coordinate).setPiece(piece);
     }
 
     getPieceFromCoord = (coordinate) => {
@@ -273,6 +295,9 @@ export class Board
 
     clear = () => {
         this.pieces = [];
+        this.tiles.forEach((tile) => {
+            tile.removePiece();
+        });
     }
 
     loadFromFEN = (fen) => {
