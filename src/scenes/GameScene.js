@@ -13,8 +13,10 @@ export default class GameScene extends Phaser.Scene
     {
         this.load.setBaseURL('/assets/');
 
-        this.load.json('json_tile_data', './json/tile_data_white.json');
-        this.load.json('json_coord_data', './json/coord_data_white.json');
+        this.load.json('json_tile_data_white', './json/tile_data_white.json');
+        this.load.json('json_coord_data_white', './json/coord_data_white.json');
+        this.load.json('json_tile_data_black', './json/tile_data_black.json');
+        this.load.json('json_coord_data_black', './json/coord_data_black.json');
         this.load.json('json_boundary_tiles', './json/boundary_tiles.json');
 
         this.load.image('spr_background', './sprites/background.png');
@@ -47,18 +49,20 @@ export default class GameScene extends Phaser.Scene
     {
         this.add.image(0,0, 'spr_background').setScale(20);
 
-        let board = new Board(this, undefined, undefined);
+        let board = new Board(this, 'white', undefined, undefined);
 
         //board.init(this);
 
         board.render(this);
 
-        let tile = board.getTileFromCoord('G10').getForwardRight(this);
+        let tile = board.getTileFromCoord('A1');
+
+        console.log(tile.x + ", " + tile.y);
 
         //this.add.image(400, 300, 'spr_hex_black').setScale(0.25);
         //this.add.image(400+(128-32), 300-64, 'spr_hex_grey').setScale(0.25);
         //this.add.image(656, 300, 'spr_hex_white').setScale(0.25);
 
-        //this.add.image(400+(128-32), 300-32, 'spr_hex_white').setScale(0.01);
+        //this.add.image(880+64, 230+32+64, 'spr_tile_black').setScale(0.05);
     }
 }

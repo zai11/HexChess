@@ -210,21 +210,21 @@ export class Board
     coordinates = [];
     pieces = [];
 
-    constructor (context, tiles_data = undefined, coords_data = undefined) {
+    constructor (context, colour, tiles_data = undefined, coords_data = undefined) {
         if (context === undefined && (tiles_data === undefined || coords_data === undefined)) {
             console.warn('The context and either the tile or coordinate data is not provided to board constructor.');
             return undefined;
         }
 
         if (tiles_data === undefined)
-            tiles_data = context.cache.json.get('json_tile_data');
+            tiles_data = context.cache.json.get('json_tile_data_' + colour);
 
         tiles_data.forEach((tile) => {
             this.tiles.push(new Tile(this, Number(tile.x), Number(tile.y), Number(tile.colour), tile.coordinate, Number(tile.size), tile.pawnStartingTile));
         }, this);
 
         if (coords_data === undefined)
-            coords_data = context.cache.json.get('json_coord_data');
+            coords_data = context.cache.json.get('json_coord_data_' + colour);
 
         coords_data.forEach((coord) => {
             this.coordinates.push(new Coordinate(coord.x, coord.y, coord.content));
@@ -273,6 +273,7 @@ export class Board
 
     addPiece = (piece) => {
         this.pieces.push(piece);
+        console.log(piece.coordinate);
         this.getTileFromCoord(piece.coordinate).setPiece(piece);
     }
 
@@ -326,28 +327,28 @@ export class Board
         this.addPiece(new Pawn(this, 'I10', 'black'));
         this.addPiece(new Pawn(this, 'J11', 'black'));
 
-        //this.addPiece(new Knight(context, 'D1', 'white'));
-        //this.addPiece(new Knight(context, 'H3', 'white'));
-        this.addPiece(new Knight(context, this.getPositionsFromCoord('D9').x, this.getPositionsFromCoord('D9').y, 'black'));
-        this.addPiece(new Knight(context, this.getPositionsFromCoord('H11').x, this.getPositionsFromCoord('H11').y, 'black'));
+        this.addPiece(new Knight(this, 'D1', 'white'));
+        this.addPiece(new Knight(this, 'H3', 'white'));
+        this.addPiece(new Knight(this, 'D9', 'black'));
+        this.addPiece(new Knight(this, 'H11', 'black'));
 
-        this.addPiece(new Bishop(context, this.getPositionsFromCoord('F1').x, this.getPositionsFromCoord('F1').y, 'white'));
-        this.addPiece(new Bishop(context, this.getPositionsFromCoord('F2').x, this.getPositionsFromCoord('F2').y, 'white'));
-        this.addPiece(new Bishop(context, this.getPositionsFromCoord('F3').x, this.getPositionsFromCoord('F3').y, 'white'));
-        this.addPiece(new Bishop(context, this.getPositionsFromCoord('F9').x, this.getPositionsFromCoord('F9').y, 'black'));
-        this.addPiece(new Bishop(context, this.getPositionsFromCoord('F10').x, this.getPositionsFromCoord('F10').y, 'black'));
-        this.addPiece(new Bishop(context, this.getPositionsFromCoord('F11').x, this.getPositionsFromCoord('F11').y, 'black'));
+        this.addPiece(new Bishop(this, 'F1', 'white'));
+        this.addPiece(new Bishop(this, 'F2', 'white'));
+        this.addPiece(new Bishop(this, 'F3', 'white'));
+        this.addPiece(new Bishop(this, 'F9', 'black'));
+        this.addPiece(new Bishop(this, 'F10', 'black'));
+        this.addPiece(new Bishop(this, 'F11', 'black'));
 
-        this.addPiece(new Rook(context, this.getPositionsFromCoord('C1').x, this.getPositionsFromCoord('C1').y, 'white'));
-        this.addPiece(new Rook(context, this.getPositionsFromCoord('I4').x, this.getPositionsFromCoord('I4').y, 'white'));
-        this.addPiece(new Rook(context, this.getPositionsFromCoord('C8').x, this.getPositionsFromCoord('C8').y, 'black'));
-        this.addPiece(new Rook(context, this.getPositionsFromCoord('I11').x, this.getPositionsFromCoord('I11').y, 'black'));
+        this.addPiece(new Rook(this, 'C1', 'white'));
+        this.addPiece(new Rook(this, 'I4', 'white'));
+        this.addPiece(new Rook(this, 'C8', 'black'));
+        this.addPiece(new Rook(this, 'I11', 'black'));
 
-        this.addPiece(new Queen(context, this.getPositionsFromCoord('E1').x, this.getPositionsFromCoord('E1').y, 'white'));
-        this.addPiece(new Queen(context, this.getPositionsFromCoord('E10').x, this.getPositionsFromCoord('E10').y, 'black'));
+        this.addPiece(new Queen(this, 'E1', 'white'));
+        this.addPiece(new Queen(this, 'E10', 'black'));
 
-        this.addPiece(new King(context, this.getPositionsFromCoord('G2').x, this.getPositionsFromCoord('G2').y, 'white'));
-        this.addPiece(new King(context, this.getPositionsFromCoord('G11').x, this.getPositionsFromCoord('G11').y, 'black'));
+        this.addPiece(new King(this, 'G2', 'white'));
+        this.addPiece(new King(this, 'G11', 'black'));
     }
 
     render = (context) => {
@@ -356,7 +357,7 @@ export class Board
             if (tile.colour === 'white')
                 style.color = '#000';
             context.add.image(tile.x, tile.y, 'spr_tile_' + tile.colour + (tile.selected ? '_selected' : '') + (tile.valid ? '_valid' : '')).setScale(tile.scale);
-            context.add.text(tile.x, tile.y, coordinateToLinear(tile.coordinate), style).setOrigin(0.5, 0.5);
+            //context.add.text(tile.x, tile.y, coordinateToLinear(tile.coordinate), style).setOrigin(0.5, 0.5);
         });
 
         this.coordinates.forEach((coordinate) => {
