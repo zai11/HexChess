@@ -1,7 +1,6 @@
 
-import { coordinateToLinear, fileLength, isValidCoord, linearToCoordinate } from "../src/Utilities.js";
 import { Board } from '../src/Board.js';
-import { Pawn } from '../src/Piece.js';
+import { Pawn } from '../src/Pawn.js';
 import { tiles_data_white, coords_data_white, tiles_data_black, coords_data_black, boundary_data } from "./test.data.js";
 
 let expect = chai.expect;

@@ -1,4 +1,5 @@
-import { Board, Tile } from "../src/Board.js";
+import { Board } from "../src/Board.js";
+import { Tile } from "../src/Tile.js";
 import { boundary_data, tiles_data_white, coords_data_white, tiles_data_black, coords_data_black } from './test.data.js'
 
 let expect = chai.expect;
