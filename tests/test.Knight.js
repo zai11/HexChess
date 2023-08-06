@@ -54,8 +54,6 @@ describe('Knight Class Tests:', () => {
             board.addPiece(new Pawn(board, 'G4', 'black'));
             let knight = board.getPieceFromCoord('I7');
             let result = knight.getValidMoves(undefined, boundary_data);
-            console.log(expected)
-            console.log(result);
             expect(result).deep.to.equal(expected);
         });
     });
