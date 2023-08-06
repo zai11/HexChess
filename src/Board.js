@@ -39,7 +39,7 @@ export class Board
     }
 
     getTileFromCoord = (coord) => {
-        let result = undefined;
+        let result;
         this.tiles.forEach((tile) => {
             if (tile.coordinate == coord)
                 result = tile;
