@@ -28,10 +28,9 @@ export class Pawn extends Piece {
         super(board, coordinate, colour, positions.x, positions.y, sprite);
     }
 
-    getValidMovesWhite = (context, boundary_data) => {
+    getValidMoves = (context = undefined, boundary_data = undefined) => {
         let validMoves = [];
         let currentTile = this.board.getTileFromPositions(this.x, this.y);
-        // 
 
         // Move 1 square forward if not blocked
         let square1Forward = this.board.getTileFromCoord(currentTile.getForward(context, boundary_data));
@@ -40,6 +39,7 @@ export class Pawn extends Piece {
 
         // If on starting square, move 2 squares forward if not blocked
         let square2Forward = this.board.getTileFromCoord(square1Forward.getForward(context, boundary_data));
+
         if (isValidCoord(square2Forward.coordinate) && !square1Forward.hasPiece() && !square2Forward.hasPiece() && currentTile.isPawnStartingTile())
             validMoves.push(square2Forward.coordinate);
 
@@ -61,8 +61,6 @@ export class Pawn extends Piece {
         // If enemy on backwardLeft or backwardRight, take en-passant (move 1 square forward of the respective square)
         let squareBackwardLeft = this.board.getTileFromCoord(currentTile.getBackwardLeft(context, boundary_data));
 
-        console.log(squareBackwardLeft.hasPiece())
-
         if (isValidCoord(squareBackwardLeft.coordinate) && isValidCoord(squareForwardLeft.coordinate) && squareBackwardLeft.hasPiece()) {
             if (squareBackwardLeft.getPiece().colour !== this.colour)
                 validMoves.push(squareForwardLeft.coordinate);
@@ -76,16 +74,6 @@ export class Pawn extends Piece {
         }
 
         return validMoves;
-    }
-
-    getValidMovesBlack = (context = undefined, boundary_data = undefined) => {
-
-    }
-
-    getValidMoves = (context = undefined, boundary_data = undefined) => {
-        if (this.colour === 'white')
-            return this.getValidMovesWhite(context, boundary_data);
-        return this.getValidMovesBlack(context, boundary_data);
     }
 }
 

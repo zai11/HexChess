@@ -89,8 +89,6 @@ export function fileLength(file) {
 
 export function isValidCoord(coord) {
 
-    console.log(coord);
-
     if (coord === undefined)
         return false;
 

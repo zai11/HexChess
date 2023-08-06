@@ -44,7 +44,7 @@ export class Tile {
         return this.pawnStartingTile;
     }
 
-    getForwardLeft = (context = undefined, boundary_tiles = undefined) => {
+    getForwardLeftWhite = (context, boundary_tiles) => {
         let file = this.coordinate[0];
 
         if (boundary_tiles === undefined)
@@ -66,7 +66,35 @@ export class Tile {
         return undefined;
     }
 
-    getForwardRight = (context = undefined, boundary_tiles = undefined) => {
+    getForwardLeftBlack = (context, boundary_tiles) => {
+        let file = this.coordinate[0];
+
+        if (boundary_tiles === undefined)
+            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
+
+        let forwardLeftLinear;
+
+        if (file.charCodeAt(0) - 65 <= 5)
+            forwardLeftLinear = coordinateToLinear(this.coordinate) + fileLength(file)+1;
+        else
+            forwardLeftLinear = coordinateToLinear(this.coordinate) + fileLength(file);
+
+        let forwardLeftCoord = linearToCoordinate(forwardLeftLinear, context, boundary_tiles);
+
+        if (!boundary_tiles.includes(forwardLeftLinear) && isValidCoord(forwardLeftCoord))
+            return forwardLeftCoord;
+
+        console.warn('There is no tile in the forward left direction from: ' + this.coordinate);
+        return undefined;
+    }
+
+    getForwardLeft = (context, boundary_tiles) => {
+        if (this.board.colour === 'white')
+            return this.getForwardLeftWhite(context, boundary_tiles);
+        return this.getForwardLeftBlack(context, boundary_tiles);
+    }
+
+    getForwardRightWhite = (context, boundary_tiles) => {
         let file = this.coordinate[0];
 
         if (boundary_tiles === undefined)
@@ -88,7 +116,35 @@ export class Tile {
         return undefined;
     }
 
-    getBackwardLeft = (context = undefined, boundary_tiles = undefined) => {
+    getForwardRightBlack = (context, boundary_tiles) => {
+        let file = this.coordinate[0];
+
+        if (boundary_tiles === undefined)
+            boundary_tiles = context.cache.json.get('json_boundary_tiles');
+
+        let forwardLeftLinear;
+
+        if (file.charCodeAt(0) - 65 <= 5)
+            forwardLeftLinear = coordinateToLinear(this.coordinate) - (fileLength(file)+1);
+        else
+            forwardLeftLinear = coordinateToLinear(this.coordinate) - (fileLength(file)+2);
+            
+        let forwardLeftCoord = linearToCoordinate(forwardLeftLinear, context, boundary_tiles);
+
+        if (!boundary_tiles.includes(forwardLeftLinear) && isValidCoord(forwardLeftCoord))
+            return forwardLeftCoord;
+
+        console.warn('There is no tile in the forward left direction from: ' + this.coordinate);
+        return undefined;
+    }
+
+    getForwardRight = (context, boundary_tiles) => {
+        if (this.board.colour === 'white')
+            return this.getForwardRightWhite(context, boundary_tiles);
+        return this.getForwardRightBlack(context, boundary_tiles);
+    }
+
+    getBackwardLeftWhite = (context, boundary_tiles) => {
         let file = this.coordinate[0];
 
         if (boundary_tiles === undefined)
@@ -110,7 +166,35 @@ export class Tile {
         return undefined;
     }
 
-    getBackwardRight = (context = undefined, boundary_tiles = undefined) => {
+    getBackwardLeftBlack = (context, boundary_tiles) => {
+        let file = this.coordinate[0];
+
+        if (boundary_tiles === undefined)
+            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
+
+        let forwardLeftLinear;
+
+        if (file.charCodeAt(0) - 65 <= 4)
+            forwardLeftLinear = coordinateToLinear(this.coordinate) + (fileLength(file)+2);
+        else
+            forwardLeftLinear = coordinateToLinear(this.coordinate) + (fileLength(file)+1);
+            
+        let forwardLeftCoord = linearToCoordinate(forwardLeftLinear, context, boundary_tiles);
+
+        if (!boundary_tiles.includes(forwardLeftLinear) && isValidCoord(forwardLeftCoord))
+            return forwardLeftCoord;
+
+        console.warn('There is no tile in the forward left direction from: ' + this.coordinate);
+        return undefined;
+    }
+
+    getBackwardLeft = (context, boundary_tiles) => {
+        if (this.board.colour === 'white')
+            return this.getBackwardLeftWhite(context, boundary_tiles);
+        return this.getBackwardLeftBlack(context, boundary_tiles);
+    }
+
+    getBackwardRightWhite = (context, boundary_tiles) => {
         let file = this.coordinate[0];
 
         if (boundary_tiles === undefined)
@@ -132,15 +216,63 @@ export class Tile {
         return undefined;
     }
 
-    getForward = (context = undefined, boundary_tiles = undefined) => {
+    getBackwardRightBlack = (context, boundary_tiles) => {
+        let file = this.coordinate[0];
+
+        if (boundary_tiles === undefined)
+            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
+
+        let forwardLeftLinear;
+
+        if (file.charCodeAt(0) - 65 <= 5)
+            forwardLeftLinear = coordinateToLinear(this.coordinate) - fileLength(file);
+        else
+            forwardLeftLinear = coordinateToLinear(this.coordinate) - (fileLength(file) + 1);
+            
+        let forwardLeftCoord = linearToCoordinate(forwardLeftLinear, context, boundary_tiles);
+
+        if (!boundary_tiles.includes(forwardLeftLinear) && isValidCoord(forwardLeftCoord))
+            return forwardLeftCoord;
+
+        console.warn('There is no tile in the forward left direction from: ' + this.coordinate);
+        return undefined;
+    }
+
+    getBackwardRight = (context, boundary_tiles) => {
+        if (this.board.colour === 'white')
+            return this.getBackwardRightWhite(context, boundary_tiles);
+        return this.getBackwardRightBlack(context, boundary_tiles);
+    }
+
+    getForwardWhite = (context, boundary_tiles) => {
         return linearToCoordinate(coordinateToLinear(this.coordinate) + 1, context, boundary_tiles);
     }
 
-    getBackward = (context = undefined, boundary_tiles = undefined) => {
+    getForwardBlack = (context, boundary_tiles) => {
         return linearToCoordinate(coordinateToLinear(this.coordinate) - 1, context, boundary_tiles);
     }
 
-    getForwardLeftDiagonal = (context = undefined, boundary_tiles = undefined) => {
+    getForward = (context, boundary_tiles) => {
+        if (this.board.colour === 'white')
+            return this.getForwardWhite(context, boundary_tiles);
+        return this.getForwardBlack(context, boundary_tiles);
+    }
+
+    getBackwardWhite = (context, boundary_tiles) => {
+        return linearToCoordinate(coordinateToLinear(this.coordinate) - 1, context, boundary_tiles);
+    }
+
+    getBackwardBlack = (context, boundary_tiles) => {
+        return linearToCoordinate(coordinateToLinear(this.coordinate) + 1, context, boundary_tiles);
+    }
+
+    getBackward = (context, boundary_tiles) => {
+        if (this.board.colour === 'white')
+            return this.getBackwardWhite(context, boundary_tiles);
+        return this.getBackwardBlack(context, boundary_tiles);
+    }
+
+    getForwardLeftDiagonalWhite = (context, boundary_tiles) => {
         let forwardLeft = this.getForwardLeft(context, boundary_tiles);
 
         if (forwardLeft === undefined)
@@ -149,7 +281,16 @@ export class Tile {
         return this.board.getTileFromCoord(forwardLeft).getForward(context, boundary_tiles);
     }
 
-    getForwardRightDiagonal = (context = undefined, boundary_tiles = undefined) => {
+    getForwardLeftDiagonal = (context, boundary_tiles) => {
+        let forwardLeft = this.getForwardLeft(context, boundary_tiles);
+
+        if (forwardLeft === undefined)
+            return undefined;
+
+        return this.board.getTileFromCoord(forwardLeft).getForward(context, boundary_tiles);
+    }
+
+    getForwardRightDiagonal = (context, boundary_tiles) => {
         let forwardRight = this.getForwardRight(context, boundary_tiles);
 
         if (forwardRight === undefined)
@@ -158,7 +299,7 @@ export class Tile {
         return this.board.getTileFromCoord(forwardRight).getForward(context, boundary_tiles);
     }
 
-    getBackwardLeftDiagonal = (context = undefined, boundary_tiles = undefined) => {
+    getBackwardLeftDiagonal = (context, boundary_tiles) => {
         let backwardLeft = this.getBackwardLeft(context, boundary_tiles);
 
         if (backwardLeft === undefined)
@@ -167,7 +308,7 @@ export class Tile {
         return this.board.getTileFromCoord(backwardLeft).getBackward(context, boundary_tiles);
     }
 
-    getBackwardRightDiagonal = (context = undefined, boundary_tiles = undefined) => {
+    getBackwardRightDiagonal = (context, boundary_tiles) => {
         let backwardRight = this.getBackwardRight(context, boundary_tiles);
 
         if (backwardRight === undefined)
@@ -176,7 +317,7 @@ export class Tile {
         return this.board.getTileFromCoord(backwardRight).getBackward(context, boundary_tiles);
     }
 
-    getLeftDiagonal = (context = undefined, boundary_tiles = undefined) => {
+    getLeftDiagonal = (context, boundary_tiles) => {
         let forwardLeft = this.getForwardLeft(context, boundary_tiles);
 
         if (forwardLeft === undefined)
@@ -185,7 +326,7 @@ export class Tile {
         return this.board.getTileFromCoord(forwardLeft).getBackwardLeft(context, boundary_tiles);
     }
 
-    getRightDiagonal = (context = undefined, boundary_tiles = undefined) => {
+    getRightDiagonal = (context, boundary_tiles) => {
         let forwardRight = this.getForwardRight(context, boundary_tiles);
 
         if (forwardRight === undefined)
@@ -210,7 +351,9 @@ export class Board
     coordinates = [];
     pieces = [];
 
-    constructor (context, colour, tiles_data = undefined, coords_data = undefined) {
+    constructor (context, colour, tiles_data, coords_data) {
+        this.colour = colour;
+
         if (context === undefined && (tiles_data === undefined || coords_data === undefined)) {
             console.warn('The context and either the tile or coordinate data is not provided to board constructor.');
             return undefined;
@@ -273,7 +416,6 @@ export class Board
 
     addPiece = (piece) => {
         this.pieces.push(piece);
-        console.log(piece.coordinate);
         this.getTileFromCoord(piece.coordinate).setPiece(piece);
     }
 
@@ -357,7 +499,7 @@ export class Board
             if (tile.colour === 'white')
                 style.color = '#000';
             context.add.image(tile.x, tile.y, 'spr_tile_' + tile.colour + (tile.selected ? '_selected' : '') + (tile.valid ? '_valid' : '')).setScale(tile.scale);
-            //context.add.text(tile.x, tile.y, coordinateToLinear(tile.coordinate), style).setOrigin(0.5, 0.5);
+            context.add.text(tile.x, tile.y, /*coordinateToLinear(*/tile.coordinate/*)*/, style).setOrigin(0.5, 0.5);
         });
 
         this.coordinates.forEach((coordinate) => {
