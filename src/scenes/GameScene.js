@@ -49,7 +49,7 @@ export default class GameScene extends Phaser.Scene
     {
         this.add.image(0,0, 'spr_background').setScale(20);
 
-        let board = new Board(this, 'black', undefined, undefined);
+        let board = new Board(this, 'white', undefined, undefined);
 
         //board.init(this);
 
