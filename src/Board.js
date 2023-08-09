@@ -7,6 +7,7 @@ import { Bishop } from "./Bishop.js";
 import { Rook } from "./Rook.js";
 import { Queen } from "./Queen.js";
 import { King } from "./King.js";
+import { boundary_data } from "../tests/test.data.js";
 
 export class Board 
 {
@@ -97,6 +98,26 @@ export class Board
         if (result === undefined)
             console.warn('Unable to find piece at coordinate: ' + coordinate);
         
+        return result;
+    }
+
+    isCheck = (coordinate, context, boundary_data) => {
+        let result = false;
+        let enemyPieces = [];
+
+        this.pieces.forEach((piece) => {
+            if (piece.colour !== this.colour)
+                enemyPieces.push(piece);
+        });
+
+        enemyPieces.forEach((piece) => {
+            let attacks = piece.getAttacks(context, boundary_data);
+            attacks.forEach((attack) => {
+                if (attack == coordinate)
+                    result = true;
+            });
+        });
+
         return result;
     }
 

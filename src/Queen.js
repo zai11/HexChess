@@ -16,7 +16,7 @@ export class Queen extends Piece {
             'BackwardLeft'];
 
         directions.forEach((direction) => {
-            let nextTile = eval('this.board.getTileFromCoord(currentTile.get' + direction + '(context, boundary_data))');
+            let nextTile = eval('this.board.getTileFromCoord(currentTile.get' + direction + '(this.colour, context, boundary_data))');
             while (nextTile !== undefined) {
                 // if it's blocked by an enemy piece
                 if (nextTile.hasPiece() && nextTile.getPiece().colour !== this.colour) {
@@ -33,7 +33,7 @@ export class Queen extends Piece {
                 if (!nextTile.hasPiece())
                     validMoves.push(nextTile.coordinate);
     
-                nextTile = eval('this.board.getTileFromCoord(nextTile.get' + direction + '(context, boundary_data))');
+                nextTile = eval('this.board.getTileFromCoord(nextTile.get' + direction + '(this.colour, context, boundary_data))');
             }
         });
 

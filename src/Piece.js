@@ -17,4 +17,12 @@ export class Piece {
         return (piece.board === this.board) && (piece.coordinate === this.coordinate) && (piece.x === this.x) && 
             (piece.y === this.y) && (piece.sprite === this.sprite) && (piece.scale === this.scale);
     }
+
+    getValidMoves = () => {
+        return undefined;
+    }
+
+    getAttacks = (context, boundary_data) => {
+        return this.getValidMoves(context, boundary_data);
+    }
 }

@@ -1,7 +1,8 @@
 import { Board } from "../src/Board.js";
 import { Tile } from "../src/Tile.js";
 import { Pawn } from '../src/Pawn.js';
-import { tiles_data_white, coords_data_white } from "./test.data.js";
+import { tiles_data_white, coords_data_white, boundary_data } from "./test.data.js";
+import { Queen } from "../src/Queen.js";
 
 let expect = chai.expect;
 
@@ -156,6 +157,46 @@ describe('Board Class Tests:', () => {
             let board = new Board(undefined, 'white', tiles_data_white, coords_data_white);
             let result = board.getPieceFromCoord('A5');
             expect(result).to.equal(undefined);
+        });
+    });
+
+    describe('isCheck(coordinate:String)', () => {
+        it('B2 check should return true', () => {
+            console.log('isCheck tests')
+            let board = new Board(undefined, 'white', tiles_data_white, coords_data_white);
+            board.addPiece(new Queen(board, 'C4', 'black'));
+            let result = board.isCheck('B2', undefined, boundary_data);
+            expect(result).to.equal(true);
+        });
+        it('B2 not check should return false', () => {
+            let board = new Board(undefined, 'white', tiles_data_white, coords_data_white);
+            board.addPiece(new Queen(board, 'E7', 'black'));
+            let result = board.isCheck('B2', undefined, boundary_data);
+            expect(result).to.equal(false);
+        });
+        it('D7 check should return true', () => {
+            let board = new Board(undefined, 'white', tiles_data_white, coords_data_white);
+            board.addPiece(new Queen(board, 'G4', 'black'));
+            let result = board.isCheck('D7', undefined, boundary_data);
+            expect(result).to.equal(true);
+        });
+        it('D7 not check should return false', () => {
+            let board = new Board(undefined, 'white', tiles_data_white, coords_data_white);
+            board.addPiece(new Queen(board, 'G3', 'black'));
+            let result = board.isCheck('D7', undefined, boundary_data);
+            expect(result).to.equal(false);
+        });
+        it('H8 check should return true', () => {
+            let board = new Board(undefined, 'white', tiles_data_white, coords_data_white);
+            board.addPiece(new Pawn(board, 'G8', 'black'));
+            let result = board.isCheck('H8', undefined, boundary_data);
+            expect(result).to.equal(true);
+        });
+        it('H8 not check should return false', () => {
+            let board = new Board(undefined, 'white', tiles_data_white, coords_data_white);
+            board.addPiece(new Pawn(board, 'G4', 'black'));
+            let result = board.isCheck('H8', undefined, boundary_data);
+            expect(result).to.equal(false);
         });
     });
 });

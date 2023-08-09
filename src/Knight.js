@@ -25,8 +25,8 @@ export class Knight extends Piece {
                              'Backward', 'BackwardLeft']]
 
         for (let i = 0; i < directions[0].length; i++) {
-            let tempTile = eval('this.board.getTileFromCoord(currentTile.get' + directions[0][i] + 'Diagonal(context, boundary_data))');
-            let nextTile = eval('this.board.getTileFromCoord(tempTile.get' + directions[1][i] + '(context, boundary_data))');
+            let tempTile = eval('this.board.getTileFromCoord(currentTile.get' + directions[0][i] + 'Diagonal(this.colour, context, boundary_data))');
+            let nextTile = eval('this.board.getTileFromCoord(tempTile.get' + directions[1][i] + '(this.colour, context, boundary_data))');
 
             // If there is no nextTile
             if (nextTile === undefined)

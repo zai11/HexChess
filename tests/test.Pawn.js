@@ -1,6 +1,7 @@
 
 import { Board } from '../src/Board.js';
 import { Pawn } from '../src/Pawn.js';
+import { King } from '../src/King.js';
 import { tiles_data_white, coords_data_white, tiles_data_black, coords_data_black, boundary_data } from "./test.data.js";
 
 let expect = chai.expect;
@@ -181,6 +182,16 @@ describe('Pawn Class Tests:', () => {
             board.addPiece(new Pawn(board, 'C6', 'black'));
             board.addPiece(new Pawn(board, 'B6', 'white'));
             let pawn = board.getPieceFromCoord('C6');
+            let result = pawn.getValidMoves(undefined, boundary_data);
+            expect(result).deep.to.equal(expected);
+        });
+
+        it('G8, black, can take on F7, H8 should return [G7, G6, F7]', () => {
+            let board = new Board(undefined, 'black', tiles_data_black, coords_data_black);
+            let expected = ['G7', 'G6', 'F7'];
+            board.addPiece(new King(board, 'F7', 'white'));
+            board.addPiece(new Pawn(board, 'G8', 'black'));
+            let pawn = board.getPieceFromCoord('G8');
             let result = pawn.getValidMoves(undefined, boundary_data);
             expect(result).deep.to.equal(expected);
         });
