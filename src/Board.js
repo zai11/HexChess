@@ -7,7 +7,7 @@ import { Bishop } from "./Bishop.js";
 import { Rook } from "./Rook.js";
 import { Queen } from "./Queen.js";
 import { King } from "./King.js";
-import { boundary_data } from "../tests/test.data.js";
+import { boundary_data } from "./tests/test.data.js";
 
 export class Board 
 {
@@ -178,18 +178,20 @@ export class Board
         this.addPiece(new King(this, 'G11', 'black'));
     }
 
-    render = (context) => {
-        this.tiles.forEach((tile) => {
-            let style = {color: '#FFF', fontSize: 20};
-            if (tile.colour === 'white')
-                style.color = '#000';
-            context.add.image(tile.x, tile.y, 'spr_tile_' + tile.colour + (tile.selected ? '_selected' : '') + (tile.valid ? '_valid' : '')).setScale(tile.scale);
-            context.add.text(tile.x, tile.y, /*coordinateToLinear(*/tile.coordinate/*)*/, style).setOrigin(0.5, 0.5);
-        });
-
+    initialRender = (context) => {
+        const style = {color: '#FFF', fontSize: 20};
         this.coordinates.forEach((coordinate) => {
-            const style = {color: '#FFF', fontSize: 20};
             context.add.text(coordinate.x, coordinate.y, coordinate.content, style).setOrigin(0.5,0.5);
+        });
+    }
+
+    render = (context) => {
+
+        this.tiles.forEach((tile) => {
+            if (tile.updated) {
+                tile.render(context);
+                tile.updated = false;
+            }
         });
 
         this.pieces.forEach((piece) => {

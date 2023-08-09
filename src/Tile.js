@@ -16,6 +16,7 @@ export class Tile {
         this.pawnStartingTile = pawnStartingTile;
         this.selected = false;
         this.valid = false;
+        this.updated = true;
     }
 
     equals = (tile) => {
@@ -33,14 +34,27 @@ export class Tile {
 
     setPiece = (piece) => {
         this.piece = piece;
+        this.updated = true;
     }
 
     removePiece = () => {
         this.piece = undefined;
+        this.updated = true;
     }
 
     isPawnStartingTile = () => {
         return this.pawnStartingTile;
+    }
+
+    select = () => {
+        this.board.tiles.forEach((tile) => {
+            if (tile.selected === true) {
+                tile.selected = false;
+                tile.updated = true;
+            }
+        });
+        this.selected = true;
+        this.updated = true;
     }
 
     getForwardLeftWhite = (context, boundary_tiles) => {
@@ -323,5 +337,22 @@ export class Tile {
             return undefined;
 
         return this.board.getTileFromCoord(forwardRight).getBackwardRight(piece_colour, context, boundary_tiles);
+    }
+
+    render = (context) => {
+        let style = {color: '#FFF', fontSize: 20};
+            if (this.colour === 'white')
+                style.color = '#000';
+            let sprite = context.add.sprite(this.x, this.y, 'spr_tile_' + this.colour + (this.selected ? '_selected' : '') + (this.valid ? '_valid' : ''))
+                .setScale(this.scale).setInteractive();
+    }
+
+    renderDebug = (context) => {
+        let style = {color: '#FFF', fontSize: 20};
+            if (this.colour === 'white')
+                style.color = '#000';
+            let sprite = context.add.sprite(this.x, this.y, 'spr_tile_' + this.colour + (this.selected ? '_selected' : '') + (this.valid ? '_valid' : ''))
+                .setScale(this.scale).setInteractive();
+            context.add.text(this.x, this.y, /*coordinateToLinear(*/this.coordinate/*)*/, style).setOrigin(0.5, 0.5);
     }
 }

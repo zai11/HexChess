@@ -1,5 +1,5 @@
 
-import { coordinateToLinear, fileLength, isValidCoord, linearToCoordinate } from "../src/Utilities.js";
+import { coordinateToLinear, fileLength, isValidCoord, linearToCoordinate } from "../Utilities.js";
 import { boundary_data } from './test.data.js'
 
 let expect = chai.expect;

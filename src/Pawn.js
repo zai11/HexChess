@@ -1,6 +1,6 @@
 import { isValidCoord } from "./Utilities.js";
 import { Piece } from "./Piece.js";
-import { boundary_data } from "../tests/test.data.js";
+import { boundary_data } from "./tests/test.data.js";
 
 export class Pawn extends Piece {
     constructor(board, coordinate, colour) {

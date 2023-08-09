@@ -1,5 +1,6 @@
 //import Phaser from '../lib/phaser.js'
 import { Board } from '../Board.js'
+import { MouseInputManager } from '../MouseInputManager.js';
 import { fileLength, isValidCoord } from '../Utilities.js';
 
 export default class GameScene extends Phaser.Scene
@@ -49,16 +50,29 @@ export default class GameScene extends Phaser.Scene
     {
         this.add.image(0,0, 'spr_background').setScale(20);
 
-        let board = new Board(this, 'black', undefined, undefined);
+        this.board = new Board(this, 'white', undefined, undefined);
+
+        const style = {color: '#FFF', fontSize: 20};
+        this.fps = this.add.text(0, 0, this.game.loop.actualFps, style)
+
+        this.board.initialRender(this);
+
+        this.mouseInputManager = new MouseInputManager(this);
 
         //board.init(this);
 
-        board.render(this);
+        //board.render(this);
 
         //this.add.image(400, 300, 'spr_hex_black').setScale(0.25);
         //this.add.image(400+(128-32), 300-64, 'spr_hex_grey').setScale(0.25);
         //this.add.image(656, 300, 'spr_hex_white').setScale(0.25);
 
         //this.add.image(880+64, 230+32+64, 'spr_tile_black').setScale(0.05);
+    }
+
+    update() {
+        this.board.render(this);
+        this.fps.setText(this.game.loop.actualFps);
+        //this.mouseInputManager.update();
     }
 }
