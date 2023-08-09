@@ -6,7 +6,11 @@ const config = {
 	height: 810,
 	antialias: true,
 	roundPixels: true,
-	scene: [GameScene]
+	scene: [GameScene],
+	fps: {
+		target: 45,
+		forceSetTimeOut: true
+	}
 }
 
 export default new Phaser.Game(config)

@@ -59,7 +59,7 @@ export default class GameScene extends Phaser.Scene
 
         this.mouseInputManager = new MouseInputManager(this);
 
-        //board.init(this);
+        this.board.init(this);
 
         //board.render(this);
 
@@ -72,7 +72,6 @@ export default class GameScene extends Phaser.Scene
 
     update() {
         this.board.render(this);
-        this.fps.setText(this.game.loop.actualFps);
-        //this.mouseInputManager.update();
+        this.fps.setText(Math.round(this.game.loop.actualFps));
     }
 }

@@ -26,6 +26,10 @@ export class Knight extends Piece {
 
         for (let i = 0; i < directions[0].length; i++) {
             let tempTile = eval('this.board.getTileFromCoord(currentTile.get' + directions[0][i] + 'Diagonal(this.colour, context, boundary_data))');
+            
+            if (tempTile === undefined)
+                continue;
+            
             let nextTile = eval('this.board.getTileFromCoord(tempTile.get' + directions[1][i] + '(this.colour, context, boundary_data))');
 
             // If there is no nextTile

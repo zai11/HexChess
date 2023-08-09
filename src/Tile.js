@@ -57,11 +57,16 @@ export class Tile {
         this.updated = true;
     }
 
+    setValid = (value=true) => {
+        this.valid = value;
+        this.updated = true;
+    }
+
     getForwardLeftWhite = (context, boundary_tiles) => {
         let file = this.coordinate[0];
 
         if (boundary_tiles === undefined)
-            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
+            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles'));
 
         let forwardLeftLinear;
 
@@ -161,7 +166,7 @@ export class Tile {
         let file = this.coordinate[0];
 
         if (boundary_tiles === undefined)
-            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
+            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles'));
 
         let forwardLeftLinear;
 
@@ -183,7 +188,7 @@ export class Tile {
         let file = this.coordinate[0];
 
         if (boundary_tiles === undefined)
-            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
+            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles'));
 
         let forwardLeftLinear;
 
@@ -211,7 +216,7 @@ export class Tile {
         let file = this.coordinate[0];
 
         if (boundary_tiles === undefined)
-            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
+            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles'));
 
         let forwardLeftLinear;
 
@@ -233,7 +238,7 @@ export class Tile {
         let file = this.coordinate[0];
 
         if (boundary_tiles === undefined)
-            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles').boundaries);
+            boundary_tiles = Object.values(context.cache.json.get('json_boundary_tiles'));
 
         let forwardLeftLinear;
 
@@ -343,8 +348,8 @@ export class Tile {
         let style = {color: '#FFF', fontSize: 20};
             if (this.colour === 'white')
                 style.color = '#000';
-            let sprite = context.add.sprite(this.x, this.y, 'spr_tile_' + this.colour + (this.selected ? '_selected' : '') + (this.valid ? '_valid' : ''))
-                .setScale(this.scale).setInteractive();
+            context.add.image(this.x, this.y, 'spr_tile_' + this.colour + (this.selected ? '_selected' : '') + (this.valid ? '_valid' : ''))
+                .setScale(this.scale);
     }
 
     renderDebug = (context) => {

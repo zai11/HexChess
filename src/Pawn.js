@@ -22,21 +22,21 @@ export class Pawn extends Piece {
         if (square1Forward !== undefined) {
         let square2Forward = this.board.getTileFromCoord(square1Forward.getForward(this.colour, context, boundary_data));
 
-        if (isValidCoord(square2Forward.coordinate) && !square1Forward.hasPiece() && !square2Forward.hasPiece() && currentTile.isPawnStartingTile())
+        if (square2Forward !== undefined && isValidCoord(square2Forward.coordinate) && !square1Forward.hasPiece() && !square2Forward.hasPiece() && currentTile.isPawnStartingTile())
             validMoves.push(square2Forward.coordinate);
         }
 
         // If enemy on forwardLeft or forwardRight, move to that square
         let squareForwardLeft = this.board.getTileFromCoord(currentTile.getForwardLeft(this.colour, context, boundary_data));
 
-        if (isValidCoord(squareForwardLeft.coordinate) && squareForwardLeft.hasPiece()) {
+        if (squareForwardLeft !== undefined && isValidCoord(squareForwardLeft.coordinate) && squareForwardLeft.hasPiece()) {
             if (squareForwardLeft.getPiece().colour !== this.colour)
                 validMoves.push(squareForwardLeft.coordinate);
         }
 
         let squareForwardRight = this.board.getTileFromCoord(currentTile.getForwardRight(this.colour, context, boundary_data));
 
-        if (isValidCoord(squareForwardRight.coordinate) && squareForwardRight.hasPiece()) {
+        if (squareForwardRight !== undefined && isValidCoord(squareForwardRight.coordinate) && squareForwardRight.hasPiece()) {
             if (squareForwardRight.getPiece().colour !== this.colour)
                 validMoves.push(squareForwardRight.coordinate);
         }
@@ -45,14 +45,14 @@ export class Pawn extends Piece {
         let squareBackwardLeft = this.board.getTileFromCoord(currentTile.getBackwardLeft(this.colour, context, boundary_data));
 
 
-        if (isValidCoord(squareBackwardLeft.coordinate) && isValidCoord(squareForwardLeft.coordinate) && squareBackwardLeft.hasPiece()) {
+        if (squareBackwardLeft !== undefined && isValidCoord(squareBackwardLeft.coordinate) && isValidCoord(squareForwardLeft.coordinate) && squareBackwardLeft.hasPiece()) {
             if (squareBackwardLeft.getPiece().colour !== this.colour)
                 validMoves.push(squareForwardLeft.coordinate);
         }
 
         let squareBackwardRight = this.board.getTileFromCoord(currentTile.getBackwardRight(this.colour, context, boundary_data));
 
-        if (isValidCoord(squareBackwardRight.coordinate) && isValidCoord(squareForwardRight.coordinate) && squareBackwardRight.hasPiece()) {
+        if (squareBackwardRight !== undefined && isValidCoord(squareBackwardRight.coordinate) && isValidCoord(squareForwardRight.coordinate) && squareBackwardRight.hasPiece()) {
             if (squareBackwardRight.getPiece().colour !== this.colour)
                 validMoves.push(squareForwardRight.coordinate);
         }

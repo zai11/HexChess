@@ -111,11 +111,13 @@ export class Board
         });
 
         enemyPieces.forEach((piece) => {
-            let attacks = piece.getAttacks(context, boundary_data);
-            attacks.forEach((attack) => {
-                if (attack == coordinate)
-                    result = true;
-            });
+            if (!piece instanceof King) {
+                let attacks = piece.getAttacks(context, boundary_data);
+                attacks.forEach((attack) => {
+                    if (attack == coordinate)
+                        result = true;
+                });
+            }
         });
 
         return result;
@@ -126,6 +128,22 @@ export class Board
         this.tiles.forEach((tile) => {
             tile.removePiece();
         });
+    }
+
+    tileSelected = (tile, context) => {
+        tile.select();
+
+        this.tiles.forEach((tile) => {
+            tile.setValid(false);
+        });
+
+        if (tile.hasPiece()) {
+            let piece = tile.getPiece();
+            let validMoves = piece.getValidMoves(context);
+            validMoves.forEach((move) => {
+                this.getTileFromCoord(move).setValid(true);
+            });
+        }
     }
 
     loadFromFEN = (fen) => {
