@@ -12,9 +12,11 @@ import { boundary_data } from "./tests/test.data.js";
 export class Board 
 {
 
-    tiles = [];
     coordinates = [];
+    tiles = [];
+    updatedTiles = [];
     pieces = [];
+    updatedPieces = [];
 
     constructor (context, colour, tiles_data, coords_data) {
         this.colour = colour;
@@ -134,7 +136,8 @@ export class Board
         tile.select();
 
         this.tiles.forEach((tile) => {
-            tile.setValid(false);
+            if (tile.valid === true)
+                tile.setValid(false);
         });
 
         if (tile.hasPiece()) {
@@ -213,7 +216,10 @@ export class Board
         });
 
         this.pieces.forEach((piece) => {
-            piece.render(context);
+            if (piece.updated) {
+                piece.render(context);
+                piece.updated = false;
+            }
         })
     }
 }

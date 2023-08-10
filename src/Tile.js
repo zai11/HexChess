@@ -349,7 +349,7 @@ export class Tile {
             if (this.colour === 'white')
                 style.color = '#000';
             context.add.image(this.x, this.y, 'spr_tile_' + this.colour + (this.selected ? '_selected' : '') + (this.valid ? '_valid' : ''))
-                .setScale(this.scale);
+                .setScale(this.scale).setDepth(0);
     }
 
     renderDebug = (context) => {

@@ -54,6 +54,7 @@ export default class GameScene extends Phaser.Scene
 
         const style = {color: '#FFF', fontSize: 20};
         this.fps = this.add.text(0, 0, this.game.loop.actualFps, style)
+        this.timeElapsed = this.add.text(0, 20, '', style);
 
         this.board.initialRender(this);
 
@@ -71,7 +72,10 @@ export default class GameScene extends Phaser.Scene
     }
 
     update() {
+        let timeStart = Date.now();
         this.board.render(this);
+        let timeElapsed = Date.now() - timeStart;
+        this.timeElapsed.setText(timeElapsed);
         this.fps.setText(Math.round(this.game.loop.actualFps));
     }
 }

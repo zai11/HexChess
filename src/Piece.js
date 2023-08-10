@@ -7,10 +7,11 @@ export class Piece {
         this.y = y;
         this.sprite = sprite;
         this.scale = scale;
+        this.updated = true;
     }
 
     render = (context) => {
-        context.add.image(this.x, this.y, this.sprite).setScale(this.scale);
+        context.add.image(this.x, this.y, this.sprite).setScale(this.scale).setDepth(1);
     }
 
     equals = (piece) => {
