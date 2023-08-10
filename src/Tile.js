@@ -5,7 +5,7 @@ export class Tile {
     // 0 = Black,
     // 1 = Grey,
     // 2 = White
-    constructor(board, x, y, colour, coordinate, size, pawnStartingTile) {
+    constructor(board, x, y, colour, coordinate, size, pawnStartingTile, context) {
         this.board = board;
         this.x = x;
         this.y = y;
@@ -17,6 +17,8 @@ export class Tile {
         this.selected = false;
         this.valid = false;
         this.updated = true;
+        this.sprite = context.add.image(this.x, this.y, 'spr_tile_' + this.colour)
+        .setScale(this.scale).setDepth(0);
     }
 
     equals = (tile) => {
@@ -46,19 +48,21 @@ export class Tile {
         return this.pawnStartingTile;
     }
 
-    select = () => {
+    setSelected = (value=true) => {
         this.board.tiles.forEach((tile) => {
             if (tile.selected === true) {
                 tile.selected = false;
                 tile.updated = true;
             }
         });
-        this.selected = true;
+        this.selected = value;
+        this.sprite.setTexture('spr_tile_' + this.colour + (this.selected ? '_selected' : ''));
         this.updated = true;
     }
 
     setValid = (value=true) => {
         this.valid = value;
+        this.sprite.setTexture('spr_tile_' + this.colour + (this.valid ? '_valid' : ''));
         this.updated = true;
     }
 
@@ -342,14 +346,6 @@ export class Tile {
             return undefined;
 
         return this.board.getTileFromCoord(forwardRight).getBackwardRight(piece_colour, context, boundary_tiles);
-    }
-
-    render = (context) => {
-        let style = {color: '#FFF', fontSize: 20};
-            if (this.colour === 'white')
-                style.color = '#000';
-            context.add.image(this.x, this.y, 'spr_tile_' + this.colour + (this.selected ? '_selected' : '') + (this.valid ? '_valid' : ''))
-                .setScale(this.scale).setDepth(0);
     }
 
     renderDebug = (context) => {

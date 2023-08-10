@@ -3,10 +3,10 @@ import { Piece } from "./Piece.js";
 import { boundary_data } from "./tests/test.data.js";
 
 export class Pawn extends Piece {
-    constructor(board, coordinate, colour) {
-        let sprite = 'spr_piece_' + colour + '_pawn';
+    constructor(board, coordinate, colour, context) {
+        let spriteLoc = 'spr_piece_' + colour + '_pawn';
         let positions = board.getPositionsFromCoord(coordinate)
-        super(board, coordinate, colour, positions.x, positions.y, sprite);
+        super(board, coordinate, colour, positions.x, positions.y, spriteLoc, context);
     }
 
     getValidMoves = (context, boundary_data) => {

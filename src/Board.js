@@ -14,9 +14,9 @@ export class Board
 
     coordinates = [];
     tiles = [];
-    updatedTiles = [];
+    selectedTile = undefined;
+    validTiles = [];
     pieces = [];
-    updatedPieces = [];
 
     constructor (context, colour, tiles_data, coords_data) {
         this.colour = colour;
@@ -30,7 +30,7 @@ export class Board
             tiles_data = context.cache.json.get('json_tile_data_' + colour);
 
         tiles_data.forEach((tile) => {
-            this.tiles.push(new Tile(this, Number(tile.x), Number(tile.y), Number(tile.colour), tile.coordinate, Number(tile.size), tile.pawnStartingTile));
+            this.tiles.push(new Tile(this, Number(tile.x), Number(tile.y), Number(tile.colour), tile.coordinate, Number(tile.size), tile.pawnStartingTile, context));
         }, this);
 
         if (coords_data === undefined)
@@ -132,20 +132,39 @@ export class Board
         });
     }
 
-    tileSelected = (tile, context) => {
-        tile.select();
-
+    clearValidTiles = () => {
         this.tiles.forEach((tile) => {
             if (tile.valid === true)
                 tile.setValid(false);
         });
+        this.validTiles = [];
+    }
 
-        if (tile.hasPiece()) {
-            let piece = tile.getPiece();
-            let validMoves = piece.getValidMoves(context);
-            validMoves.forEach((move) => {
-                this.getTileFromCoord(move).setValid(true);
-            });
+    tileSelected = (tile, context) => {
+        if ((this.validTiles.length > 0 && !this.validTiles.includes(tile)) || this.selectedTile === undefined || !this.selectedTile.hasPiece()) {
+            tile.setSelected();
+            this.selectedTile = tile;
+
+            this.clearValidTiles();
+
+            if (tile.hasPiece()) {
+                let piece = tile.getPiece();
+                let validMoves = piece.getValidMoves(context);
+                validMoves.forEach((move) => {
+                    this.getTileFromCoord(move).setValid(true);
+                    this.validTiles.push(this.getTileFromCoord(move));
+                });
+            }
+        }
+        else {
+            let piece = this.selectedTile.getPiece();
+            this.selectedTile.removePiece();
+            piece.moveTo(tile.coordinate);
+            if (tile.hasPiece())
+                tile.getPiece().take();
+            tile.setPiece(piece);
+            this.selectedTile.setSelected(false);
+            this.clearValidTiles();
         }
     }
 
@@ -155,48 +174,48 @@ export class Board
 
     init = (context) => {
         this.clear();
-        this.addPiece(new Pawn(this, 'B1', 'white'));
-        this.addPiece(new Pawn(this, 'C2', 'white'));
-        this.addPiece(new Pawn(this, 'D3', 'white'));
-        this.addPiece(new Pawn(this, 'E4', 'white'));
-        this.addPiece(new Pawn(this, 'F5', 'white'));
-        this.addPiece(new Pawn(this, 'G5', 'white'));
-        this.addPiece(new Pawn(this, 'H5', 'white'));
-        this.addPiece(new Pawn(this, 'I5', 'white'));
-        this.addPiece(new Pawn(this, 'J5', 'white'));
+        this.addPiece(new Pawn(this, 'B1', 'white', context));
+        this.addPiece(new Pawn(this, 'C2', 'white', context));
+        this.addPiece(new Pawn(this, 'D3', 'white', context));
+        this.addPiece(new Pawn(this, 'E4', 'white', context));
+        this.addPiece(new Pawn(this, 'F5', 'white', context));
+        this.addPiece(new Pawn(this, 'G5', 'white', context));
+        this.addPiece(new Pawn(this, 'H5', 'white', context));
+        this.addPiece(new Pawn(this, 'I5', 'white', context));
+        this.addPiece(new Pawn(this, 'J5', 'white', context));
 
-        this.addPiece(new Pawn(this, 'B7', 'black'));
-        this.addPiece(new Pawn(this, 'C7', 'black'));
-        this.addPiece(new Pawn(this, 'D7', 'black'));
-        this.addPiece(new Pawn(this, 'E7', 'black'));
-        this.addPiece(new Pawn(this, 'F7', 'black'));
-        this.addPiece(new Pawn(this, 'G8', 'black'));
-        this.addPiece(new Pawn(this, 'H9', 'black'));
-        this.addPiece(new Pawn(this, 'I10', 'black'));
-        this.addPiece(new Pawn(this, 'J11', 'black'));
+        this.addPiece(new Pawn(this, 'B7', 'black', context));
+        this.addPiece(new Pawn(this, 'C7', 'black', context));
+        this.addPiece(new Pawn(this, 'D7', 'black', context));
+        this.addPiece(new Pawn(this, 'E7', 'black', context));
+        this.addPiece(new Pawn(this, 'F7', 'black', context));
+        this.addPiece(new Pawn(this, 'G8', 'black', context));
+        this.addPiece(new Pawn(this, 'H9', 'black', context));
+        this.addPiece(new Pawn(this, 'I10', 'black', context));
+        this.addPiece(new Pawn(this, 'J11', 'black', context));
 
-        this.addPiece(new Knight(this, 'D1', 'white'));
-        this.addPiece(new Knight(this, 'H3', 'white'));
-        this.addPiece(new Knight(this, 'D9', 'black'));
-        this.addPiece(new Knight(this, 'H11', 'black'));
+        this.addPiece(new Knight(this, 'D1', 'white', context));
+        this.addPiece(new Knight(this, 'H3', 'white', context));
+        this.addPiece(new Knight(this, 'D9', 'black', context));
+        this.addPiece(new Knight(this, 'H11', 'black', context));
 
-        this.addPiece(new Bishop(this, 'F1', 'white'));
-        this.addPiece(new Bishop(this, 'F2', 'white'));
-        this.addPiece(new Bishop(this, 'F3', 'white'));
-        this.addPiece(new Bishop(this, 'F9', 'black'));
-        this.addPiece(new Bishop(this, 'F10', 'black'));
-        this.addPiece(new Bishop(this, 'F11', 'black'));
+        this.addPiece(new Bishop(this, 'F1', 'white', context));
+        this.addPiece(new Bishop(this, 'F2', 'white', context));
+        this.addPiece(new Bishop(this, 'F3', 'white', context));
+        this.addPiece(new Bishop(this, 'F9', 'black', context));
+        this.addPiece(new Bishop(this, 'F10', 'black', context));
+        this.addPiece(new Bishop(this, 'F11', 'black', context));
 
-        this.addPiece(new Rook(this, 'C1', 'white'));
-        this.addPiece(new Rook(this, 'I4', 'white'));
-        this.addPiece(new Rook(this, 'C8', 'black'));
-        this.addPiece(new Rook(this, 'I11', 'black'));
+        this.addPiece(new Rook(this, 'C1', 'white', context));
+        this.addPiece(new Rook(this, 'I4', 'white', context));
+        this.addPiece(new Rook(this, 'C8', 'black', context));
+        this.addPiece(new Rook(this, 'I11', 'black', context));
 
-        this.addPiece(new Queen(this, 'E1', 'white'));
-        this.addPiece(new Queen(this, 'E10', 'black'));
+        this.addPiece(new Queen(this, 'E1', 'white', context));
+        this.addPiece(new Queen(this, 'E10', 'black', context));
 
-        this.addPiece(new King(this, 'G2', 'white'));
-        this.addPiece(new King(this, 'G11', 'black'));
+        this.addPiece(new King(this, 'G2', 'white', context));
+        this.addPiece(new King(this, 'G11', 'black', context));
     }
 
     initialRender = (context) => {
@@ -210,14 +229,13 @@ export class Board
 
         this.tiles.forEach((tile) => {
             if (tile.updated) {
-                tile.render(context);
+                //tile.render(context);
                 tile.updated = false;
             }
         });
 
         this.pieces.forEach((piece) => {
             if (piece.updated) {
-                piece.render(context);
                 piece.updated = false;
             }
         })
