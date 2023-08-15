@@ -141,29 +141,38 @@ export class Board
     }
 
     tileSelected = (tile, context) => {
-        if ((this.validTiles.length > 0 && !this.validTiles.includes(tile)) || this.selectedTile === undefined || !this.selectedTile.hasPiece()) {
+        // Selected tile is not valid, no valid tiles, no piece: just set current tile to selected and clear valid tiles
+        if (!this.validTiles.includes(tile) && !tile.hasPiece()) {
             tile.setSelected();
             this.selectedTile = tile;
-
             this.clearValidTiles();
-
-            if (tile.hasPiece()) {
-                let piece = tile.getPiece();
-                let validMoves = piece.getValidMoves(context);
-                validMoves.forEach((move) => {
-                    this.getTileFromCoord(move).setValid(true);
-                    this.validTiles.push(this.getTileFromCoord(move));
-                });
-            }
         }
-        else {
-            let piece = this.selectedTile.getPiece();
-            this.selectedTile.removePiece();
-            piece.moveTo(tile.coordinate);
+
+        // Selected tile is not valid, has piece: set current tile to selected, set valid tiles to piece's valid moves
+        if (!this.validTiles.includes(tile) && tile.hasPiece()) {
+            tile.setSelected();
+            this.selectedTile = tile;
+            let piece = tile.getPiece();
+            this.clearValidTiles();
+            let validMoves = piece.getValidMoves(context);
+            validMoves.forEach((move) => {
+                let t = this.getTileFromCoord(move);
+                t.setValid();
+                this.validTiles.push(t);
+            });
+        }
+
+        // Tile selected is valid: move piece from previously selected tile to newly selected tile.
+        if (this.validTiles.includes(tile)) {
+            let prevTile = this.selectedTile;
+            prevTile.setSelected(false);
+            this.selectedTile = undefined;
+            let piece = prevTile.getPiece();
+            prevTile.removePiece();
             if (tile.hasPiece())
                 tile.getPiece().take();
+            piece.moveTo(tile.coordinate);
             tile.setPiece(piece);
-            this.selectedTile.setSelected(false);
             this.clearValidTiles();
         }
     }

@@ -52,6 +52,7 @@ export class Tile {
         this.board.tiles.forEach((tile) => {
             if (tile.selected === true) {
                 tile.selected = false;
+                tile.sprite.setTexture('spr_tile_' + tile.colour);
                 tile.updated = true;
             }
         });
