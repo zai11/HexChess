@@ -8,7 +8,8 @@ export class Piece {
         this.spriteLoc = spriteLoc;
         this.scale = scale;
         this.updated = true;
-        this.sprite = context.add.sprite(this.x, this.y, this.spriteLoc).setScale(this.scale).setDepth(1);
+        if (context !== undefined)
+            this.sprite = context.add.sprite(this.x, this.y, this.spriteLoc).setScale(this.scale).setDepth(1);
     }
 
     moveTo = (coordinate) => {

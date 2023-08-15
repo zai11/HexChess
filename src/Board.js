@@ -2,6 +2,7 @@ import { isValidCoord } from "./Utilities.js";
 import { Tile } from "./Tile.js";
 import { Coordinate } from "./Coordinate.js";
 import { FENLoader } from "./FENLoader.js";
+import { King } from "./King.js";
 
 export class Board 
 {
@@ -11,7 +12,6 @@ export class Board
     selectedTile = undefined;
     validTiles = [];
     pieces = [];
-    playerToMove = 'Black';
     halfMoveClock = 0;
     fullMoveClock = 1;
 
@@ -27,7 +27,7 @@ export class Board
             tiles_data = context.cache.json.get('json_tile_data_' + colour);
 
         tiles_data.forEach((tile) => {
-            this.tiles.push(new Tile(this, Number(tile.x), Number(tile.y), Number(tile.colour), tile.coordinate, Number(tile.size), tile.pawnStartingTile, context));
+            this.tiles.push(new Tile(this, Number(tile.x), Number(tile.y), Number(tile.colour), tile.coordinate, Number(tile.size), tile.pawn_starting_tile, context));
         }, this);
 
         if (coords_data === undefined)
@@ -110,7 +110,7 @@ export class Board
         });
 
         enemyPieces.forEach((piece) => {
-            if (!piece instanceof King) {
+            if (!(piece instanceof King)) {
                 let attacks = piece.getAttacks(context, boundary_data);
                 attacks.forEach((attack) => {
                     if (attack == coordinate)

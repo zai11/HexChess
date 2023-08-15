@@ -16,8 +16,9 @@ export class Tile {
         this.pawnStartingTile = pawnStartingTile;
         this.selected = false;
         this.valid = false;
-        this.sprite = context.add.image(this.x, this.y, 'spr_tile_' + this.colour)
-        .setScale(this.scale).setDepth(0);
+        if (context !== undefined)
+            this.sprite = context.add.image(this.x, this.y, 'spr_tile_' + this.colour)
+                .setScale(this.scale).setDepth(0);
     }
 
     equals = (tile) => {
@@ -41,8 +42,12 @@ export class Tile {
         this.piece = undefined;
     }
 
-    isPawnStartingTile = () => {
-        return this.pawnStartingTile;
+    isPawnStartingTile = (pieceColour) => {
+        return this.pawnStartingTile === pieceColour;
+    }
+
+    destroy = () => {
+        this.sprite.destroy();
     }
 
     setSelected = (value=true) => {

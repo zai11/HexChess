@@ -22,7 +22,8 @@ export class Pawn extends Piece {
         if (square1Forward !== undefined) {
         let square2Forward = this.board.getTileFromCoord(square1Forward.getForward(this.colour, context, boundary_data));
 
-        if (square2Forward !== undefined && isValidCoord(square2Forward.coordinate) && !square1Forward.hasPiece() && !square2Forward.hasPiece() && currentTile.isPawnStartingTile())
+        if (square2Forward !== undefined && isValidCoord(square2Forward.coordinate) && !square1Forward.hasPiece() && 
+            !square2Forward.hasPiece() && currentTile.isPawnStartingTile(this.colour))
             validMoves.push(square2Forward.coordinate);
         }
 
@@ -45,22 +46,22 @@ export class Pawn extends Piece {
         let squareBackwardLeft = this.board.getTileFromCoord(currentTile.getBackwardLeft(this.colour, context, boundary_data));
 
 
-        if (squareBackwardLeft !== undefined && isValidCoord(squareBackwardLeft.coordinate) && isValidCoord(squareForwardLeft.coordinate) && squareBackwardLeft.hasPiece()) {
+        if (squareBackwardLeft !== undefined && isValidCoord(squareBackwardLeft.coordinate) && 
+            isValidCoord(squareForwardLeft.coordinate) && squareBackwardLeft.hasPiece()) {
             if (squareBackwardLeft.getPiece().colour !== this.colour)
                 validMoves.push(squareForwardLeft.coordinate);
         }
 
         let squareBackwardRight = this.board.getTileFromCoord(currentTile.getBackwardRight(this.colour, context, boundary_data));
 
-        if (squareBackwardRight !== undefined && isValidCoord(squareBackwardRight.coordinate) && isValidCoord(squareForwardRight.coordinate) && squareBackwardRight.hasPiece()) {
+        if (squareBackwardRight !== undefined && isValidCoord(squareBackwardRight.coordinate) && 
+            isValidCoord(squareForwardRight.coordinate) && squareBackwardRight.hasPiece()) {
             if (squareBackwardRight.getPiece().colour !== this.colour)
                 validMoves.push(squareForwardRight.coordinate);
         }
 
         return validMoves;
     }
-
-    
 
     getAttacks = (context, boundary_data) => {
         let currentTile = this.board.getTileFromPositions(this.x, this.y);
