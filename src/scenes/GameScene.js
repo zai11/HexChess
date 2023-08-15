@@ -1,7 +1,7 @@
 //import Phaser from '../lib/phaser.js'
 import { Board } from '../Board.js'
 import { MouseInputManager } from '../MouseInputManager.js';
-import { fileLength, isValidCoord } from '../Utilities.js';
+import { UserInterfaceManager } from '../UserInterfaceManager.js';
 
 export default class GameScene extends Phaser.Scene
 {
@@ -13,6 +13,8 @@ export default class GameScene extends Phaser.Scene
 	preload()
     {
         this.load.setBaseURL('/assets/');
+
+        this.load.text('fen_initial_layout', './fen/initial_layout.fen');
 
         this.load.json('json_tile_data_white', './json/tile_data_white.json');
         this.load.json('json_coord_data_white', './json/coord_data_white.json');
@@ -52,17 +54,13 @@ export default class GameScene extends Phaser.Scene
 
         this.board = new Board(this, 'white', undefined, undefined);
 
-        const style = {color: '#FFF', fontSize: 20};
-        this.fps = this.add.text(0, 0, this.game.loop.actualFps, style)
-        this.timeElapsed = this.add.text(0, 20, '', style);
-
         this.board.initialRender(this);
 
         this.mouseInputManager = new MouseInputManager(this);
 
         this.board.init(this);
 
-        //board.render(this);
+        this.ui = new UserInterfaceManager(this);
 
         //this.add.image(400, 300, 'spr_hex_black').setScale(0.25);
         //this.add.image(400+(128-32), 300-64, 'spr_hex_grey').setScale(0.25);
@@ -72,10 +70,6 @@ export default class GameScene extends Phaser.Scene
     }
 
     update() {
-        let timeStart = Date.now();
-        this.board.render(this);
-        let timeElapsed = Date.now() - timeStart;
-        this.timeElapsed.setText(timeElapsed);
-        this.fps.setText(Math.round(this.game.loop.actualFps));
+        this.ui.update();
     }
 }

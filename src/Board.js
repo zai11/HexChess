@@ -1,13 +1,7 @@
 import { isValidCoord } from "./Utilities.js";
 import { Tile } from "./Tile.js";
 import { Coordinate } from "./Coordinate.js";
-import { Pawn } from "./Pawn.js";
-import { Knight } from "./Knight.js";
-import { Bishop } from "./Bishop.js";
-import { Rook } from "./Rook.js";
-import { Queen } from "./Queen.js";
-import { King } from "./King.js";
-import { boundary_data } from "./tests/test.data.js";
+import { FENLoader } from "./FENLoader.js";
 
 export class Board 
 {
@@ -17,6 +11,9 @@ export class Board
     selectedTile = undefined;
     validTiles = [];
     pieces = [];
+    playerToMove = 'Black';
+    halfMoveClock = 0;
+    fullMoveClock = 1;
 
     constructor (context, colour, tiles_data, coords_data) {
         this.colour = colour;
@@ -177,54 +174,11 @@ export class Board
         }
     }
 
-    loadFromFEN = (fen) => {
-        
-    }
-
     init = (context) => {
-        this.clear();
-        this.addPiece(new Pawn(this, 'B1', 'white', context));
-        this.addPiece(new Pawn(this, 'C2', 'white', context));
-        this.addPiece(new Pawn(this, 'D3', 'white', context));
-        this.addPiece(new Pawn(this, 'E4', 'white', context));
-        this.addPiece(new Pawn(this, 'F5', 'white', context));
-        this.addPiece(new Pawn(this, 'G5', 'white', context));
-        this.addPiece(new Pawn(this, 'H5', 'white', context));
-        this.addPiece(new Pawn(this, 'I5', 'white', context));
-        this.addPiece(new Pawn(this, 'J5', 'white', context));
+        let fen = context.cache.text.get('fen_initial_layout');
 
-        this.addPiece(new Pawn(this, 'B7', 'black', context));
-        this.addPiece(new Pawn(this, 'C7', 'black', context));
-        this.addPiece(new Pawn(this, 'D7', 'black', context));
-        this.addPiece(new Pawn(this, 'E7', 'black', context));
-        this.addPiece(new Pawn(this, 'F7', 'black', context));
-        this.addPiece(new Pawn(this, 'G8', 'black', context));
-        this.addPiece(new Pawn(this, 'H9', 'black', context));
-        this.addPiece(new Pawn(this, 'I10', 'black', context));
-        this.addPiece(new Pawn(this, 'J11', 'black', context));
-
-        this.addPiece(new Knight(this, 'D1', 'white', context));
-        this.addPiece(new Knight(this, 'H3', 'white', context));
-        this.addPiece(new Knight(this, 'D9', 'black', context));
-        this.addPiece(new Knight(this, 'H11', 'black', context));
-
-        this.addPiece(new Bishop(this, 'F1', 'white', context));
-        this.addPiece(new Bishop(this, 'F2', 'white', context));
-        this.addPiece(new Bishop(this, 'F3', 'white', context));
-        this.addPiece(new Bishop(this, 'F9', 'black', context));
-        this.addPiece(new Bishop(this, 'F10', 'black', context));
-        this.addPiece(new Bishop(this, 'F11', 'black', context));
-
-        this.addPiece(new Rook(this, 'C1', 'white', context));
-        this.addPiece(new Rook(this, 'I4', 'white', context));
-        this.addPiece(new Rook(this, 'C8', 'black', context));
-        this.addPiece(new Rook(this, 'I11', 'black', context));
-
-        this.addPiece(new Queen(this, 'E1', 'white', context));
-        this.addPiece(new Queen(this, 'E10', 'black', context));
-
-        this.addPiece(new King(this, 'G2', 'white', context));
-        this.addPiece(new King(this, 'G11', 'black', context));
+        let loader = new FENLoader(fen, this, context);
+        loader.load();
     }
 
     initialRender = (context) => {
@@ -232,21 +186,5 @@ export class Board
         this.coordinates.forEach((coordinate) => {
             context.add.text(coordinate.x, coordinate.y, coordinate.content, style).setOrigin(0.5,0.5);
         });
-    }
-
-    render = (context) => {
-
-        this.tiles.forEach((tile) => {
-            if (tile.updated) {
-                //tile.render(context);
-                tile.updated = false;
-            }
-        });
-
-        this.pieces.forEach((piece) => {
-            if (piece.updated) {
-                piece.updated = false;
-            }
-        })
     }
 }
