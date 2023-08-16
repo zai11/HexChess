@@ -174,10 +174,12 @@ export class Board
             // Check pawn double move:
             if (piece instanceof Pawn) {
                 let forward1 = this.getTileFromCoord(prevTile.getForward(piece.colour, context));
-                let forward2 = this.getTileFromCoord(forward1.getForward(piece.colour, context));
-                if (forward2.equals(tile)) {
-                    piece.doubleMove = true;
-                    piece.doubleMoveClock = this.halfMoveClock;
+                if (forward1 !== undefined) {
+                    let forward2 = this.getTileFromCoord(forward1.getForward(piece.colour, context));
+                    if (forward2 !== undefined && forward2.equals(tile)) {
+                        piece.doubleMove = true;
+                        piece.doubleMoveClock = this.halfMoveClock;
+                    }
                 }
             }
 
@@ -190,7 +192,7 @@ export class Board
                     if (backwardRight.hasPiece())
                         backwardRight.getPiece().take();
                 }
-                else if (forwardLeft.equals(tile) && !forwardLeft.hasPiece()) {
+                else if (forwardLeft !== undefined && forwardLeft.equals(tile) && !forwardLeft.hasPiece()) {
                     let backwardLeft = this.getTileFromCoord(prevTile.getBackwardLeft(piece.colour, context));
                     if (backwardLeft.hasPiece())
                         backwardLeft.getPiece().take();

@@ -53,7 +53,7 @@
         "y": 592,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": true
+        "pawn_starting_tile": "white"
     },
     {
         "coordinate": "B2",

@@ -50,7 +50,7 @@ export class Pawn extends Piece {
         let squareBackwardLeft = this.board.getTileFromCoord(currentTile.getBackwardLeft(this.colour, context, boundary_data));
 
 
-        if (squareBackwardLeft !== undefined && isValidCoord(squareBackwardLeft.coordinate) && 
+        if (squareForwardLeft !== undefined && squareBackwardLeft !== undefined && isValidCoord(squareBackwardLeft.coordinate) && 
             isValidCoord(squareForwardLeft.coordinate) && squareBackwardLeft.hasPiece() && squareBackwardLeft.getPiece().doubleMove) {
             if (squareBackwardLeft.getPiece().colour !== this.colour)
                 validMoves.push(squareForwardLeft.coordinate);
@@ -58,7 +58,7 @@ export class Pawn extends Piece {
 
         let squareBackwardRight = this.board.getTileFromCoord(currentTile.getBackwardRight(this.colour, context, boundary_data));
 
-        if (squareBackwardRight !== undefined && isValidCoord(squareBackwardRight.coordinate) && 
+        if (squareForwardRight !== undefined && squareBackwardRight !== undefined && isValidCoord(squareBackwardRight.coordinate) && 
             isValidCoord(squareForwardRight.coordinate) && squareBackwardRight.hasPiece() && squareBackwardRight.getPiece().doubleMove) {
             if (squareBackwardRight.getPiece().colour !== this.colour)
                 validMoves.push(squareForwardRight.coordinate);
