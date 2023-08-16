@@ -3,6 +3,7 @@ import { Tile } from "./Tile.js";
 import { Coordinate } from "./Coordinate.js";
 import { FENLoader } from "./FENLoader.js";
 import { King } from "./King.js";
+import { Pawn } from "./Pawn.js";
 
 export class Board 
 {
@@ -161,6 +162,7 @@ export class Board
 
         // Tile selected is valid: move piece from previously selected tile to newly selected tile.
         if (this.validTiles.includes(tile)) {
+            this.halfMoveClock++;
             let prevTile = this.selectedTile;
             prevTile.setSelected(false);
             this.selectedTile = undefined;
@@ -168,6 +170,32 @@ export class Board
             prevTile.removePiece();
             if (tile.hasPiece())
                 tile.getPiece().take();
+
+            // Check pawn double move:
+            if (piece instanceof Pawn) {
+                let forward1 = this.getTileFromCoord(prevTile.getForward(piece.colour, context));
+                let forward2 = this.getTileFromCoord(forward1.getForward(piece.colour, context));
+                if (forward2.equals(tile)) {
+                    piece.doubleMove = true;
+                    piece.doubleMoveClock = this.halfMoveClock;
+                }
+            }
+
+            // Check en passant:
+            if ((piece instanceof Pawn)) {
+                let forwardRight = this.getTileFromCoord(prevTile.getForwardRight(piece.colour, context));
+                let forwardLeft = this.getTileFromCoord(prevTile.getForwardLeft(piece.colour, context));
+                if (forwardRight !== undefined && forwardRight.equals(tile) && !forwardRight.hasPiece()) {
+                    let backwardRight = this.getTileFromCoord(prevTile.getBackwardRight(piece.colour, context));
+                    if (backwardRight.hasPiece())
+                        backwardRight.getPiece().take();
+                }
+                else if (forwardLeft.equals(tile) && !forwardLeft.hasPiece()) {
+                    let backwardLeft = this.getTileFromCoord(prevTile.getBackwardLeft(piece.colour, context));
+                    if (backwardLeft.hasPiece())
+                        backwardLeft.getPiece().take();
+                }
+            }
             piece.moveTo(tile.coordinate);
             tile.setPiece(piece);
             this.clearValidTiles();

@@ -3,6 +3,10 @@ import { Piece } from "./Piece.js";
 import { boundary_data } from "./tests/test.data.js";
 
 export class Pawn extends Piece {
+
+    doubleMove = false;
+    doubleMoveClock = Infinity;
+
     constructor(board, coordinate, colour, context) {
         let spriteLoc = 'spr_piece_' + colour + '_pawn';
         let positions = board.getPositionsFromCoord(coordinate)
@@ -47,7 +51,7 @@ export class Pawn extends Piece {
 
 
         if (squareBackwardLeft !== undefined && isValidCoord(squareBackwardLeft.coordinate) && 
-            isValidCoord(squareForwardLeft.coordinate) && squareBackwardLeft.hasPiece()) {
+            isValidCoord(squareForwardLeft.coordinate) && squareBackwardLeft.hasPiece() && squareBackwardLeft.getPiece().doubleMove) {
             if (squareBackwardLeft.getPiece().colour !== this.colour)
                 validMoves.push(squareForwardLeft.coordinate);
         }
@@ -55,7 +59,7 @@ export class Pawn extends Piece {
         let squareBackwardRight = this.board.getTileFromCoord(currentTile.getBackwardRight(this.colour, context, boundary_data));
 
         if (squareBackwardRight !== undefined && isValidCoord(squareBackwardRight.coordinate) && 
-            isValidCoord(squareForwardRight.coordinate) && squareBackwardRight.hasPiece()) {
+            isValidCoord(squareForwardRight.coordinate) && squareBackwardRight.hasPiece() && squareBackwardRight.getPiece().doubleMove) {
             if (squareBackwardRight.getPiece().colour !== this.colour)
                 validMoves.push(squareForwardRight.coordinate);
         }
@@ -69,5 +73,13 @@ export class Pawn extends Piece {
         let squareForwardRight = this.board.getTileFromCoord(currentTile.getForwardRight(this.colour, context, boundary_data));
 
         return [squareForwardLeft.coordinate, squareForwardRight.coordinate];
+    }
+
+    moveTo (coordinate) {
+        if (this.doubleMoveClock < this.board.halfMoveClock) {
+            this.doubleMove = false;
+            this.doubleMoveClock = Infinity;
+        }
+        super.moveTo(coordinate);
     }
 }

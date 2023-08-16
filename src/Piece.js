@@ -12,7 +12,7 @@ export class Piece {
             this.sprite = context.add.sprite(this.x, this.y, this.spriteLoc).setScale(this.scale).setDepth(1);
     }
 
-    moveTo = (coordinate) => {
+    moveTo (coordinate) {
         this.board.getTileFromCoord(coordinate).updated = true;
         this.coordinate = coordinate;
         let positions = this.board.getPositionsFromCoord(coordinate);
