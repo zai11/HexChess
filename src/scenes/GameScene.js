@@ -46,6 +46,8 @@ export default class GameScene extends Phaser.Scene
         this.load.image('spr_piece_white_queen', './sprites/pieces/queen_white.png');
         this.load.image('spr_piece_black_king', './sprites/pieces/king_black.png');
         this.load.image('spr_piece_white_king', './sprites/pieces/king_white.png');
+
+        this.load.image('spr_promotion_prompt', './sprites/promotion_prompt.png');
     }
 
     create()
@@ -66,7 +68,7 @@ export default class GameScene extends Phaser.Scene
         //this.add.image(400+(128-32), 300-64, 'spr_hex_grey').setScale(0.25);
         //this.add.image(656, 300, 'spr_hex_white').setScale(0.25);
 
-        //this.add.image(880+64, 230+32+64, 'spr_tile_black').setScale(0.05);
+        //this.add.image(448, 592, 'spr_tile_black').setScale(0.05);
     }
 
     update() {

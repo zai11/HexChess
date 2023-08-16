@@ -1,9 +1,9 @@
-import { Pawn } from "./Pawn.js";
-import { Knight } from "./Knight.js";
-import { Bishop } from "./Bishop.js";
-import { Rook } from "./Rook.js";
-import { Queen } from "./Queen.js";
-import { King } from "./King.js";
+import { Pawn } from "./pieces/Pawn.js";
+import { Knight } from "./pieces/Knight.js";
+import { Bishop } from "./pieces/Bishop.js";
+import { Rook } from "./pieces/Rook.js";
+import { Queen } from "./pieces/Queen.js";
+import { King } from "./pieces/King.js";
 
 export class FENLoader {
     constructor(fenString, board, context) {

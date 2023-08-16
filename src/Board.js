@@ -2,8 +2,8 @@ import { isValidCoord } from "./Utilities.js";
 import { Tile } from "./Tile.js";
 import { Coordinate } from "./Coordinate.js";
 import { FENLoader } from "./FENLoader.js";
-import { King } from "./King.js";
-import { Pawn } from "./Pawn.js";
+import { King } from "./pieces/King.js";
+import { Pawn } from "./pieces/Pawn.js";
 
 export class Board 
 {
@@ -15,6 +15,7 @@ export class Board
     pieces = [];
     halfMoveClock = 0;
     fullMoveClock = 1;
+    awaitingPromotion = false;
 
     constructor (context, colour, tiles_data, coords_data) {
         this.colour = colour;
@@ -82,6 +83,7 @@ export class Board
     addPiece = (piece) => {
         this.pieces.push(piece);
         this.getTileFromCoord(piece.coordinate).setPiece(piece);
+        return piece;
     }
 
     getPieceFromCoord = (coordinate) => {
@@ -139,6 +141,8 @@ export class Board
     }
 
     tileSelected = (tile, context) => {
+        if (this.awaitingPromotion)
+            return;
         // Selected tile is not valid, no valid tiles, no piece: just set current tile to selected and clear valid tiles
         if (!this.validTiles.includes(tile) && !tile.hasPiece()) {
             tile.setSelected();
@@ -184,7 +188,7 @@ export class Board
             }
 
             // Check en passant:
-            if ((piece instanceof Pawn)) {
+            if (piece instanceof Pawn) {
                 let forwardRight = this.getTileFromCoord(prevTile.getForwardRight(piece.colour, context));
                 let forwardLeft = this.getTileFromCoord(prevTile.getForwardLeft(piece.colour, context));
                 if (forwardRight !== undefined && forwardRight.equals(tile) && !forwardRight.hasPiece()) {
@@ -198,6 +202,16 @@ export class Board
                         backwardLeft.getPiece().take();
                 }
             }
+
+            // Check promotion:
+            if (piece instanceof Pawn) {
+                let forward = tile.getForward(piece.colour, context);
+                if (forward === undefined) {
+                    this.awaitingPromotion = true;
+                    context.ui.createPromotionPrompt(piece);
+                }
+            }
+
             piece.moveTo(tile.coordinate);
             tile.setPiece(piece);
             this.clearValidTiles();

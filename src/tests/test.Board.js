@@ -1,8 +1,8 @@
 import { Board } from "../Board.js";
 import { Tile } from "../Tile.js";
-import { Pawn } from '../Pawn.js';
+import { Pawn } from '../pieces/Pawn.js';
 import { tiles_data_white, coords_data_white, boundary_data } from "./test.data.js";
-import { Queen } from "../Queen.js";
+import { Queen } from "../pieces/Queen.js";
 
 let expect = chai.expect;
 
