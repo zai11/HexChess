@@ -156,12 +156,14 @@ export class Board
             this.selectedTile = tile;
             let piece = tile.getPiece();
             this.clearValidTiles();
-            let validMoves = piece.getValidMoves(context);
-            validMoves.forEach((move) => {
-                let t = this.getTileFromCoord(move);
-                t.setValid();
-                this.validTiles.push(t);
-            });
+            if (tile.getPiece().colour === this.colour) {
+                let validMoves = piece.getValidMoves(context);
+                validMoves.forEach((move) => {
+                    let t = this.getTileFromCoord(move);
+                    t.setValid();
+                    this.validTiles.push(t);
+                });
+            }
         }
 
         // Tile selected is valid: move piece from previously selected tile to newly selected tile.
@@ -215,7 +217,15 @@ export class Board
             piece.moveTo(tile.coordinate);
             tile.setPiece(piece);
             this.clearValidTiles();
+            this.togglePlayer();
         }
+    }
+
+    togglePlayer = () => {
+        if (this.colour === 'w')
+            this.colour = 'b';
+        else
+            this.colour = 'w';
     }
 
     init = (context) => {

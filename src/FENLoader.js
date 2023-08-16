@@ -25,40 +25,40 @@ export class FENLoader {
                 case '_':
                     continue;
                 case 'p':
-                    this.board.addPiece(new Pawn(this.board, String.fromCharCode(i+65) + (rankNum+1), 'black', this.context));
+                    this.board.addPiece(new Pawn(this.board, String.fromCharCode(i+65) + (rankNum+1), 'b', this.context));
                     break;
                 case 'b':
-                    this.board.addPiece(new Bishop(this.board, String.fromCharCode(i+65) + (rankNum+1), 'black', this.context));
+                    this.board.addPiece(new Bishop(this.board, String.fromCharCode(i+65) + (rankNum+1), 'b', this.context));
                     break;
                 case 'n':
-                    this.board.addPiece(new Knight(this.board, String.fromCharCode(i+65) + (rankNum+1), 'black', this.context));
+                    this.board.addPiece(new Knight(this.board, String.fromCharCode(i+65) + (rankNum+1), 'b', this.context));
                     break;
                 case 'r':
-                    this.board.addPiece(new Rook(this.board, String.fromCharCode(i+65) + (rankNum+1), 'black', this.context));
+                    this.board.addPiece(new Rook(this.board, String.fromCharCode(i+65) + (rankNum+1), 'b', this.context));
                     break;
                 case 'q':
-                    this.board.addPiece(new Queen(this.board, String.fromCharCode(i+65) + (rankNum+1), 'black', this.context));
+                    this.board.addPiece(new Queen(this.board, String.fromCharCode(i+65) + (rankNum+1), 'b', this.context));
                     break;
                 case 'k':
-                    this.board.addPiece(new King(this.board, String.fromCharCode(i+65) + (rankNum+1), 'black', this.context));
+                    this.board.addPiece(new King(this.board, String.fromCharCode(i+65) + (rankNum+1), 'b', this.context));
                     break;
                 case 'P':
-                    this.board.addPiece(new Pawn(this.board, String.fromCharCode(i+65) + (rankNum+1), 'white', this.context));
+                    this.board.addPiece(new Pawn(this.board, String.fromCharCode(i+65) + (rankNum+1), 'w', this.context));
                     break;
                 case 'B':
-                    this.board.addPiece(new Bishop(this.board, String.fromCharCode(i+65) + (rankNum+1), 'white', this.context));
+                    this.board.addPiece(new Bishop(this.board, String.fromCharCode(i+65) + (rankNum+1), 'w', this.context));
                     break;
                 case 'N':
-                    this.board.addPiece(new Knight(this.board, String.fromCharCode(i+65) + (rankNum+1), 'white', this.context));
+                    this.board.addPiece(new Knight(this.board, String.fromCharCode(i+65) + (rankNum+1), 'w', this.context));
                     break;
                 case 'R':
-                    this.board.addPiece(new Rook(this.board, String.fromCharCode(i+65) + (rankNum+1), 'white', this.context));
+                    this.board.addPiece(new Rook(this.board, String.fromCharCode(i+65) + (rankNum+1), 'w', this.context));
                     break;
                 case 'Q':
-                    this.board.addPiece(new Queen(this.board, String.fromCharCode(i+65) + (rankNum+1), 'white', this.context));
+                    this.board.addPiece(new Queen(this.board, String.fromCharCode(i+65) + (rankNum+1), 'w', this.context));
                     break;
                 case 'K':
-                    this.board.addPiece(new King(this.board, String.fromCharCode(i+65) + (rankNum+1), 'white', this.context));
+                    this.board.addPiece(new King(this.board, String.fromCharCode(i+65) + (rankNum+1), 'w', this.context));
                         break;
                 default:
                     console.warn('Invalid FEN provided');
@@ -78,7 +78,7 @@ export class FENLoader {
         switch(playerToMove) {
             case 'w':
             case 'b':
-                this.board.playerToMove = playerToMove;
+                this.board.colour = playerToMove;
                 break;
             default:
                 console.warn('Invalid FEN provided');

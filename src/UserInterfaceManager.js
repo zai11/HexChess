@@ -24,7 +24,7 @@ export class UserInterfaceManager {
 
     update = () => {
         this.fps.setText(Math.round(this.context.game.loop.actualFps) + ' FPS');
-        this.playerToMove.setText('Player To Move: ' + (this.context.board.playerToMove === 'w' ? 'White' : 'Black'));
+        this.playerToMove.setText('Player To Move: ' + (this.context.board.colour === 'w' ? 'White' : 'Black'));
         this.halfMoveClock.setText('Half Move Clock: ' + this.context.board.halfMoveClock);
         this.fullMoveClock.setText('Full Move Clock: ' + this.context.board.fullMoveClock);
     }

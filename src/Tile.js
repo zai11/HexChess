@@ -111,7 +111,7 @@ export class Tile {
     }
 
     getForwardLeft = (piece_colour, context, boundary_tiles) => {
-        if (piece_colour === 'white')
+        if (piece_colour === 'w')
             return this.getForwardLeftWhite(context, boundary_tiles);
         return this.getForwardLeftBlack(context, boundary_tiles);
     }
@@ -161,7 +161,7 @@ export class Tile {
     }
 
     getForwardRight = (piece_colour, context, boundary_tiles) => {
-        if (piece_colour === 'white')
+        if (piece_colour === 'w')
             return this.getForwardRightWhite(context, boundary_tiles);
         return this.getForwardRightBlack(context, boundary_tiles);
     }
@@ -211,7 +211,7 @@ export class Tile {
     }
 
     getBackwardLeft = (piece_colour, context, boundary_tiles) => {
-        if (piece_colour === 'white')
+        if (piece_colour === 'w')
             return this.getBackwardLeftWhite(context, boundary_tiles);
         return this.getBackwardLeftBlack(context, boundary_tiles);
     }
@@ -261,7 +261,7 @@ export class Tile {
     }
 
     getBackwardRight = (piece_colour, context, boundary_tiles) => {
-        if (piece_colour === 'white')
+        if (piece_colour === 'w')
             return this.getBackwardRightWhite(context, boundary_tiles);
         return this.getBackwardRightBlack(context, boundary_tiles);
     }
@@ -275,7 +275,7 @@ export class Tile {
     }
 
     getForward = (piece_colour, context, boundary_tiles) => {
-        if (piece_colour === 'white')
+        if (piece_colour === 'w')
             return this.getForwardWhite(context, boundary_tiles);
         return this.getForwardBlack(context, boundary_tiles);
     }
@@ -289,7 +289,7 @@ export class Tile {
     }
 
     getBackward = (piece_colour, context, boundary_tiles) => {
-        if (piece_colour === 'white')
+        if (piece_colour === 'w')
             return this.getBackwardWhite(context, boundary_tiles);
         return this.getBackwardBlack(context, boundary_tiles);
     }

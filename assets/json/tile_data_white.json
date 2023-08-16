@@ -53,7 +53,7 @@
         "y": 592,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "B2",
@@ -101,7 +101,7 @@
         "y": 208,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "C1",
@@ -117,7 +117,7 @@
         "y": 560,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "C3",
@@ -157,7 +157,7 @@
         "y": 240,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "C8",
@@ -189,7 +189,7 @@
         "y": 528,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "D4",
@@ -221,7 +221,7 @@
         "y": 272,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "D8",
@@ -269,7 +269,7 @@
         "y": 496,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "E5",
@@ -293,7 +293,7 @@
         "y": 304,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "E8",
@@ -357,7 +357,7 @@
         "y": 464,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "F6",
@@ -373,7 +373,7 @@
         "y": 336,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "F8",
@@ -437,7 +437,7 @@
         "y": 496,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "G6",
@@ -461,7 +461,7 @@
         "y": 304,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "G9",
@@ -509,7 +509,7 @@
         "y": 528,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "H6",
@@ -541,7 +541,7 @@
         "y": 272,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "H10",
@@ -573,7 +573,7 @@
         "y": 560,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "I6",
@@ -613,7 +613,7 @@
         "y": 240,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "I11",
@@ -629,7 +629,7 @@
         "y": 592,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "J6",
@@ -677,7 +677,7 @@
         "y": 208,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "K6",

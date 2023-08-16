@@ -53,7 +53,7 @@ export let tiles_data_white = [
         "y": 592,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": true
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "B2",
@@ -101,7 +101,7 @@ export let tiles_data_white = [
         "y": 208,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "C1",
@@ -117,7 +117,7 @@ export let tiles_data_white = [
         "y": 560,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "C3",
@@ -157,7 +157,7 @@ export let tiles_data_white = [
         "y": 240,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "C8",
@@ -189,7 +189,7 @@ export let tiles_data_white = [
         "y": 528,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "D4",
@@ -221,7 +221,7 @@ export let tiles_data_white = [
         "y": 272,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "D8",
@@ -269,7 +269,7 @@ export let tiles_data_white = [
         "y": 496,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "E5",
@@ -293,7 +293,7 @@ export let tiles_data_white = [
         "y": 304,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "E8",
@@ -357,7 +357,7 @@ export let tiles_data_white = [
         "y": 464,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "F6",
@@ -373,7 +373,7 @@ export let tiles_data_white = [
         "y": 336,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "F8",
@@ -437,7 +437,7 @@ export let tiles_data_white = [
         "y": 496,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "G6",
@@ -461,7 +461,7 @@ export let tiles_data_white = [
         "y": 304,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "G9",
@@ -509,7 +509,7 @@ export let tiles_data_white = [
         "y": 528,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "H6",
@@ -541,7 +541,7 @@ export let tiles_data_white = [
         "y": 272,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "H10",
@@ -573,7 +573,7 @@ export let tiles_data_white = [
         "y": 560,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "I6",
@@ -613,7 +613,7 @@ export let tiles_data_white = [
         "y": 240,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "I11",
@@ -629,7 +629,7 @@ export let tiles_data_white = [
         "y": 592,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "J6",
@@ -677,7 +677,7 @@ export let tiles_data_white = [
         "y": 208,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "K6",
@@ -784,7 +784,7 @@ export let tiles_data_black = [
         "y": 218,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "J6",
@@ -832,7 +832,7 @@ export let tiles_data_black = [
         "y": 602,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "I4",
@@ -848,7 +848,7 @@ export let tiles_data_black = [
         "y": 250,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "I6",
@@ -888,7 +888,7 @@ export let tiles_data_black = [
         "y": 570,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "I11",
@@ -920,7 +920,7 @@ export let tiles_data_black = [
         "y": 282,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "H6",
@@ -952,7 +952,7 @@ export let tiles_data_black = [
         "y": 538,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "H10",
@@ -1000,7 +1000,7 @@ export let tiles_data_black = [
         "y": 314,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "G6",
@@ -1024,7 +1024,7 @@ export let tiles_data_black = [
         "y": 506,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "G9",
@@ -1088,7 +1088,7 @@ export let tiles_data_black = [
         "y": 346,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "F6",
@@ -1104,7 +1104,7 @@ export let tiles_data_black = [
         "y": 474,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "F8",
@@ -1168,7 +1168,7 @@ export let tiles_data_black = [
         "y": 314,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "E5",
@@ -1192,7 +1192,7 @@ export let tiles_data_black = [
         "y": 506,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "E8",
@@ -1240,7 +1240,7 @@ export let tiles_data_black = [
         "y": 282,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "D4",
@@ -1272,7 +1272,7 @@ export let tiles_data_black = [
         "y": 538,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "D8",
@@ -1304,7 +1304,7 @@ export let tiles_data_black = [
         "y": 250,
         "colour": 0,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "C3",
@@ -1344,7 +1344,7 @@ export let tiles_data_black = [
         "y": 570,
         "colour": 2,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "C8",
@@ -1360,7 +1360,7 @@ export let tiles_data_black = [
         "y": 218,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "white"
+        "pawn_starting_tile": "w"
     },
     {
         "coordinate": "B2",
@@ -1408,7 +1408,7 @@ export let tiles_data_black = [
         "y": 602,
         "colour": 1,
         "size": 64,
-        "pawn_starting_tile": "black"
+        "pawn_starting_tile": "b"
     },
     {
         "coordinate": "A1",

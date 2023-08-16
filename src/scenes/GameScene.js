@@ -34,18 +34,18 @@ export default class GameScene extends Phaser.Scene
         this.load.image('spr_tile_white_selected', './sprites/tiles/tile_white_selected.png');
         this.load.image('spr_tile_white_valid', './sprites/tiles/tile_white_valid.png');
 
-        this.load.image('spr_piece_black_pawn', './sprites/pieces/pawn_black.png');
-        this.load.image('spr_piece_white_pawn', './sprites/pieces/pawn_white.png');
-        this.load.image('spr_piece_black_knight', './sprites/pieces/knight_black.png');
-        this.load.image('spr_piece_white_knight', './sprites/pieces/knight_white.png');
-        this.load.image('spr_piece_black_bishop', './sprites/pieces/bishop_black.png');
-        this.load.image('spr_piece_white_bishop', './sprites/pieces/bishop_white.png');
-        this.load.image('spr_piece_black_rook', './sprites/pieces/rook_black.png');
-        this.load.image('spr_piece_white_rook', './sprites/pieces/rook_white.png');
-        this.load.image('spr_piece_black_queen', './sprites/pieces/queen_black.png');
-        this.load.image('spr_piece_white_queen', './sprites/pieces/queen_white.png');
-        this.load.image('spr_piece_black_king', './sprites/pieces/king_black.png');
-        this.load.image('spr_piece_white_king', './sprites/pieces/king_white.png');
+        this.load.image('spr_piece_b_pawn', './sprites/pieces/pawn_black.png');
+        this.load.image('spr_piece_w_pawn', './sprites/pieces/pawn_white.png');
+        this.load.image('spr_piece_b_knight', './sprites/pieces/knight_black.png');
+        this.load.image('spr_piece_w_knight', './sprites/pieces/knight_white.png');
+        this.load.image('spr_piece_b_bishop', './sprites/pieces/bishop_black.png');
+        this.load.image('spr_piece_w_bishop', './sprites/pieces/bishop_white.png');
+        this.load.image('spr_piece_b_rook', './sprites/pieces/rook_black.png');
+        this.load.image('spr_piece_w_rook', './sprites/pieces/rook_white.png');
+        this.load.image('spr_piece_b_queen', './sprites/pieces/queen_black.png');
+        this.load.image('spr_piece_w_queen', './sprites/pieces/queen_white.png');
+        this.load.image('spr_piece_b_king', './sprites/pieces/king_black.png');
+        this.load.image('spr_piece_w_king', './sprites/pieces/king_white.png');
 
         this.load.image('spr_promotion_prompt', './sprites/promotion_prompt.png');
     }
