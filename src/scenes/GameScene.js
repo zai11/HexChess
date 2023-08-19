@@ -24,15 +24,15 @@ export default class GameScene extends Phaser.Scene
 
         this.load.image('spr_background', './sprites/background.png');
 
-        this.load.image('spr_tile_black', './sprites/tiles/tile_black.png');
-        this.load.image('spr_tile_black_selected', './sprites/tiles/tile_black_selected.png');
-        this.load.image('spr_tile_black_valid', './sprites/tiles/tile_black_valid.png');
-        this.load.image('spr_tile_grey', './sprites/tiles/tile_grey.png');
-        this.load.image('spr_tile_grey_selected', './sprites/tiles/tile_grey_selected.png');
-        this.load.image('spr_tile_grey_valid', './sprites/tiles/tile_grey_valid.png');
-        this.load.image('spr_tile_white', './sprites/tiles/tile_white.png');
-        this.load.image('spr_tile_white_selected', './sprites/tiles/tile_white_selected.png');
-        this.load.image('spr_tile_white_valid', './sprites/tiles/tile_white_valid.png');
+        this.load.image('spr_tile_black', './sprites/tiles/tile_black_var_1.png');
+        this.load.image('spr_tile_black_selected', './sprites/tiles/tile_black_var_1_selected.png');
+        this.load.image('spr_tile_black_valid', './sprites/tiles/tile_black_var_1_valid.png');
+        this.load.image('spr_tile_grey', './sprites/tiles/tile_grey_var_1.png');
+        this.load.image('spr_tile_grey_selected', './sprites/tiles/tile_grey_var_1_selected.png');
+        this.load.image('spr_tile_grey_valid', './sprites/tiles/tile_grey_var_1_valid.png');
+        this.load.image('spr_tile_white', './sprites/tiles/tile_white_var_1.png');
+        this.load.image('spr_tile_white_selected', './sprites/tiles/tile_white_var_1_selected.png');
+        this.load.image('spr_tile_white_valid', './sprites/tiles/tile_white_var_1_valid.png');
 
         this.load.image('spr_piece_b_pawn', './sprites/pieces/pawn_black.png');
         this.load.image('spr_piece_w_pawn', './sprites/pieces/pawn_white.png');

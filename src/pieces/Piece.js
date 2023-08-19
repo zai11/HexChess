@@ -1,5 +1,5 @@
 export class Piece {
-    constructor(board, coordinate, colour, x, y, spriteLoc, context, scale = 0.05) {
+    constructor(board, coordinate, colour, x, y, spriteLoc, context, scale = 0.07) {
         this.board = board;
         this.coordinate = coordinate;
         this.colour = colour;
