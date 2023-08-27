@@ -1,0 +1,110 @@
+/*       Variables       */
+:root {
+    --primary-colour: #3d2877;
+    --secondary-colour: #5e3eb7;
+    --highlight-colour: #eee;
+}
+
+
+
+
+/*         Rules         */
+
+body {
+    margin: 0px;
+}
+
+p, a {
+    color: var(--highlight-colour);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+#left-margin {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+}
+
+#logo {
+    margin-top: 40px;
+    width: 80%;
+}
+
+#menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 80%;
+}
+
+.menu-item {
+    display: block;
+    height: 100px;
+    width: 80%;
+    line-height: 100px;
+    text-align: center;
+    background-color: var(--secondary-colour);
+    border: rgba(0,0,0,0.5) 1px solid;
+}
+
+.menu-item#play-button {
+    margin-top: 50px;
+}
+
+#container {
+    height: 100vh;
+    width: 100vw;
+    display:flex;
+    justify-content: center;
+    flex-grow: 2;
+    background-image: linear-gradient(var(--primary-colour), var(--secondary-colour), var(--primary-colour));
+}
+
+#tray {
+    flex-grow: 2;
+    background-color: rgba(0,0,0,0.5);
+    padding: 3px;
+    margin: 65px 65px 65px 0px;
+}
+
+#moves {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+
+.move {
+    width: 100%;
+    height: 40px;
+    display:flex;
+}
+
+.move p {
+    line-height: 40px;
+    height: 100%;
+}
+
+.number {
+    text-align: center;
+    width: 40px;
+    background-color: var(--secondary-colour);
+}
+
+.white {
+    width: calc((100% - 40px) / 2);
+    background-color: var(--primary-colour);
+    padding-left: 10px;
+}
+
+.black {
+    width: calc((100% - 40px) / 2);
+    background-color: var(--primary-colour);
+    padding-left: 10px;
+}

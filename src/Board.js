@@ -36,7 +36,7 @@ export class Board
             coords_data = context.cache.json.get('json_coord_data_' + colour);
 
         coords_data.forEach((coord) => {
-            this.coordinates.push(new Coordinate(coord.x, coord.y, coord.content));
+            this.coordinates.push(new Coordinate(coord.x, coord.y, coord.content, context));
         }); 
     }
 
@@ -233,12 +233,5 @@ export class Board
 
         let loader = new FENLoader(fen, this, context);
         loader.load();
-    }
-
-    initialRender = (context) => {
-        const style = {color: '#FFF', fontSize: 20};
-        this.coordinates.forEach((coordinate) => {
-            context.add.text(coordinate.x, coordinate.y, coordinate.content, style).setOrigin(0.5,0.5);
-        });
     }
 }

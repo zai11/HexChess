@@ -2,10 +2,42 @@
 	<head>
 		<title>HexChess</title>
 		<script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+		<link type="text/css" rel="stylesheet" href="./styles.css" />
 	</head>
 	<body>
 		<script type="module" src="./src/main.js"></script>
 
-		<a href="./tests.html" style="float:right;display:block;margin: 20px 0;padding-left: 50px;">Tests</a>
+		<div id="container">
+			<div id="left-margin">
+				<img id="logo" src="./assets/sprites/logo.png" />
+				<div id="menu">
+					<a id="play-button" class="menu-item">Play</a>
+					<a id="puzzles-button" class="menu-item">Puzzles</a>
+					<a id="learn-button" class="menu-item">Learn</a>
+					<a id="social-button" class="menu-item">Social</a>
+				</div>
+			</div>
+
+			<div id="canvas-container">
+				
+			</div>
+			<div id="tray">
+				<div id="moves">
+					<div class="move" id="1">
+						<div class="number">
+							<p>1</p>
+						</div>
+						<div class="white">
+							<p>e6</p>
+						</div>
+						<div class="black">
+							<p>fxe6</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--<a href="./tests.html" style="float:right;display:block;margin: 20px 0;padding-left: 50px;">Tests</a>-->
 	</body>
 </html>
