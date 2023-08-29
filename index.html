@@ -2,19 +2,54 @@
 	<head>
 		<title>HexChess</title>
 		<script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link type="text/css" rel="stylesheet" href="./styles.css" />
 	</head>
 	<body>
 		<script type="module" src="./src/main.js"></script>
-
+		<div class="alert alert-danger" role="alert" id="error-alert">
+			
+		</div>
+		<div class="alert alert-success" role="alert" id="success-alert">
+			This is a success
+		</div>
 		<div id="container">
 			<div id="left-margin">
 				<img id="logo" src="./assets/sprites/logo.png" />
+				<div id="not-logged-in">
+					<p>You are not currently logged in</p>
+					<div id="not-logged-in-buttons">
+						<a href="#" id="login-button">Log in</a>
+						<a href="#" id="register-button">Register</a>
+					</div>
+				</div>
+				<div id="logged-in">
+					<p>Logged in as {Player}</p>
+					<a href="#" id="logout-button">Log out</a>
+				</div>
 				<div id="menu">
-					<a id="play-button" class="menu-item">Play</a>
-					<a id="puzzles-button" class="menu-item">Puzzles</a>
-					<a id="learn-button" class="menu-item">Learn</a>
-					<a id="social-button" class="menu-item">Social</a>
+					<a id="play-button" class="menu-item" href="./play.html">Play</a>
+					<a id="puzzles-button" class="menu-item" href="./puzzles.html">Puzzles</a>
+					<a id="learn-button" class="menu-item" href="./learn.html">Learn</a>
+					<a id="social-button" class="menu-item" href="./social.html">Social</a>
+					<div class="sub-menu" id="play-sub-menu">
+						<a id="" class="sub-menu-item">Create a game</a>
+						<a id="" class="sub-menu-item">Join a game</a>
+						<a id="" class="sub-menu-item">Local Multiplayer</a>
+						<a id="" class="sub-menu-item">Play against AI</a>
+					</div>
+					<div class="sub-menu" id="puzzles-sub-menu">
+						<a id="" class="sub-menu-item"></a>
+					</div>
+					<div class="sub-menu" id="learn-sub-menu">
+						<a id="" class="sub-menu-item"></a>
+					</div>
+					<div class="sub-menu" id="social-sub-menu">
+						<a id="" class="sub-menu-item"></a>
+					</div>
 				</div>
 			</div>
 
@@ -36,8 +71,40 @@
 					</div>
 				</div>
 			</div>
+			<div id="login-container" class="my-modal">
+				<a class="modal-close" href="#">×</a>
+				<img id="logo" src="./assets/sprites/logo.png" />
+				<div id="login-username-group" class="form-group">
+					<p>username or email</p>
+					<input type="text" id="login-username" />
+				</div>
+				<div id="login-password-group" class="form-group">
+					<p>password</p>
+					<input type="password" id="login-password" />
+				</div>
+				<a id="login-submit" class="modal-submit" href="#">Log In</a>
+			</div>
+			<div id="register-container" class="my-modal">
+				<a class="modal-close" href="#">×</a>
+				<img id="logo" src="./assets/sprites/logo.png" />
+				<div id="register-username-group" class="form-group">
+					<p>username</p>
+					<input type="text" id="register-username" />
+				</div>
+				<div id="register-email-group" class="form-group">
+					<p>email</p>
+					<input type="text" id="register-email" />
+				</div>
+				<div id="register-password-group" class="form-group">
+					<p>password</p>
+					<input type="password" id="register-password" />
+				</div>
+				<a id="register-submit" class="modal-submit" href="#">Register</a>
+			</div>
 		</div>
 
+		<script src="./functions.js"></script>
+		
 		<!--<a href="./tests.html" style="float:right;display:block;margin: 20px 0;padding-left: 50px;">Tests</a>-->
 	</body>
 </html>
