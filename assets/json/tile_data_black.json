@@ -1,730 +1,639 @@
 [
     {
-        "coordinate": "K6",
+        "coordinate": "K1",
         "x": 100,
         "y": 250,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
-        "coordinate": "K7",
+        "coordinate": "K2",
         "x": 100,
         "y": 314,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
-        "coordinate": "K8",
+        "coordinate": "K3",
         "x": 100,
         "y": 378,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
-        "coordinate": "K9",
+        "coordinate": "K4",
         "x": 100,
         "y": 442,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
-        "coordinate": "K10",
+        "coordinate": "K5",
         "x": 100,
         "y": 506,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
-        "coordinate": "K11",
+        "coordinate": "K6",
         "x": 100,
         "y": 570,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
+    },
+    {
+        "coordinate": "J1",
+        "x": 148,
+        "y": 218,
+        "colour": "grey",
+        "isPawnStartingTile": false
+    },
+    {
+        "coordinate": "J2",
+        "x": 148,
+        "y": 282,
+        "colour": "white",
+        "isPawnStartingTile": false
+    },
+    {
+        "coordinate": "J3",
+        "x": 148,
+        "y": 346,
+        "colour": "black",
+        "isPawnStartingTile": false
+    },
+    {
+        "coordinate": "J4",
+        "x": 148,
+        "y": 410,
+        "colour": "grey", 
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "J5",
         "x": 148,
-        "y": 218,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": "w"
+        "y": 474,
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "J6",
         "x": 148,
-        "y": 282,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 538,
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "J7",
         "x": 148,
-        "y": 346,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
-    },
-    {
-        "coordinate": "J8",
-        "x": 148,
-        "y": 410,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
-    },
-    {
-        "coordinate": "J9",
-        "x": 148,
-        "y": 474,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
-    },
-    {
-        "coordinate": "J10",
-        "x": 148,
-        "y": 538,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
-    },
-    {
-        "coordinate": "J11",
-        "x": 148,
         "y": 602,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": "b"
+        "colour": "grey",
+        "isPawnStartingTile": true
+    },
+    {
+        "coordinate": "I1",
+        "x": 196,
+        "y": 186,
+        "colour": "white",
+        "isPawnStartingTile": false
+    },
+    {
+        "coordinate": "I2",
+        "x": 196,
+        "y": 250,
+        "colour": "black",
+        "isPawnStartingTile": false
+    },
+    {
+        "coordinate": "I3",
+        "x": 196,
+        "y": 314,
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "I4",
         "x": 196,
-        "y": 186,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 378,
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "I5",
         "x": 196,
-        "y": 250,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": "w"
+        "y": 442,
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "I6",
         "x": 196,
-        "y": 314,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 506,
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "I7",
         "x": 196,
-        "y": 378,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 570,
+        "colour": "white",
+        "isPawnStartingTile": true
     },
     {
         "coordinate": "I8",
         "x": 196,
-        "y": 442,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
-    },
-    {
-        "coordinate": "I9",
-        "x": 196,
-        "y": 506,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
-    },
-    {
-        "coordinate": "I10",
-        "x": 196,
-        "y": 570,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": "b"
-    },
-    {
-        "coordinate": "I11",
-        "x": 196,
         "y": 634,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
+    },
+    {
+        "coordinate": "H1",
+        "x": 244,
+        "y": 154,
+        "colour": "black",
+        "isPawnStartingTile": false
+    },
+    {
+        "coordinate": "H2",
+        "x": 244,
+        "y": 218,
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "H3",
         "x": 244,
-        "y": 154,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 282,
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "H4",
         "x": 244,
-        "y": 218,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 346,
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "H5",
         "x": 244,
-        "y": 282,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": "w"
+        "y": 410,
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "H6",
         "x": 244,
-        "y": 346,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 474,
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "H7",
         "x": 244,
-        "y": 410,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 538,
+        "colour": "black",
+        "isPawnStartingTile": true
     },
     {
         "coordinate": "H8",
         "x": 244,
-        "y": 474,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 602,
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "H9",
         "x": 244,
-        "y": 538,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": "b"
-    },
-    {
-        "coordinate": "H10",
-        "x": 244,
-        "y": 602,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
-    },
-    {
-        "coordinate": "H11",
-        "x": 244,
         "y": 666,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
+    },
+    {
+        "coordinate": "G1",
+        "x": 292,
+        "y": 122,
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "G2",
         "x": 292,
-        "y": 122,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 186,
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "G3",
         "x": 292,
-        "y": 186,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 250,
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "G4",
         "x": 292,
-        "y": 250,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 314,
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "G5",
         "x": 292,
-        "y": 314,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": "w"
+        "y": 378,
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "G6",
         "x": 292,
-        "y": 378,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 442,
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "G7",
         "x": 292,
-        "y": 442,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 506,
+        "colour": "grey",
+        "isPawnStartingTile": true
     },
     {
         "coordinate": "G8",
         "x": 292,
-        "y": 506,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": "b"
+        "y": 570,
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "G9",
         "x": 292,
-        "y": 570,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "y": 634,
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "G10",
         "x": 292,
-        "y": 634,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
-    },
-    {
-        "coordinate": "G11",
-        "x": 292,
         "y": 698,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "F1",
         "x": 340,
         "y": 90,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white", 
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "F2",
         "x": 340,
         "y": 154,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "F3",
         "x": 340,
         "y": 218,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "F4",
         "x": 340,
         "y": 282,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "F5",
         "x": 340,
         "y": 346,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": "w"
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "F6",
         "x": 340,
         "y": 410,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "F7",
         "x": 340,
         "y": 474,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": "b"
+        "colour": "white",
+        "isPawnStartingTile": true
     },
     {
         "coordinate": "F8",
         "x": 340,
         "y": 538,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "F9",
         "x": 340,
         "y": 602,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "F10",
         "x": 340,
         "y": 666,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "F11",
         "x": 340,
         "y": 730,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "E1",
         "x": 388,
         "y": 122,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "E2",
         "x": 388,
         "y": 186,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "E3",
         "x": 388,
         "y": 250,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "E4",
         "x": 388,
         "y": 314,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": "w"
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "E5",
         "x": 388,
         "y": 378,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "E6",
         "x": 388,
         "y": 442,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "E7",
         "x": 388,
         "y": 506,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": "b"
+        "colour": "grey",
+        "isPawnStartingTile": true
     },
     {
         "coordinate": "E8",
         "x": 388,
         "y": 570,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "E9",
         "x": 388,
         "y": 634,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "E10",
         "x": 388,
         "y": 698,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "D1",
         "x": 436,
         "y": 154,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "D2",
         "x": 436,
         "y": 218,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "D3",
         "x": 436,
         "y": 282,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": "w"
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "D4",
         "x": 436,
         "y": 346,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "D5",
         "x": 436,
         "y": 410,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "D6",
         "x": 436,
         "y": 474,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "D7",
         "x": 436,
         "y": 538,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": "b"
+        "colour": "black",
+        "isPawnStartingTile": true
     },
     {
         "coordinate": "D8",
         "x": 436,
         "y": 602,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "D9",
         "x": 436,
         "y": 666,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "C1",
         "x": 484,
         "y": 186,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "C2",
         "x": 484,
         "y": 250,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": "w"
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "C3",
         "x": 484,
         "y": 314,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "C4",
         "x": 484,
         "y": 378,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "C5",
         "x": 484,
         "y": 442,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "C6",
         "x": 484,
         "y": 506,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "C7",
         "x": 484,
         "y": 570,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": "b"
+        "colour": "white",
+        "isPawnStartingTile": true
     },
     {
         "coordinate": "C8",
         "x": 484,
         "y": 634,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "B1",
         "x": 532,
         "y": 218,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": "w"
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "B2",
         "x": 532,
         "y": 282,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "B3",
         "x": 532,
         "y": 346,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "B4",
         "x": 532,
         "y": 410,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "B5",
         "x": 532,
         "y": 474,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "B6",
         "x": 532,
         "y": 538,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "B7",
         "x": 532,
         "y": 602,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": "b"
+        "colour": "grey",
+        "isPawnStartingTile": true
     },
     {
         "coordinate": "A1",
         "x": 580,
         "y": 250,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "A2",
         "x": 580,
         "y": 314,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "A3",
         "x": 580,
         "y": 378,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "A4",
         "x": 580,
         "y": 442,
-        "colour": 0,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "black",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "A5",
         "x": 580,
         "y": 506,
-        "colour": 1,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "grey",
+        "isPawnStartingTile": false
     },
     {
         "coordinate": "A6",
         "x": 580,
         "y": 570,
-        "colour": 2,
-        "size": 64,
-        "pawn_starting_tile": false
+        "colour": "white",
+        "isPawnStartingTile": false
     }
 ]

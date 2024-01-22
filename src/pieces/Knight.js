@@ -1,55 +1,32 @@
 import { Piece } from "./Piece.js";
 
 export class Knight extends Piece {
-    constructor(board, coordinate, colour, context) {
-        let spriteLoc = 'spr_piece_' + colour + '_knight';
-        let positions = board.getPositionsFromCoord(coordinate)
-        super(board, coordinate, colour, positions.x, positions.y, spriteLoc, context);
+    constructor(board, coordinate, colour, scene) {
+        super(board, coordinate, colour, 'knight', scene);
     }
 
-    getValidMoves = (context, boundary_data) => {
-        let validMoves = [];
-        let currentTile = this.board.getTileFromPositions(this.x, this.y);
+    getFENChar = function () {
+        return this.colour === 'white' ? 'N' : 'n';
+    }
 
-        let directions = [[  'Left', 'Left', 
-                             'ForwardLeft', 'ForwardLeft',
-                             'ForwardRight', 'ForwardRight',
-                             'Right', 'Right',
-                             'BackwardRight', 'BackwardRight',
-                             'BackwardLeft', 'BackwardLeft'], 
-                          [  'BackwardLeft', 'ForwardLeft',
-                             'ForwardLeft', 'Forward',
-                             'Forward', 'ForwardRight',
-                             'ForwardRight', 'BackwardRight',
-                             'BackwardRight', 'Backward',
-                             'Backward', 'BackwardLeft']]
+    getPseudolegalMoves = function () {
+        const pseudolegalMoves = [];
+        const currentTile = this.board.getTileFromCoord(this.coordinate);
+        const directions = [
+            ["East", "East", "NorthEast", "NorthEast", "NorthWest", "NorthWest",
+             "West", "West", "SouthWest", "SouthWest", "SouthEast", "SouthEast"],
+            ["SouthEast", "NorthEast", "NorthEast", "North", "North", "NorthWest",
+             "NorthWest", "SouthWest", "SouthWest", "South", "South", "SouthEast"]
+        ];
 
         for (let i = 0; i < directions[0].length; i++) {
-            let tempTile = eval('this.board.getTileFromCoord(currentTile.get' + directions[0][i] + 'Diagonal(this.colour, context, boundary_data))');
-            
+            const tempTile = currentTile["getNeighbourTileDiagonal" + directions[0][i]]();
             if (tempTile === undefined)
                 continue;
-            
-            let nextTile = eval('this.board.getTileFromCoord(tempTile.get' + directions[1][i] + '(this.colour, context, boundary_data))');
-
-            // If there is no nextTile
-            if (nextTile === undefined)
-                continue;
-
-            // If the nextTile is blocked by enemy piece
-            if (nextTile.hasPiece() && nextTile.getPiece().colour !== this.colour)
-                validMoves.push(nextTile.coordinate);
-
-            // If the nextTile is blocked by friendly piece
-            if (nextTile.hasPiece() && nextTile.getPiece().colour !== this.colour)
-                continue;
-
-            // If the nextTile is not blocked
-            if (!nextTile.hasPiece())
-                validMoves.push(nextTile.coordinate);
-
+            const neighbourTile = tempTile["getNeighbourTile" + directions[1][i]]();
+            if (neighbourTile !== undefined)
+                pseudolegalMoves.push(neighbourTile.coordinate);
         }
-
-        return validMoves;
+        return pseudolegalMoves;
     }
 }
