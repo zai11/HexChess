@@ -120,34 +120,6 @@ $('#register-submit').click(async function () {
             $('#error-alert').text('This shouldn\'t be visible');
         }, 3000);
     }
-    /*$.post("http://localhost:5501/AddUser", { username: username, email: email, password: password }, (data, status) => {
-        data = JSON.parse(data);
-        if (data.success) {
-            localStorage.setItem('id', data.user.id);
-            localStorage.setItem('username', data.user.username);
-            localStorage.setItem('email', data.user.email);
-            localStorage.setItem('elo', data.user.elo);
-            localStorage.setItem('loggedIn', data.user.loggedIn);
-            localStorage.setItem('uat', data.user.uat);
-            $('#register-container').css('visibility', 'hidden');
-            $('#not-logged-in').css('display', 'none');
-            $('#logged-in').css('display', 'flex');
-            $('#logged-in p').text('Logged in as ' + localStorage.getItem('username'));$('#success-alert').css('visibility', 'visible');
-            $('#success-alert').text('Registration successful');
-            setTimeout(() => {
-                $('#success-alert').css('visibility', 'hidden');
-                $('#success-alert').text('This shouldn\'t be visible');
-            }, 3000);
-        }
-        else {
-            $('#error-alert').css('visibility', 'visible');
-            $('#error-alert').text(data.errorMessage);
-            setTimeout(() => {
-                $('#error-alert').css('visibility', 'hidden');
-                $('#error-alert').text('This shouldn\'t be visible');
-            }, 3000);
-        }
-    });*/
 });
 
 $('#logout-button').click(async function () {
