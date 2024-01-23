@@ -1,13 +1,14 @@
 import { PromotionPrompt } from "./PromotionPrompt.js";
 
 export class UserInterfaceManager {
-    constructor(scene) {
+
+    DEVELOPMENT_BUILD = true;
+
+    constructor(scene, DEBUG) {
         const style_white = {color: '#FFF', fontSize: 20};
         this.scene = scene;
-        this.fps = this.scene.add.text(10, 10, '60 FPS', style_white)
-        this.playerToMove = this.scene.add.text(1270, 10, 'Player To Move: White', style_white).setOrigin(1,0);
-        this.halfMoveClock = this.scene.add.text(1270, 40, 'Half Move Clock: 0', style_white).setOrigin(1, 0);
-        this.fullMoveClock = this.scene.add.text(1270, 70, 'Full Move Clock: 0', style_white).setOrigin(1, 0);
+        if (this.DEVELOPMENT_BUILD)
+            this.fps = this.scene.add.text(10, 10, '60 FPS', style_white);
     }
 
     createPromotionPrompt = function (piece) {
@@ -23,9 +24,7 @@ export class UserInterfaceManager {
     }
 
     update = function () {
-        this.fps.setText(Math.round(this.scene.game.loop.actualFps) + ' FPS');
-        this.playerToMove.setText('Player To Move: ' + (this.scene.board.colour === 'w' ? 'White' : 'Black'));
-        this.halfMoveClock.setText('Half Move Clock: ' + this.scene.board.halfMoveClock);
-        this.fullMoveClock.setText('Full Move Clock: ' + this.scene.board.fullMoveClock);
+        if (this.DEVELOPMENT_BUILD)
+            this.fps.setText(Math.round(this.scene.game.loop.actualFps) + ' FPS');
     }
 }

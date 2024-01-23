@@ -4,18 +4,18 @@ buttons.forEach((button) => {
 
     $('#' + button + '-button').hover(() => {
         $('#' + button + '-sub-menu').css('visibility', 'visible');
-        $('#' + button + '-button').css('background-color', 'var(--primary-colour)');
+        $('#' + button + '-button').css('background-color', 'rgba(0, 0, 0, 0.5)');
     }, () => {
         $('#' + button + '-sub-menu').css('visibility', 'hidden');
-        $('#' + button + '-button').css('background-color', 'var(--secondary-colour)');
+        $('#' + button + '-button').css('background-color', 'rgba(0, 0, 0, 0.5)');
     });
     
     $('#' + button + '-sub-menu').hover(() => {
         $('#' + button + '-sub-menu').css('visibility', 'visible');
-        $('#' + button + '-button').css('background-color', 'var(--primary-colour)');
+        $('#' + button + '-button').css('background-color', 'rgba(0, 0, 0, 0.5)');
     }, () => {
         $('#' + button + '-sub-menu').css('visibility', 'hidden');
-        $('#' + button + '-button').css('background-color', 'var(--secondary-colour)');
+        $('#' + button + '-button').css('background-color', 'rgba(0, 0, 0, 0.5)');
     });
 });
 
@@ -32,6 +32,7 @@ $('#register-button').click(() => {
 $('.modal-close').click(() => {
     $('#login-container').css('visibility', 'hidden');
     $('#register-container').css('visibility', 'hidden');
+    $('#create-game-container').css('visibility', 'hidden');
 });
 
 if (localStorage.getItem('username') !== undefined && localStorage.getItem('username') !== null && localStorage.getItem('username') !== '') {
@@ -136,8 +137,8 @@ $('#logout-button').click(async function () {
     localStorage.removeItem('username');
     localStorage.removeItem('email');
     localStorage.removeItem('elo');
-    localStorage.removeItem('loggedIn');
     localStorage.removeItem('uat');
+    localStorage.setItem('loggedIn', false);
     $('#not-logged-in').css('display', 'block');
     $('#logged-in').css('display', 'none');
     $('#success-alert').css('visibility', 'visible');
@@ -148,6 +149,15 @@ $('#logout-button').click(async function () {
     }, 3000);
 });
 
-let displayError = (errorMessage) => {
-    alert(errorMessage);
-}
+$('#create-game-button').click(() => {
+    if (!localStorage.getItem('loggedIn')) {
+        $('#error-alert').css('visibility', 'visible');
+        $('#error-alert').text('You must be logged in to create a game.');
+        setTimeout(() => {
+            $('#error-alert').css('visibility', 'hidden');
+            $('#error-alert').text('This shouldn\'t be visible');
+        }, 3000);
+    } 
+    else
+        $('#create-game-container').css('visibility', 'visible');
+});

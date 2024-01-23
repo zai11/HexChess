@@ -36,10 +36,10 @@
 					<a id="learn-button" class="menu-item" href="./learn.html">Learn</a>
 					<a id="social-button" class="menu-item" href="./social.html">Social</a>
 					<div class="sub-menu" id="play-sub-menu">
-						<a id="" class="sub-menu-item" href="#">Create a game</a>
-						<a id="" class="sub-menu-item" href="#">Join a game</a>
-						<a id="" class="sub-menu-item" href="#">Local Multiplayer</a>
-						<a id="" class="sub-menu-item" href="#">Play against AI</a>
+						<a id="create-game-button" class="sub-menu-item" href="#">Create a game</a>
+						<a id="join-game-button" class="sub-menu-item" href="#">Join a game</a>
+						<a id="local-multiplayer-button" class="sub-menu-item" href="#">Local Multiplayer</a>
+						<a id="play-ai-button" class="sub-menu-item" href="#">Play against AI</a>
 					</div>
 					<div class="sub-menu" id="puzzles-sub-menu">
 						<a id="" class="sub-menu-item"></a>
@@ -100,6 +100,15 @@
 					<input type="password" id="register-password" />
 				</div>
 				<a id="register-submit" class="modal-submit" href="#">Register</a>
+			</div>
+			<div id="create-game-container" class="my-modal">
+				<a class="modal-close" href="#">×</a>
+				<p id="time-control-label">Select Time Control</p>
+				<select class="form-select form-select-med" id="time-control-select">
+					<option selected>3 mins | 0</option>
+
+				</select>
+				<a href="#" id="create-game-play-button">Create Game</a>
 			</div>
 		</div>
 

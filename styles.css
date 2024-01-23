@@ -87,7 +87,7 @@ a:hover {
     width: 80%;
     line-height: 100px;
     text-align: center;
-    background-color: var(--secondary-colour);
+    background-color: rgba(0,0,0,0.5);
     border: rgba(0,0,0,0.5) 1px solid;
 }
 
@@ -96,7 +96,7 @@ a:hover {
     height: 100vh;
     background-color: rgba(0,0,0,0.8);
     position: absolute;
-    left: 270px;
+    left: 269px;
     top: 0;
     display: flex;
     flex-direction: column;
@@ -166,7 +166,7 @@ a:hover {
 .my-modal {
     position: absolute;
     width: 400px;
-    height: 430px;
+    height: 60%;
     background-color: rgba(0,0,0,0.9);
     top: calc((100vh - 400px)/2);
     display: flex;
@@ -212,8 +212,36 @@ a:hover {
     border: black 1px solid;
     display: block;
     width: 100px;
-    height: 40px;
+    height: 50px;
     line-height: 40px;
     text-align: center;
     margin-top: 30px;
+}
+
+#create-game-container {
+    visibility: visible;
+    height: 40%;
+    top: calc((100vh - 40%)/2);
+}
+
+#time-control-label {
+    padding-bottom: 15px;
+    margin-top: 10%;
+}
+
+#time-control-select {
+    width: 150px;
+    height: 40px;
+}
+
+#create-game-play-button {
+    display: block;
+    width: 50%;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background-color: var(--secondary-colour);
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 10px;
+    margin-top: 10%;
 }
