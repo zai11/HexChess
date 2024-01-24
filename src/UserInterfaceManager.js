@@ -4,7 +4,7 @@ export class UserInterfaceManager {
 
     DEVELOPMENT_BUILD = true;
 
-    constructor(scene, DEBUG) {
+    constructor(scene) {
         const style_white = {color: '#FFF', fontSize: 20};
         this.scene = scene;
         if (this.DEVELOPMENT_BUILD)
