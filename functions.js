@@ -161,3 +161,44 @@ $('#create-game-button').click(() => {
     else
         $('#create-game-container').css('visibility', 'visible');
 });
+
+$('#create-game-modal-button').click(async function () {
+    console.log("Clicked");
+    if (!localStorage.getItem('loggedIn')) {
+        $('#error-alert').css('visibility', 'visible');
+        $('#error-alert').text('You must be logged in to create a game.');
+        setTimeout(() => {
+            $('#error-alert').css('visibility', 'hidden');
+            $('#error-alert').text('This shouldn\'t be visible');
+        }, 3000);
+    }
+    const id = localStorage.getItem('id');
+    const uat = localStorage.getItem('uat');
+    const timeControl = $('#time-control-select').val();
+    const response = await fetch("https://localhost:5501/CreateGameRequest/",
+    {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({'playerID': id, 'timeControl': timeControl, 'userAccessToken': uat})
+    });
+    const data = await response.json();
+    console.log(data);
+    if (data.success) {
+        $('#success-alert').text('Game request created successfully. You will be able to play once someone else joins the game.');
+        setTimeout(() => {
+            $('#success-alert').css('visibility', 'hidden');
+            $('#success-alert').text('This shouldn\'t be visible');
+        }, 3000);
+    }
+    else {
+        $('#error-alert').css('visibility', 'visible');
+        $('#error-alert').text(data.errorMessage);
+        setTimeout(() => {
+            $('#error-alert').css('visibility', 'hidden');
+            $('#error-alert').text('This shouldn\'t be visible');
+        }, 3000);
+    }
+});
