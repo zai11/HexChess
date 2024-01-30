@@ -315,10 +315,6 @@ export class Board
         prevTile.setSelected(false);
         this.selectedTile = undefined;
         let piece = prevTile.getPiece();
-        prevTile.removePiece();
-        if (tile.hasPiece()) {
-            this.removePiece(this.getPieceFromCoord(tile.coordinate));
-        }
 
         // Check pawn double move:
         if (piece.type === 'pawn') {
@@ -338,6 +334,9 @@ export class Board
             }
         }
 
+        let enPassant = false;
+        let enPassantTile;
+
         // Check en passant:
         if (piece.type === 'pawn') {
             switch (piece.colour) {
@@ -350,6 +349,8 @@ export class Board
                         if (takenPiece !== undefined && takenPiece.colour !== piece.colour) {
                             this.removePiece(takenPiece);
                         }
+                        enPassant = true;
+                        enPassantTile = takenTile;
                     } 
                     else if (tile.coordinate.charCodeAt(0) > prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
                         this.hasEnPassant = false;
@@ -359,6 +360,8 @@ export class Board
                         if (takenPiece !== undefined && takenPiece.colour !== piece.colour) {
                             this.removePiece(takenPiece);
                         }
+                        enPassant = true;
+                        enPassantTile = takenTile;
                     }
                     break;
                 case 'black':
@@ -370,6 +373,8 @@ export class Board
                         if (takenPiece !== undefined && takenPiece.colour !== piece.colour) {
                             this.removePiece(takenPiece);
                         }
+                        enPassant = true;
+                        enPassantTile = takenTile;
                     } 
                     else if (tile.coordinate.charCodeAt(0) > prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
                         this.hasEnPassant = false;
@@ -379,10 +384,14 @@ export class Board
                         if (takenPiece !== undefined && takenPiece.colour !== piece.colour) {
                             this.removePiece(takenPiece);
                         }
+                        enPassant = true;
+                        enPassantTile = takenTile;
                     }
                     break;
             }
         }
+
+        let promoted = false;
 
         // Check promotion:
         if (piece.type === 'pawn') {
@@ -390,14 +399,15 @@ export class Board
             if (neighbourTileNorth === undefined) {
                 this.awaitingPromotion = true;
                 this.scene.ui.createPromotionPrompt(piece);
-                this.removePiece(piece)
+                this.removePiece(piece);
+                promoted = true;
             }
-            else {
-                this.togglePlayer();
-            }
-        } else {
-            this.togglePlayer();
         }
+
+        this.logMove(prevTile, tile, enPassant, enPassantTile);
+
+        if (!promoted)
+            this.togglePlayer();
 
         piece.moveTo(tile.coordinate);
         tile.setPiece(piece);
@@ -408,6 +418,37 @@ export class Board
 
     handlePieceMoveOnline = function () {
 
+    }
+
+    logMove = function (prevTile, tile, enPassant, enPassantTile) {
+        const prevMoveCount = $('#moves').children().length + 1;
+        const algebraicNotation = this.getAlgebraicNotation(prevTile, tile, enPassant, enPassantTile);
+        switch (this.colour) {
+            case 'white':
+                $('#moves').append(`<div class='move' id='${prevMoveCount}'><div class='number'><p>${prevMoveCount}</p></div><div class='white'><p>${algebraicNotation}</p></div><div class='black'><p>-</p></div></div>`)
+                break;
+            case 'black':
+                $('#moves').children().last().children('.black').children().last().text(algebraicNotation);
+                break;
+        }
+    }
+
+    getAlgebraicNotation = function (prevTile, tile, enPassant, enPassantTile) {
+        let notation = '';
+        const movingPiece = prevTile.getPiece();
+        const attacking = tile.hasPiece() || enPassant;
+        const takenPiece = enPassant ? enPassantTile : tile.getPiece();
+        if (movingPiece.type !== 'pawn')
+            notation += movingPiece.getFENChar().toUpperCase();
+
+        if (attacking && movingPiece.type === 'pawn')
+            notation += prevTile.coordinate.toLowerCase()[0] + 'x';
+        else if (attacking && movingPiece.type !== 'pawn')
+            notation += 'x';
+
+        notation += tile.coordinate.toLowerCase();
+
+        return notation;
     }
 
     togglePlayer = function () {
