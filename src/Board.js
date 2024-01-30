@@ -406,6 +406,9 @@ export class Board
 
         this.logMove(prevTile, tile, enPassant, enPassantTile);
 
+        if (tile.hasPiece())
+            this.removePiece(tile.getPiece());
+
         if (!promoted)
             this.togglePlayer();
 
