@@ -208,6 +208,7 @@ export class Board
         this.addPiece(knight);
         const pseudolegalMoves = knight.getPseudolegalMoves();
         this.removePiece(knight);
+        this.addPiece(king);
         pseudolegalMoves.forEach(move => {
             const piece = this.getPieceFromCoord(move);
             if (piece !== undefined && piece.type === 'knight' && piece.colour !== king.colour)
@@ -222,6 +223,7 @@ export class Board
         this.addPiece(bishop);
         const pseudolegalMoves = bishop.getPseudolegalMoves();
         this.removePiece(bishop);
+        this.addPiece(king);
         pseudolegalMoves.forEach(move => {
             const piece = this.getPieceFromCoord(move);
             if (piece === undefined)
@@ -241,6 +243,7 @@ export class Board
         this.addPiece(rook);
         const pseudolegalMoves = rook.getPseudolegalMoves();
         this.removePiece(rook);
+        this.addPiece(king);
         pseudolegalMoves.forEach(move => {
             const piece = this.getPieceFromCoord(move);
             if (piece === undefined)
@@ -259,6 +262,7 @@ export class Board
         this.addPiece(queen);
         const pseudolegalMoves = queen.getPseudolegalMoves();
         this.removePiece(queen);
+        this.addPiece(king);
         pseudolegalMoves.forEach(move => {
             const piece = this.getPieceFromCoord(move);
             if (piece === undefined)
@@ -280,6 +284,8 @@ export class Board
             this.selectedTile = tile;
             this.clearValidTiles();
         }
+
+        console.log(tile.coordinate + ", " + tile.hasPiece())
 
         // Selected tile is not valid, has piece: set current tile to selected, set valid tiles to piece's valid moves
         if (!this.validTiles.includes(tile.coordinate) && tile.hasPiece()) {
