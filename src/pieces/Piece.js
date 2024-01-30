@@ -38,8 +38,6 @@ export class Piece {
     getLegalMoves = function () {
         const legalMoves = [];
         const pseudolegalMoves = this.getPseudolegalMoves();
-        //console.log(pseudolegalMoves);
-        console.log(this.board.findKing('black').coordinate);
         pseudolegalMoves.forEach(move => {
             if (this.isValidMove(move))
                 legalMoves.push(move);

@@ -8,15 +8,15 @@ export class PromotionPrompt {
         this.piece = piece;
         this.scene = scene;
         const style_black = {color: '#000', fontSize: 15};
-        this.background = this.scene.add.sprite(0, 810, 'spr_promotion_prompt').setOrigin(0,1);
-        this.title = this.scene.add.text(100, 440, 'Pawn Promotion:', style_black).setOrigin(0.5,0);
-        this.promotionKnight = this.scene.add.sprite(100, 490, 'spr_piece_' + piece.colour + '_knight').setOrigin(0.5, 0).setScale(0.08).setInteractive();
+        this.background = this.scene.add.sprite(0, 810, 'spr_promotion_prompt').setOrigin(0,1).setDepth(1000);
+        this.title = this.scene.add.text(100, 440, 'Pawn Promotion:', style_black).setOrigin(0.5,0).setDepth(1000);
+        this.promotionKnight = this.scene.add.sprite(100, 490, 'spr_piece_' + piece.colour + '_knight').setOrigin(0.5, 0).setScale(0.08).setInteractive().setDepth(1000);
         this.promotionKnight.on('pointerdown', this.knightSelected, this);
-        this.promotionBishop = this.scene.add.sprite(100, 560, 'spr_piece_' + piece.colour + '_bishop').setOrigin(0.5, 0).setScale(0.08).setInteractive();
+        this.promotionBishop = this.scene.add.sprite(100, 560, 'spr_piece_' + piece.colour + '_bishop').setOrigin(0.5, 0).setScale(0.08).setInteractive().setDepth(1000);
         this.promotionBishop.on('pointerdown', this.bishopSelected, this);
-        this.promotionRook = this.scene.add.sprite(100, 630, 'spr_piece_' + piece.colour + '_rook').setOrigin(0.5, 0).setScale(0.08).setInteractive();
+        this.promotionRook = this.scene.add.sprite(100, 630, 'spr_piece_' + piece.colour + '_rook').setOrigin(0.5, 0).setScale(0.08).setInteractive().setDepth(1000);
         this.promotionRook.on('pointerdown', this.rookSelected, this);
-        this.promotionQueen = this.scene.add.sprite(100, 700, 'spr_piece_' + piece.colour + '_queen').setOrigin(0.5, 0).setScale(0.08).setInteractive();
+        this.promotionQueen = this.scene.add.sprite(100, 700, 'spr_piece_' + piece.colour + '_queen').setOrigin(0.5, 0).setScale(0.08).setInteractive().setDepth(1000);
         this.promotionQueen.on('pointerdown', this.queenSelected, this);
     }
 
@@ -33,23 +33,31 @@ export class PromotionPrompt {
         this.piece = this.scene.board.addPiece(new Knight(this.piece.board, this.piece.coordinate, this.piece.colour, this.scene));
         this.scene.ui.destroyPromotionPrompt();
         this.scene.board.togglePlayer();
+        this.scene.board.buildTiles();
+        this.scene.board.buildCoordinates();
     }
 
     bishopSelected = function () {
         this.piece = this.scene.board.addPiece(new Bishop(this.piece.board, this.piece.coordinate, this.piece.colour, this.scene));
         this.scene.ui.destroyPromotionPrompt();
         this.scene.board.togglePlayer();
+        this.scene.board.buildTiles();
+        this.scene.board.buildCoordinates();
     }
 
     rookSelected = function () {
         this.piece = this.scene.board.addPiece(new Rook(this.piece.board, this.piece.coordinate, this.piece.colour, this.scene));
         this.scene.ui.destroyPromotionPrompt();
         this.scene.board.togglePlayer();
+        this.scene.board.buildTiles();
+        this.scene.board.buildCoordinates();
     }
 
     queenSelected = function () {
         this.piece = this.scene.board.addPiece(new Queen(this.piece.board, this.piece.coordinate, this.piece.colour, this.scene));
         this.scene.ui.destroyPromotionPrompt();
         this.scene.board.togglePlayer();
+        this.scene.board.buildTiles();
+        this.scene.board.buildCoordinates();
     }
 }
