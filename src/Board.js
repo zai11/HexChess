@@ -285,8 +285,6 @@ export class Board
             this.clearValidTiles();
         }
 
-        console.log(tile.coordinate + ", " + tile.hasPiece())
-
         // Selected tile is not valid, has piece: set current tile to selected, set valid tiles to piece's valid moves
         if (!this.validTiles.includes(tile.coordinate) && tile.hasPiece()) {
             tile.setSelected();
@@ -320,15 +318,6 @@ export class Board
         prevTile.removePiece();
         if (tile.hasPiece()) {
             this.removePiece(this.getPieceFromCoord(tile.coordinate));
-        }
-
-        // Check promotion:
-        if (piece.type === 'pawn') {
-            let neighbourTileNorth = tile.getNeighbourTileNorth(piece.colour);
-            if (neighbourTileNorth === undefined) {
-                this.awaitingPromotion = true;
-                this.scene.ui.createPromotionPrompt(piece);
-            }
         }
 
         // Check pawn double move:
@@ -395,10 +384,24 @@ export class Board
             }
         }
 
+        // Check promotion:
+        if (piece.type === 'pawn') {
+            let neighbourTileNorth = tile.getNeighbourTileNorth(piece.colour);
+            if (neighbourTileNorth === undefined) {
+                this.awaitingPromotion = true;
+                this.scene.ui.createPromotionPrompt(piece);
+                this.removePiece(piece)
+            }
+            else {
+                this.togglePlayer();
+            }
+        } else {
+            this.togglePlayer();
+        }
+
         piece.moveTo(tile.coordinate);
         tile.setPiece(piece);
         this.clearValidTiles();
-        this.togglePlayer();
         this.buildTiles();
         this.buildCoordinates();
     }

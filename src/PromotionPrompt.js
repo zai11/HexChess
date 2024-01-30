@@ -30,26 +30,26 @@ export class PromotionPrompt {
     }
 
     knightSelected = function () {
-        this.piece.take();
         this.piece = this.scene.board.addPiece(new Knight(this.piece.board, this.piece.coordinate, this.piece.colour, this.scene));
         this.scene.ui.destroyPromotionPrompt();
+        this.scene.board.togglePlayer();
     }
 
     bishopSelected = function () {
-        this.piece.take();
         this.piece = this.scene.board.addPiece(new Bishop(this.piece.board, this.piece.coordinate, this.piece.colour, this.scene));
         this.scene.ui.destroyPromotionPrompt();
+        this.scene.board.togglePlayer();
     }
 
     rookSelected = function () {
-        this.piece.take();
         this.piece = this.scene.board.addPiece(new Rook(this.piece.board, this.piece.coordinate, this.piece.colour, this.scene));
         this.scene.ui.destroyPromotionPrompt();
+        this.scene.board.togglePlayer();
     }
 
     queenSelected = function () {
-        this.piece.take();
         this.piece = this.scene.board.addPiece(new Queen(this.piece.board, this.piece.coordinate, this.piece.colour, this.scene));
         this.scene.ui.destroyPromotionPrompt();
+        this.scene.board.togglePlayer();
     }
 }
