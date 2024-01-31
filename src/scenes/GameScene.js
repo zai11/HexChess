@@ -12,7 +12,7 @@ export default class GameScene extends Phaser.Scene
 	preload = function() {
         this.load.setBaseURL('/assets/');
 
-        this.load.text('fen_initial_layout', './fen/initial_layout.fen');
+        this.load.text('fen_initial_layout', './fen/test.fen');
 
         this.load.json('json_tile_data_white', './json/tile_data_white.json');
         this.load.json('json_tile_data_black', './json/tile_data_black.json');

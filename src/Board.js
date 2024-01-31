@@ -522,9 +522,11 @@ export class Board
         this.clearValidTiles();
         this.buildTiles();
         this.buildCoordinates();
+        this.handleStalemate();
         this.handleMate();
         this.handleRepetition();
         this.handle50Move();
+        this.handleDeadPosition();
     }
 
     handlePieceMoveOnline = function () {
@@ -606,6 +608,32 @@ export class Board
         if (this.halfMoveClock >= 100) {
             $('#game-end-container').css('visibility', 'visible');
             $('#game-end-container').children('p').first().text('Game Drawn!');
+        }
+    }
+
+    handleStalemate = function () {
+        let legalMovesExist = false;
+        this.pieces.forEach(piece => {
+            if (piece.colour === this.colour) {
+                const legalMoves = piece.getLegalMoves();
+
+                if (legalMoves.length > 0)
+                    legalMovesExist = true;
+            }
+        });
+
+        if (!legalMovesExist && ((this.colour === 'white' && !this.isCheckWhite()) || (this.colour === 'black' && !this.isCheckBlack()))) {
+            $('#game-end-container').css('visibility', 'visible');
+            $('#game-end-container').children('p').first().text('Game Drawn!');
+        }
+    }
+
+    handleDeadPosition = function () {
+        if (this.pieces.length == 2) {
+            if (this.pieces[0].type === 'king' && this.pieces[1].type === 'king') {
+                $('#game-end-container').css('visibility', 'visible');
+                $('#game-end-container').children('p').first().text('Game Drawn!');
+            }
         }
     }
 
