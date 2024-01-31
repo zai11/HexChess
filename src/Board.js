@@ -184,12 +184,7 @@ export class Board
         piece.moveTo(coordinate);
         destinationTile.setPiece(piece);
 
-        const king = this.findKing('white');
-        const legalMoves = king.getLegalMoves();
-
-        let resultsInMate = false;
-        if (this.isCheckWhite() && legalMoves.length === 0)
-            resultsInMate = true;
+        const resultsInMate = this.isMateWhite();
 
         piece.moveTo(originTile.coordinate);
         originTile.setPiece(piece);
@@ -201,7 +196,33 @@ export class Board
     }
 
     resultsInMateBlack = function (piece, coordinate) {
+        const destinationTile = this.getTileFromCoord(coordinate);
+        const originTile = this.getTileFromCoord(piece.coordinate);
+        const pieceAtCoordinate = this.getPieceFromCoord(coordinate);
+        piece.moveTo(coordinate);
+        destinationTile.setPiece(piece);
 
+        const resultsInMate = this.isMateBlack();
+
+        piece.moveTo(originTile.coordinate);
+        originTile.setPiece(piece);
+        if (pieceAtCoordinate !== undefined)
+            destinationTile.setPiece(pieceAtCoordinate);
+        else
+            destinationTile.removePiece();
+        return resultsInMate;
+    }
+
+    isMateWhite = function () {
+        const king = this.findKing('white');
+        const legalMoves = king.getLegalMoves();
+        return this.isCheckWhite() && legalMoves.length === 0
+    }
+
+    isMateBlack = function () {
+        const king = this.findKing('black');
+        const legalMoves = king.getLegalMoves();
+        return this.isCheckBlack() && legalMoves.length === 0
     }
 
     resultsInCheckWhite = function (piece, coordinate) {
@@ -491,6 +512,7 @@ export class Board
         this.clearValidTiles();
         this.buildTiles();
         this.buildCoordinates();
+        this.handleMate();
     }
 
     handlePieceMoveOnline = function () {
@@ -541,6 +563,17 @@ export class Board
         
 
         return notation;
+    }
+
+    handleMate = function () {
+        if (this.isMateWhite()) {
+            $('#game-end-container').css('visibility', 'visible');
+            $('#game-end-container').children('p').first().text('Black won!');
+        }
+        else if (this.isMateBlack()) {
+            $('#game-end-container').css('visibility', 'visible');
+            $('#game-end-container').children('p').first().text('White won!');
+        }
     }
 
     togglePlayer = function () {

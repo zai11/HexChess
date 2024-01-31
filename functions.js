@@ -22,17 +22,22 @@ buttons.forEach((button) => {
 $('#login-button').click(() => {
     $('#login-container').css('visibility', 'visible');
     $('#register-container').css('visibility', 'hidden');
+    $('#create-game-container').css('visibility', 'hidden');
+    $('#game-end-container').css('visibility', 'hidden');
 });
 
 $('#register-button').click(() => {
     $('#login-container').css('visibility', 'hidden');
     $('#register-container').css('visibility', 'visible');
+    $('#create-game-container').css('visibility', 'hidden');
+    $('#game-end-container').css('visibility', 'hidden');
 });
 
 $('.modal-close').click(() => {
     $('#login-container').css('visibility', 'hidden');
     $('#register-container').css('visibility', 'hidden');
     $('#create-game-container').css('visibility', 'hidden');
+    $('#game-end-container').css('visibility', 'hidden');
 });
 
 if (localStorage.getItem('username') !== undefined && localStorage.getItem('username') !== null && localStorage.getItem('username') !== '') {

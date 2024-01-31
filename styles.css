@@ -2,6 +2,7 @@
 :root {
     --primary-colour: #3d2877;
     --secondary-colour: #5e3eb7;
+    --tertiary-colour: #764EE6;
     --highlight-colour: #eee;
 }
 
@@ -168,7 +169,7 @@ a:hover {
     width: 400px;
     height: 60%;
     background-color: rgba(0,0,0,0.9);
-    top: calc((100vh - 400px)/2);
+    top: calc((100vh - 60%)/2);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -207,15 +208,20 @@ a:hover {
     height: 30px;
 }
 
-.modal-submit {
+.modal-submit, #play-again-button, #play-another-game-button {
     background-color: var(--secondary-colour);
     border: black 1px solid;
     display: block;
     width: 100px;
     height: 50px;
-    line-height: 40px;
+    line-height: 50px;
     text-align: center;
     margin-top: 30px;
+    border-radius: 5px;
+}
+
+.modal-submit:hover, #play-again-button:hover, #play-another-game-button:hover {
+    background-color: var(--primary-colour);
 }
 
 #create-game-container {
@@ -243,4 +249,21 @@ a:hover {
     border: 1px solid rgba(0,0,0,0.5);
     border-radius: 10px;
     margin-top: 6%;
+}
+
+#game-end-container {
+    visibility: visible;
+    height: 350px;
+    top: calc((100vh - 350px) / 2);
+}
+
+#game-end-container p {
+    color: var(--tertiary-colour);
+    font-size: 22pt;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#play-another-game-button {
+    width: 200px;
 }
