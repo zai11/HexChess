@@ -23,6 +23,8 @@ export class Board
     hasEnPassant = false;
     enPassant = '';
     localGame = true;
+
+    previousBoards = [];
     
 
     constructor (scene, colour, tiles_data, coords_data) {
@@ -77,6 +79,8 @@ export class Board
                     break;
             }
         });
+
+        this.previousBoards.push(this.toFEN().split(' ')[0]);
     }
 
     buildCoordinates = function (colour) {
@@ -410,6 +414,8 @@ export class Board
         prevTile.setSelected(false);
         this.selectedTile = undefined;
         let piece = prevTile.getPiece();
+        this.hasEnPassant = false;
+        this.enPassant = undefined;
 
         // Check pawn double move:
         if (piece.type === 'pawn') {
@@ -499,6 +505,10 @@ export class Board
             }
         }
 
+        // Check half move clock reset:
+        if (piece.type === 'pawn' || tile.hasPiece() || enPassant)
+            this.halfMoveClock = 0;
+
         this.logMove(prevTile, tile, enPassant, enPassantTile);
 
         if (tile.hasPiece())
@@ -513,6 +523,8 @@ export class Board
         this.buildTiles();
         this.buildCoordinates();
         this.handleMate();
+        this.handleRepetition();
+        this.handle50Move();
     }
 
     handlePieceMoveOnline = function () {
@@ -568,11 +580,32 @@ export class Board
     handleMate = function () {
         if (this.isMateWhite()) {
             $('#game-end-container').css('visibility', 'visible');
-            $('#game-end-container').children('p').first().text('Black won!');
+            $('#game-end-container').children('p').first().text('Black Won!');
         }
         else if (this.isMateBlack()) {
             $('#game-end-container').css('visibility', 'visible');
-            $('#game-end-container').children('p').first().text('White won!');
+            $('#game-end-container').children('p').first().text('White Won!');
+        }
+    }
+
+    handleRepetition = function () {
+        const currentFEN = this.toFEN().split(' ')[0];
+        let count = 0;
+        this.previousBoards.forEach(fen => {
+            if (fen === currentFEN)
+                count++;
+        });
+
+        if (count >= 3) {
+            $('#game-end-container').css('visibility', 'visible');
+            $('#game-end-container').children('p').first().text('Game Drawn!');
+        }
+    }
+
+    handle50Move = function () {
+        if (this.halfMoveClock >= 100) {
+            $('#game-end-container').css('visibility', 'visible');
+            $('#game-end-container').children('p').first().text('Game Drawn!');
         }
     }
 
