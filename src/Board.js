@@ -228,6 +228,7 @@ export class Board
         const pieceAtCoordinate = this.getPieceFromCoord(coordinate);
         piece.moveTo(coordinate);
         destinationTile.setPiece(piece);
+        originTile.removePiece();
         let resultsInCheck = false;
         if (this.isCheckBlack())
             resultsInCheck = true;
@@ -353,7 +354,6 @@ export class Board
             return;
         // Selected tile is not valid, no piece: just set current tile to selected and clear valid tiles
         if (!this.validTiles.includes(tile.coordinate) && !tile.hasPiece()) {
-            console.log('Called 1');
             tile.setSelected();
             this.selectedTile = tile;
             this.clearValidTiles();
@@ -361,13 +361,11 @@ export class Board
 
         // Selected tile is not valid, has piece: set current tile to selected, set valid tiles to piece's valid moves
         if (!this.validTiles.includes(tile.coordinate) && tile.hasPiece()) {
-            console.log('Called 2');
             tile.setSelected();
             this.selectedTile = tile;
             let piece = tile.getPiece();
             this.clearValidTiles();
             if (piece.colour === this.colour) {
-                console.log('Called 3');
                 this.validTiles = piece.getLegalMoves();
                 this.validTiles.forEach(move => {
                     let t = this.getTileFromCoord(move);
@@ -378,7 +376,6 @@ export class Board
 
         // Tile selected is valid: move piece from previously selected tile to newly selected tile.
         if (this.validTiles.includes(tile.coordinate)) {
-            console.log('Called 3');
             if (this.localGame)
                 this.handlePieceMoveLocal(tile);
             else
@@ -527,8 +524,6 @@ export class Board
             notation += 'x';
 
         notation += tile.coordinate.toLowerCase();
-
-        console.log(this.resultsInMateWhite(movingPiece, tile.coordinate));
 
         switch (movingPiece.colour) {
             case 'white':
