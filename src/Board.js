@@ -137,6 +137,12 @@ export class Board
         this.getTileFromCoord(piece.coordinate).removePiece();
     }
 
+    tempRemovePiece = function (piece) {
+        const indexOfPiece = this.pieces.indexOf(piece);
+        this.pieces.splice(indexOfPiece, 1);
+        this.getTileFromCoord(piece.coordinate).removePiece();
+    }
+
     getPieceFromCoord = function (coordinate) {
         let result = undefined;
         this.pieces.forEach((piece) => {
@@ -169,6 +175,69 @@ export class Board
                 return piece;
         }
         return undefined;
+    }
+
+    resultsInMateWhite = function (piece, coordinate) {
+        const destinationTile = this.getTileFromCoord(coordinate);
+        const originTile = this.getTileFromCoord(piece.coordinate);
+        const pieceAtCoordinate = this.getPieceFromCoord(coordinate);
+        piece.moveTo(coordinate);
+        destinationTile.setPiece(piece);
+
+        const king = this.findKing('white');
+        const legalMoves = king.getLegalMoves();
+
+        let resultsInMate = false;
+        if (this.isCheckWhite() && legalMoves.length === 0)
+            resultsInMate = true;
+
+        piece.moveTo(originTile.coordinate);
+        originTile.setPiece(piece);
+        if (pieceAtCoordinate !== undefined)
+            destinationTile.setPiece(pieceAtCoordinate);
+        else
+            destinationTile.removePiece();
+        return resultsInMate;
+    }
+
+    resultsInMateBlack = function (piece, coordinate) {
+
+    }
+
+    resultsInCheckWhite = function (piece, coordinate) {
+        const destinationTile = this.getTileFromCoord(coordinate);
+        const originTile = this.getTileFromCoord(piece.coordinate);
+        const pieceAtCoordinate = this.getPieceFromCoord(coordinate);
+        piece.moveTo(coordinate);
+        destinationTile.setPiece(piece);
+        let resultsInCheck = false;
+        if (this.isCheckWhite())
+            resultsInCheck = true;
+        piece.moveTo(originTile.coordinate);
+        originTile.setPiece(piece);
+        if (pieceAtCoordinate !== undefined)
+            destinationTile.setPiece(pieceAtCoordinate);
+        else
+            destinationTile.removePiece();
+        return resultsInCheck;
+    }
+
+    resultsInCheckBlack = function (piece, coordinate) {
+        const destinationTile = this.getTileFromCoord(coordinate);
+        const originTile = this.getTileFromCoord(piece.coordinate);
+        const pieceAtCoordinate = this.getPieceFromCoord(coordinate);
+        piece.moveTo(coordinate);
+        destinationTile.setPiece(piece);
+        let resultsInCheck = false;
+        if (this.isCheckBlack())
+            resultsInCheck = true;
+        piece.moveTo(originTile.coordinate);
+        originTile.setPiece(piece);
+        if (pieceAtCoordinate !== undefined)
+            destinationTile.setPiece(pieceAtCoordinate);
+        else
+            destinationTile.removePiece();
+        return resultsInCheck;
     }
 
     isCheck = function () {
@@ -205,6 +274,7 @@ export class Board
     isCheckKnight = function (king) {
         let isCheck = false;
         const knight = new Knight(this, king.coordinate, king.colour === 'white' ? 'black' : 'white', this.scene);
+        this.tempRemovePiece(king);
         this.addPiece(knight);
         const pseudolegalMoves = knight.getPseudolegalMoves();
         this.removePiece(knight);
@@ -220,6 +290,7 @@ export class Board
     isCheckBishop = function (king) {
         let isCheck = false;
         const bishop = new Bishop(this, king.coordinate, king.colour === 'white' ? 'black' : 'white', this.scene);
+        this.tempRemovePiece(king);
         this.addPiece(bishop);
         const pseudolegalMoves = bishop.getPseudolegalMoves();
         this.removePiece(bishop);
@@ -240,6 +311,7 @@ export class Board
     isCheckRook = function (king) {
         let isCheck = false;
         const rook = new Rook(this, king.coordinate, king.colour === 'white' ? 'black' : 'white', this.scene);
+        this.tempRemovePiece(king);
         this.addPiece(rook);
         const pseudolegalMoves = rook.getPseudolegalMoves();
         this.removePiece(rook);
@@ -259,6 +331,7 @@ export class Board
     isCheckQueen = function (king) {
         let isCheck = false;
         const queen = new Queen(this, king.coordinate, king.colour === 'white' ? 'black' : 'white', this.scene);
+        this.tempRemovePiece(king);
         this.addPiece(queen);
         const pseudolegalMoves = queen.getPseudolegalMoves();
         this.removePiece(queen);
@@ -280,6 +353,7 @@ export class Board
             return;
         // Selected tile is not valid, no piece: just set current tile to selected and clear valid tiles
         if (!this.validTiles.includes(tile.coordinate) && !tile.hasPiece()) {
+            console.log('Called 1');
             tile.setSelected();
             this.selectedTile = tile;
             this.clearValidTiles();
@@ -287,11 +361,13 @@ export class Board
 
         // Selected tile is not valid, has piece: set current tile to selected, set valid tiles to piece's valid moves
         if (!this.validTiles.includes(tile.coordinate) && tile.hasPiece()) {
+            console.log('Called 2');
             tile.setSelected();
             this.selectedTile = tile;
             let piece = tile.getPiece();
             this.clearValidTiles();
             if (piece.colour === this.colour) {
+                console.log('Called 3');
                 this.validTiles = piece.getLegalMoves();
                 this.validTiles.forEach(move => {
                     let t = this.getTileFromCoord(move);
@@ -302,6 +378,7 @@ export class Board
 
         // Tile selected is valid: move piece from previously selected tile to newly selected tile.
         if (this.validTiles.includes(tile.coordinate)) {
+            console.log('Called 3');
             if (this.localGame)
                 this.handlePieceMoveLocal(tile);
             else
@@ -450,6 +527,23 @@ export class Board
             notation += 'x';
 
         notation += tile.coordinate.toLowerCase();
+
+        console.log(this.resultsInMateWhite(movingPiece, tile.coordinate));
+
+        switch (movingPiece.colour) {
+            case 'white':
+                if (this.resultsInMateBlack(movingPiece, tile.coordinate))
+                    notation += '#';
+                else if (this.resultsInCheckBlack(movingPiece, tile.coordinate))
+                    notation += '+';
+                break;
+            case 'black':
+                if (this.resultsInMateWhite(movingPiece, tile.coordinate))
+                    notation += '#';
+                else if (this.resultsInCheckWhite(movingPiece, tile.coordinate))
+                    notation += '+';
+        }
+        
 
         return notation;
     }

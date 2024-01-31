@@ -59,25 +59,16 @@ export class Piece {
                 return false;
         }
 
-        const destinationTile = this.board.getTileFromCoord(coordinate);
-        const originTile = this.board.getTileFromCoord(this.coordinate);
-        const pieceAtCoordinate = this.board.getPieceFromCoord(coordinate);
-        this.moveTo(coordinate);
-        destinationTile.setPiece(this);
-        let resultsInCheck = false;
-        if (this.colour === 'white' && this.board.isCheckWhite())
-            resultsInCheck = true;
-        else if (this.colour === 'black' && this.board.isCheckBlack())
-            resultsInCheck = true;
-        this.moveTo(originTile.coordinate);
-        originTile.setPiece(this);
-        if (pieceAtCoordinate !== undefined)
-            destinationTile.setPiece(pieceAtCoordinate);
-        else
-            destinationTile.removePiece();
+        if (this.colour === 'white') {
+            if (this.board.resultsInCheckWhite(this, coordinate))
+                return false;
+        }
+        else if (this.colour === 'black') {
+            if (this.board.resultsInCheckBlack(this, coordinate))
+                return false;
+        }
 
-        if (resultsInCheck)
-            return false;
+        const destinationTile = this.board.getTileFromCoord(coordinate);
 
         if (destinationTile.hasPiece() && destinationTile.getPiece().colour !== this.colour) {
             if (this.type !== 'pawn')
