@@ -38,6 +38,7 @@ $('.modal-close').click(() => {
     $('#login-container').css('visibility', 'hidden');
     $('#register-container').css('visibility', 'hidden');
     $('#active-games-container').css('visibility', 'hidden');
+    $('#completed-games-container').css('visibility', 'hidden');
     $('#create-game-container').css('visibility', 'hidden');
     $('#game-end-container').css('visibility', 'hidden');
     activeGamesModalOpen = false;
@@ -183,14 +184,13 @@ async function updateActiveGames() {
         body: JSON.stringify({'userID': localStorage.getItem('id')})
     });
     const gamesJSON = await response.json();
-    $('#games-container').empty();
+    $('.games-container').empty();
     let games = gamesJSON.activeGames;
     games.forEach(async function (game) {
-        console.log(game);
         const turn = game.playerTurn == localStorage.getItem('id') ? 'my-turn' : 'opponent-turn';
         const opponent = game.whitePlayer.id == localStorage.getItem('id') ? game.blackPlayer : game.whitePlayer;
         const [clock, unit] = getClockAndUnit(game);
-        $('#games-container').append(`<div class='game' value='${game.id}'><p class='game-detail ${turn}' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail ${turn}' id='time-left'>~${clock} ${unit} Left</p></div>`);
+        $('.games-container').append(`<div class='game' value='${game.id}'><p class='game-detail ${turn}' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail ${turn}' id='time-left'>~${clock} ${unit} Left</p></div>`);
     });
     setTimeout(async function () {
         if (activeGamesModalOpen)
@@ -265,5 +265,35 @@ $('#create-game-modal-button').click(async function () {
             $('#error-alert').css('visibility', 'hidden');
             $('#error-alert').text('This shouldn\'t be visible');
         }, 3000);
+    }
+});
+
+$('#completed-games-button').click(async function () {
+    if (localStorage.getItem('loggedIn') === 'false') {
+        $('#error-alert').css('visibility', 'visible');
+        $('#error-alert').text('You must be logged in to view your active games.');
+        setTimeout(() => {
+            $('#error-alert').css('visibility', 'hidden');
+            $('#error-alert').text('This shouldn\'t be visible');
+        }, 3000);
+    } 
+    else {
+        $('#completed-games-container').css('visibility', 'visible');
+        let response = await fetch('https://localhost:5501/FetchCompletedGames/', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({'userID': localStorage.getItem('id')})
+        });
+        const gamesJSON = await response.json();
+        $('.games-container').empty();
+        let games = gamesJSON.completedGames;
+        games.forEach(async function (game) {
+            const opponent = game.whitePlayer.id == localStorage.getItem('id') ? game.blackPlayer : game.whitePlayer;
+            const result = game.result === 1 ? 'White Won' : game.result === -1 ? 'Black Won' : 'Draw';
+            $('.games-container').append(`<div class='game' value='${game.id}'><p class='game-detail' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail' id='time-left'>${result}</p></div>`);
+        });
     }
 });

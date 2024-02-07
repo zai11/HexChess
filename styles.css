@@ -267,7 +267,7 @@ a:hover {
     width: 200px;
 }
 
-#games-container {
+.games-container {
     width: 100%;
     overflow-y: scroll;
 }

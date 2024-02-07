@@ -31,10 +31,10 @@
 					<a href="#" id="logout-button">Log out</a>
 				</div>
 				<div id="menu">
-					<a id="play-button" class="menu-item" href="./play.html">Play</a>
-					<a id="puzzles-button" class="menu-item" href="./puzzles.html">Puzzles</a>
-					<a id="learn-button" class="menu-item" href="./learn.html">Learn</a>
-					<a id="social-button" class="menu-item" href="./social.html">Social</a>
+					<a id="play-button" class="menu-item" href="#">Play</a>
+					<a id="puzzles-button" class="menu-item" href="#">Puzzles</a>
+					<a id="learn-button" class="menu-item" href="#">Learn</a>
+					<a id="social-button" class="menu-item" href="#">Social</a>
 					<div class="sub-menu" id="play-sub-menu">
 						<a id="active-games-button" class="sub-menu-item" href="#">Active games</a>
 						<a id="create-game-button" class="sub-menu-item" href="#">Create a game</a>
@@ -96,15 +96,15 @@
 			<div id="active-games-container" class="my-modal">
 				<a class="modal-close" href="#">x</a>
 				<p>Active Games</p>
-				<div id="games-container">
-					<div class="game" value="1">
-						<p class="game-detail my-turn" id="opponent">opponent312 (1000)</p>
-						<p class="game-detail my-turn" id="time-left">3 Days Left</p>
-					</div>
-					<div class="game" value="2">
-						<p class="game-detail opponent-turn" id="opponent">enemy32 (954)</p>
-						<p class="game-detail opponent-turn" id="time-left">1 Days Left</p>
-					</div>
+				<div class="games-container">
+					
+				</div>
+			</div>
+			<div id="completed-games-container" class="my-modal">
+				<a class="modal-close" href="#">x</a>
+				<p>Completed Games</p>
+				<div class="games-container">
+
 				</div>
 			</div>
 			<div id="create-game-container" class="my-modal">
@@ -126,7 +126,5 @@
 		</div>
 
 		<script src="./functions.js"></script>
-		
-		<!--<a href="./tests.html" style="float:right;display:block;margin: 20px 0;padding-left: 50px;">Tests</a>-->
 	</body>
 </html>
