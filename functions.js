@@ -1,4 +1,5 @@
 const buttons = ['play', 'puzzles', 'learn', 'social']
+let activeGamesModalOpen = false;
 
 buttons.forEach((button) => {
 
@@ -36,8 +37,10 @@ $('#register-button').click(() => {
 $('.modal-close').click(() => {
     $('#login-container').css('visibility', 'hidden');
     $('#register-container').css('visibility', 'hidden');
+    $('#active-games-container').css('visibility', 'hidden');
     $('#create-game-container').css('visibility', 'hidden');
     $('#game-end-container').css('visibility', 'hidden');
+    activeGamesModalOpen = false;
 });
 
 if (localStorage.getItem('username') !== undefined && localStorage.getItem('username') !== null && localStorage.getItem('username') !== '') {
@@ -135,7 +138,7 @@ $('#logout-button').click(async function () {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify({'userID': localStorage.getItem('id'), 'userAccessToken': localStorage.getItem('uat')})
     });
     localStorage.removeItem('id');
@@ -154,8 +157,67 @@ $('#logout-button').click(async function () {
     }, 3000);
 });
 
+$('#active-games-button').click(async function () {
+    if (localStorage.getItem('loggedIn') === 'false') {
+        $('#error-alert').css('visibility', 'visible');
+        $('#error-alert').text('You must be logged in to view your active games.');
+        setTimeout(() => {
+            $('#error-alert').css('visibility', 'hidden');
+            $('#error-alert').text('This shouldn\'t be visible');
+        }, 3000);
+    } 
+    else {
+        $('#active-games-container').css('visibility', 'visible');
+        activeGamesModalOpen = true;
+        updateActiveGames();
+    }
+});
+
+async function updateActiveGames() {
+    let response = await fetch('https://localhost:5501/FetchActiveGames/', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({'userID': localStorage.getItem('id')})
+    });
+    const gamesJSON = await response.json();
+    $('#games-container').empty();
+    let games = gamesJSON.activeGames;
+    games.forEach(async function (game) {
+        console.log(game);
+        const turn = game.playerTurn == localStorage.getItem('id') ? 'my-turn' : 'opponent-turn';
+        const opponent = game.whitePlayer.id == localStorage.getItem('id') ? game.blackPlayer : game.whitePlayer;
+        const [clock, unit] = getClockAndUnit(game);
+        $('#games-container').append(`<div class='game' value='${game.id}'><p class='game-detail ${turn}' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail ${turn}' id='time-left'>~${clock} ${unit} Left</p></div>`);
+    });
+    setTimeout(async function () {
+        if (activeGamesModalOpen)
+            updateActiveGames();
+    }, 10000);
+}
+
+function getClockAndUnit(game) {
+    let clock = game.playerTurn == game.playerWhite ? game.clockWhite : game.clockBlack;
+    let unit = clock === 1 ? 'Second' : 'Seconds';
+    if (clock >= 60 && clock < 3600) {
+        clock = Math.round(clock / 60);
+        unit = clock === 1 ? 'Minute' : 'Minutes';
+    }
+    if (clock >= 3600 && clock < 86400) {
+        clock = Math.round(clock/3600);
+        unit = clock === 1 ? 'Hour' : 'Hours';
+    }
+    if (clock >= 86400) {
+        clock = Math.round(clock/86400);
+        unit = clock === 1 ? 'Day' : 'Days';
+    }
+    return [clock, unit];
+}
+
 $('#create-game-button').click(() => {
-    if (!localStorage.getItem('loggedIn')) {
+    if (localStorage.getItem('loggedIn') === 'false') {
         $('#error-alert').css('visibility', 'visible');
         $('#error-alert').text('You must be logged in to create a game.');
         setTimeout(() => {
@@ -168,8 +230,7 @@ $('#create-game-button').click(() => {
 });
 
 $('#create-game-modal-button').click(async function () {
-    console.log("Clicked");
-    if (!localStorage.getItem('loggedIn')) {
+    if (localStorage.getItem('loggedIn') === 'false') {
         $('#error-alert').css('visibility', 'visible');
         $('#error-alert').text('You must be logged in to create a game.');
         setTimeout(() => {
@@ -190,7 +251,6 @@ $('#create-game-modal-button').click(async function () {
         body: JSON.stringify({'playerID': id, 'timeControl': timeControl, 'userAccessToken': uat})
     });
     const data = await response.json();
-    console.log(data);
     if (data.success) {
         $('#success-alert').text('Game request created successfully. You will be able to play once someone else joins the game.');
         setTimeout(() => {

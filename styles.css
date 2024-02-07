@@ -256,7 +256,7 @@ a:hover {
     top: calc((100vh - 350px) / 2);
 }
 
-#game-end-container p {
+.my-modal > p {
     color: var(--tertiary-colour);
     font-size: 22pt;
     margin-top: 30px;
@@ -265,4 +265,32 @@ a:hover {
 
 #play-another-game-button {
     width: 200px;
+}
+
+#active-games-container {
+}
+
+#games-container {
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.game {
+    display:flex;
+    justify-content: space-evenly;
+    width: 100%;
+    cursor: pointer;
+}
+
+.game .game-detail {
+    font-size: 11pt;
+    margin: 5px;
+}
+
+.game-detail.my-turn {
+    color: #FFF;
+}
+
+.game-detail.opponent-turn {
+    color: #AAA;
 }
