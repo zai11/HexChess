@@ -1,5 +1,6 @@
 const buttons = ['play', 'puzzles', 'learn', 'social']
 let activeGamesModalOpen = false;
+localStorage.setItem('localGame', 'true');
 
 buttons.forEach((button) => {
 
@@ -21,27 +22,17 @@ buttons.forEach((button) => {
 });
 
 $('#login-button').click(() => {
+    clearModals();
     $('#login-container').css('visibility', 'visible');
-    $('#register-container').css('visibility', 'hidden');
-    $('#create-game-container').css('visibility', 'hidden');
-    $('#game-end-container').css('visibility', 'hidden');
 });
 
 $('#register-button').click(() => {
-    $('#login-container').css('visibility', 'hidden');
+    clearModals();
     $('#register-container').css('visibility', 'visible');
-    $('#create-game-container').css('visibility', 'hidden');
-    $('#game-end-container').css('visibility', 'hidden');
 });
 
 $('.modal-close').click(() => {
-    $('#login-container').css('visibility', 'hidden');
-    $('#register-container').css('visibility', 'hidden');
-    $('#active-games-container').css('visibility', 'hidden');
-    $('#completed-games-container').css('visibility', 'hidden');
-    $('#create-game-container').css('visibility', 'hidden');
-    $('#game-end-container').css('visibility', 'hidden');
-    activeGamesModalOpen = false;
+    clearModals();
 });
 
 if (localStorage.getItem('username') !== undefined && localStorage.getItem('username') !== null && localStorage.getItem('username') !== '') {
@@ -159,6 +150,7 @@ $('#logout-button').click(async function () {
 });
 
 $('#active-games-button').click(async function () {
+    clearModals();
     if (localStorage.getItem('loggedIn') === 'false') {
         $('#error-alert').css('visibility', 'visible');
         $('#error-alert').text('You must be logged in to view your active games.');
@@ -192,10 +184,49 @@ async function updateActiveGames() {
         const [clock, unit] = getClockAndUnit(game);
         $('.games-container').append(`<div class='game' value='${game.id}'><p class='game-detail ${turn}' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail ${turn}' id='time-left'>~${clock} ${unit} Left</p></div>`);
     });
+
+    handleActiveGameSelection();
+
     setTimeout(async function () {
         if (activeGamesModalOpen)
             updateActiveGames();
     }, 10000);
+}
+
+function handleActiveGameSelection() {
+    $('div.game').click(async function (eventData) {
+        const gameID = eventData.currentTarget.attributes['value'].value;
+        const response = await fetch('https://localhost:5501/FetchGame/', {
+            headers: {
+                'Accepts': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({'gameID': gameID})
+        });
+        const json = await response.json();
+        const game = json.game;
+        localStorage.setItem('game', JSON.stringify(game));
+        const board = window.game.scene.scenes[0].board;
+        board.loadOnline();
+        $('#active-games-container').css('visibility', 'hidden');
+        populateNotationTray(game.pgn);
+    });
+}
+
+function populateNotationTray(pgn) {
+    $('#tray #moves').empty();
+    const turns = pgn.match(/[1-9][0-9]*\. [a-zA-Z0-9 ]+/g);
+    if (turns == null)
+        return;
+    console.log(turns);
+    turns.forEach(turn => {
+        const splitTurn = turn.trim().split(' ');
+        if (splitTurn.length === 2)
+            $('#tray #moves').append(`<div class='move' id='${splitTurn[0]}'><div class='number'><p>${splitTurn[0]}</p></div><div class='white'><p>${splitTurn[1]}</p></div><div class='black'><p>-</p></div></div>`);
+        else if (splitTurn.length === 3)
+            $('#tray #moves').append(`<div class='move' id='${splitTurn[0]}'><div class='number'><p>${splitTurn[0]}</p></div><div class='white'><p>${splitTurn[1]}</p></div><div class='black'><p>${splitTurn[2]}</p></div></div>`);
+    });
 }
 
 function getClockAndUnit(game) {
@@ -217,6 +248,7 @@ function getClockAndUnit(game) {
 }
 
 $('#create-game-button').click(() => {
+    clearModals();
     if (localStorage.getItem('loggedIn') === 'false') {
         $('#error-alert').css('visibility', 'visible');
         $('#error-alert').text('You must be logged in to create a game.');
@@ -269,6 +301,7 @@ $('#create-game-modal-button').click(async function () {
 });
 
 $('#completed-games-button').click(async function () {
+    clearModals();
     if (localStorage.getItem('loggedIn') === 'false') {
         $('#error-alert').css('visibility', 'visible');
         $('#error-alert').text('You must be logged in to view your active games.');
@@ -297,3 +330,14 @@ $('#completed-games-button').click(async function () {
         });
     }
 });
+
+
+clearModals = function () {
+    $('#login-container').css('visibility', 'hidden');
+    $('#register-container').css('visibility', 'hidden');
+    $('#active-games-container').css('visibility', 'hidden');
+    $('#completed-games-container').css('visibility', 'hidden');
+    $('#create-game-container').css('visibility', 'hidden');
+    $('#game-end-container').css('visibility', 'hidden');
+    activeGamesModalOpen = false;
+}

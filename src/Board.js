@@ -22,7 +22,6 @@ export class Board
     awaitingPromotion = false;
     hasEnPassant = false;
     enPassant = '';
-    localGame = true;
 
     previousBoards = [];
     
@@ -158,6 +157,7 @@ export class Board
     }
 
     clear = function () {
+        this.pieces.forEach(piece => piece.take());
         this.pieces = [];
         this.tiles.forEach((tile) => {
             tile.removePiece();
@@ -374,9 +374,16 @@ export class Board
         return isCheck;
     }
 
-    tileSelected = async function (tile) {
+    tileSelected = function (tile) {
         if (this.awaitingPromotion)
             return;
+        if (localStorage.getItem('localGame') === 'true')
+            this.handleTileSelectedLocal(tile);
+        else
+            this.handleTileSelectedOnline(tile);
+    }
+
+    handleTileSelectedLocal = function (tile) {
         // Selected tile is not valid, no piece: just set current tile to selected and clear valid tiles
         if (!this.validTiles.includes(tile.coordinate) && !tile.hasPiece()) {
             tile.setSelected();
@@ -401,10 +408,24 @@ export class Board
 
         // Tile selected is valid: move piece from previously selected tile to newly selected tile.
         if (this.validTiles.includes(tile.coordinate)) {
-            if (this.localGame)
+            if (localStorage.getItem('localGame') == 'true')
                 this.handlePieceMoveLocal(tile);
             else
                 this.handlePieceMoveOnline(tile);
+        }
+    }
+
+    handleTileSelectedOnline = function (tile) {
+        const game = JSON.parse(localStorage.getItem('game'));
+
+        console.log(!this.validTiles.includes(tile.coordinate));
+
+        if (game.playerTurn == localStorage.getItem('id')) {
+            this.handleTileSelectedLocal(tile);
+        } else {
+            this.clearValidTiles();
+            tile.setSelected();
+            this.selectedTile = tile;
         }
     }
 
@@ -550,7 +571,6 @@ export class Board
         let notation = '';
         const movingPiece = prevTile.getPiece();
         const attacking = tile.hasPiece() || enPassant;
-        const takenPiece = enPassant ? enPassantTile : tile.getPiece();
         if (movingPiece.type !== 'pawn')
             notation += movingPiece.getFENChar().toUpperCase();
 
@@ -574,7 +594,6 @@ export class Board
                 else if (this.resultsInCheckWhite(movingPiece, tile.coordinate))
                     notation += '+';
         }
-        
 
         return notation;
     }
@@ -706,5 +725,28 @@ export class Board
         let fen = this.scene.cache.text.get('fen_initial_layout');
         let loader = new FENLoader(fen, this, this.scene);
         loader.load();
+    }
+
+    loadFEN = function (fen, perspective) {
+        let loader = new FENLoader(fen, this, this.scene);
+        loader.load(perspective);
+    }
+
+    loadLocal = function () {
+
+    }
+
+    loadOnline = function () {
+        $('#tray #moves').empty();
+        if (localStorage.getItem('localGame') === 'true')
+            localStorage.setItem('localGame', 'false');
+        const playerID = localStorage.getItem('id');
+        const game = JSON.parse(localStorage.getItem('game'));
+        console.log(playerID + ", " + game.whitePlayer.id);
+        const perspective = game.whitePlayer.id == playerID ? 'w' : 'b';
+        this.loadFEN(game.fen, perspective);
+        this.buildTiles();
+        this.buildCoordinates();
+        console.log(this.pieces.length);
     }
 }

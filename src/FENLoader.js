@@ -68,6 +68,7 @@ export class FENLoader {
     }
 
     loadBoardPositions = function (boardPositions) {
+        this.board.clear();
         let ranks = boardPositions.split('/').reverse();
         ranks.forEach((rank, index) => {
             this.loadRank(rank, index);
@@ -97,10 +98,14 @@ export class FENLoader {
         this.board.fullMoveClock = fullMoveClock;
     }
 
-    load = function () {
+    load = function (forcePerspective) {
         let fields = this.fenString.split(' ');
         this.loadBoardPositions(fields[0]);
-        this.loadPlayerToMove(fields[1]);
+        console.log(forcePerspective);
+        if (forcePerspective === undefined)
+            this.loadPlayerToMove(fields[1]);
+        else
+            this.loadPlayerToMove(forcePerspective);
         this.loadEnPassant(fields[2]);
         this.loadHalfMoveClock(fields[3]);
         this.loadFullMoveClock(fields[4]);
