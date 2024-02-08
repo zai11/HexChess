@@ -101,7 +101,6 @@ export class FENLoader {
     load = function (forcePerspective) {
         let fields = this.fenString.split(' ');
         this.loadBoardPositions(fields[0]);
-        console.log(forcePerspective);
         if (forcePerspective === undefined)
             this.loadPlayerToMove(fields[1]);
         else
