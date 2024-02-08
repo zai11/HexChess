@@ -418,8 +418,6 @@ export class Board
     handleTileSelectedOnline = function (tile) {
         const game = JSON.parse(localStorage.getItem('game'));
 
-        console.log(!this.validTiles.includes(tile.coordinate));
-
         if (game.playerTurn == localStorage.getItem('id')) {
             this.handleTileSelectedLocal(tile);
         } else {
@@ -742,11 +740,9 @@ export class Board
             localStorage.setItem('localGame', 'false');
         const playerID = localStorage.getItem('id');
         const game = JSON.parse(localStorage.getItem('game'));
-        console.log(playerID + ", " + game.whitePlayer.id);
         const perspective = game.whitePlayer.id == playerID ? 'w' : 'b';
         this.loadFEN(game.fen, perspective);
         this.buildTiles();
         this.buildCoordinates();
-        console.log(this.pieces.length);
     }
 }

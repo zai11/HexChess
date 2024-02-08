@@ -219,7 +219,6 @@ function populateNotationTray(pgn) {
     const turns = pgn.match(/[1-9][0-9]*\. [a-zA-Z0-9 ]+/g);
     if (turns == null)
         return;
-    console.log(turns);
     turns.forEach(turn => {
         const splitTurn = turn.trim().split(' ');
         if (splitTurn.length === 2)
