@@ -210,21 +210,6 @@ function handleActiveGameSelection() {
         const board = window.game.scene.scenes[0].board;
         board.loadOnline();
         $('#active-games-container').css('visibility', 'hidden');
-        populateNotationTray(game.pgn);
-    });
-}
-
-function populateNotationTray(pgn) {
-    $('#tray #moves').empty();
-    const turns = pgn.match(/[1-9][0-9]*\. [a-zA-Z0-9 ]+/g);
-    if (turns == null)
-        return;
-    turns.forEach(turn => {
-        const splitTurn = turn.trim().split(' ');
-        if (splitTurn.length === 2)
-            $('#tray #moves').append(`<div class='move' id='${splitTurn[0]}'><div class='number'><p>${splitTurn[0]}</p></div><div class='white'><p>${splitTurn[1]}</p></div><div class='black'><p>-</p></div></div>`);
-        else if (splitTurn.length === 3)
-            $('#tray #moves').append(`<div class='move' id='${splitTurn[0]}'><div class='number'><p>${splitTurn[0]}</p></div><div class='white'><p>${splitTurn[1]}</p></div><div class='black'><p>${splitTurn[2]}</p></div></div>`);
     });
 }
 

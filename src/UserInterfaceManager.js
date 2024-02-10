@@ -11,10 +11,10 @@ export class UserInterfaceManager {
             this.fps = this.scene.add.text(10, 10, '60 FPS', style_white);
     }
 
-    createPromotionPrompt = function (piece) {
+    createPromotionPrompt = function (piece, callback) {
         if (this.promotionPrompt !== undefined)
             this.destroyPromotionPrompt();
-        this.promotionPrompt = new PromotionPrompt(this.scene, piece);
+        this.promotionPrompt = new PromotionPrompt(this.scene, piece, callback);
     }
 
     destroyPromotionPrompt = function () {

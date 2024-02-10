@@ -4,9 +4,10 @@ import { Rook } from "./pieces/Rook.js";
 import { Queen } from "./pieces/Queen.js";
 
 export class PromotionPrompt {
-    constructor(scene, piece) {
+    constructor(scene, piece, callback) {
         this.piece = piece;
         this.scene = scene;
+        this.callback = callback;
         const style_black = {color: '#000', fontSize: 15};
         this.background = this.scene.add.sprite(0, 810, 'spr_promotion_prompt').setOrigin(0,1).setDepth(1000);
         this.title = this.scene.add.text(100, 440, 'Pawn Promotion:', style_black).setOrigin(0.5,0).setDepth(1000);
@@ -35,6 +36,7 @@ export class PromotionPrompt {
         this.scene.board.togglePlayer();
         this.scene.board.buildTiles();
         this.scene.board.buildCoordinates();
+        this.callback('Knight');
     }
 
     bishopSelected = function () {
@@ -43,6 +45,7 @@ export class PromotionPrompt {
         this.scene.board.togglePlayer();
         this.scene.board.buildTiles();
         this.scene.board.buildCoordinates();
+        this.callback('Bishop');
     }
 
     rookSelected = function () {
@@ -51,6 +54,7 @@ export class PromotionPrompt {
         this.scene.board.togglePlayer();
         this.scene.board.buildTiles();
         this.scene.board.buildCoordinates();
+        this.callback('Rook');
     }
 
     queenSelected = function () {
@@ -59,5 +63,6 @@ export class PromotionPrompt {
         this.scene.board.togglePlayer();
         this.scene.board.buildTiles();
         this.scene.board.buildCoordinates();
+        this.callback('Queen');
     }
 }

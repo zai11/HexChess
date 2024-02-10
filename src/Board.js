@@ -437,98 +437,19 @@ export class Board
         this.enPassant = undefined;
 
         // Check pawn double move:
-        if (piece.type === 'pawn') {
-            if (tile.coordinate[0] === prevTile.coordinate[0]) {
-                if (this.colour === 'white' && Number(tile.coordinate.slice(1, tile.coordinate.length) - Number(prevTile.coordinate.slice(1, prevTile.coordinate.length) === 2))) {
-                    this.hasEnPassant = true;
-                    this.enPassant = tile.coordinate;
-                }
-                else if (this.colour === 'black' && Number(tile.coordinate.slice(1, tile.coordinate.length) - Number(prevTile.coordinate.slice(1, prevTile.coordinate.length) === -2))) {
-                    this.hasEnPassant = true;
-                    this.enPassant = tile.coordinate;
-                }
-                else {
-                    this.hasEnPassant = false;
-                    this.enPassant = undefined;
-                }
-            }
-        }
-
-        let enPassant = false;
-        let enPassantTile;
+        this.checkDoublePawnMove();
 
         // Check en passant:
-        if (piece.type === 'pawn') {
-            switch (piece.colour) {
-                case 'white':
-                    if (tile.coordinate.charCodeAt(0) < prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
-                        this.hasEnPassant = false;
-                        this.enPassant = undefined;
-                        const takenTile = prevTile.getNeighbourTileSouthWest();
-                        const takenPiece = takenTile.getPiece();
-                        if (takenPiece !== undefined && takenPiece.colour !== piece.colour) {
-                            this.removePiece(takenPiece);
-                        }
-                        enPassant = true;
-                        enPassantTile = takenTile;
-                    } 
-                    else if (tile.coordinate.charCodeAt(0) > prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
-                        this.hasEnPassant = false;
-                        this.enPassant = undefined;
-                        const takenTile = prevTile.getNeighbourTileSouthEast();
-                        const takenPiece = takenTile.getPiece();
-                        if (takenPiece !== undefined && takenPiece.colour !== piece.colour) {
-                            this.removePiece(takenPiece);
-                        }
-                        enPassant = true;
-                        enPassantTile = takenTile;
-                    }
-                    break;
-                case 'black':
-                    if (tile.coordinate.charCodeAt(0) < prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
-                        this.hasEnPassant = false;
-                        this.enPassant = undefined;
-                        const takenTile = prevTile.getNeighbourTileSouthEast();
-                        const takenPiece = takenTile.getPiece();
-                        if (takenPiece !== undefined && takenPiece.colour !== piece.colour) {
-                            this.removePiece(takenPiece);
-                        }
-                        enPassant = true;
-                        enPassantTile = takenTile;
-                    } 
-                    else if (tile.coordinate.charCodeAt(0) > prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
-                        this.hasEnPassant = false;
-                        this.enPassant = undefined;
-                        const takenTile = prevTile.getNeighbourTileSouthWest();
-                        const takenPiece = takenTile.getPiece();
-                        if (takenPiece !== undefined && takenPiece.colour !== piece.colour) {
-                            this.removePiece(takenPiece);
-                        }
-                        enPassant = true;
-                        enPassantTile = takenTile;
-                    }
-                    break;
-            }
-        }
-
-        let promoted = false;
+        const [tookEnPassant, takenTile] = this.checkEnPassantLocal(piece, tile, prevTile);
 
         // Check promotion:
-        if (piece.type === 'pawn') {
-            let neighbourTileNorth = tile.getNeighbourTileNorth(piece.colour);
-            if (neighbourTileNorth === undefined) {
-                this.awaitingPromotion = true;
-                this.scene.ui.createPromotionPrompt(piece);
-                this.removePiece(piece);
-                promoted = true;
-            }
-        }
+        const promoted = this.checkPromotionLocal(piece, tile);
 
         // Check half move clock reset:
-        if (piece.type === 'pawn' || tile.hasPiece() || enPassant)
+        if (piece.type === 'pawn' || tile.hasPiece() || tookEnPassant)
             this.halfMoveClock = 0;
 
-        this.logMove(prevTile, tile, enPassant, enPassantTile);
+        this.logMove(prevTile, tile, tookEnPassant, takenTile);
 
         if (tile.hasPiece())
             this.removePiece(tile.getPiece());
@@ -548,8 +469,148 @@ export class Board
         this.handleDeadPosition();
     }
 
-    handlePieceMoveOnline = function () {
+    checkDoublePawnMoveLocal = function (piece, tile, prevTile) {
+        if (piece.type === 'pawn') {
+            if (tile.coordinate[0] === prevTile.coordinate[0]) {
+                if (this.colour === 'white' && Number(tile.coordinate.slice(1, tile.coordinate.length) - Number(prevTile.coordinate.slice(1, prevTile.coordinate.length) === 2))) {
+                    this.hasEnPassant = true;
+                    this.enPassant = tile.coordinate;
+                }
+                else if (this.colour === 'black' && Number(tile.coordinate.slice(1, tile.coordinate.length) - Number(prevTile.coordinate.slice(1, prevTile.coordinate.length) === -2))) {
+                    this.hasEnPassant = true;
+                    this.enPassant = tile.coordinate;
+                }
+                else {
+                    this.hasEnPassant = false;
+                    this.enPassant = undefined;
+                }
+            }
+        }
+    }
 
+    checkEnPassantLocal = function (piece, tile, prevTile) {
+        if (piece.type === 'pawn') {
+            switch (piece.colour) {
+                case 'white':
+                    if (tile.coordinate.charCodeAt(0) < prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
+                        this.hasEnPassant = false;
+                        this.enPassant = undefined;
+                        const takenTile = prevTile.getNeighbourTileSouthWest();
+                        const takenPiece = takenTile.getPiece();
+                        if (takenPiece !== undefined && takenPiece.colour !== piece.colour) {
+                            this.removePiece(takenPiece);
+                        }
+                        return [true, takenTile];
+                    } 
+                    else if (tile.coordinate.charCodeAt(0) > prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
+                        this.hasEnPassant = false;
+                        this.enPassant = undefined;
+                        const takenTile = prevTile.getNeighbourTileSouthEast();
+                        const takenPiece = takenTile.getPiece();
+                        if (takenPiece !== undefined && takenPiece.colour !== piece.colour) {
+                            this.removePiece(takenPiece);
+                        }
+                        return [true, takenTile];
+                    }
+                    break;
+                case 'black':
+                    if (tile.coordinate.charCodeAt(0) < prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
+                        this.hasEnPassant = false;
+                        this.enPassant = undefined;
+                        const takenTile = prevTile.getNeighbourTileSouthEast();
+                        const takenPiece = takenTile.getPiece();
+                        if (takenPiece !== undefined && takenPiece.colour !== piece.colour) {
+                            this.removePiece(takenPiece);
+                        }
+                        return [true, takenTile];
+                    } 
+                    else if (tile.coordinate.charCodeAt(0) > prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
+                        this.hasEnPassant = false;
+                        this.enPassant = undefined;
+                        const takenTile = prevTile.getNeighbourTileSouthWest();
+                        const takenPiece = takenTile.getPiece();
+                        if (takenPiece !== undefined && takenPiece.colour !== piece.colour) {
+                            this.removePiece(takenPiece);
+                        }
+                        return [true, takenTile];
+                    }
+                    break;
+            }
+        }
+    }
+
+    checkPromotionLocal = function (piece, tile) {
+        if (piece.type === 'pawn') {
+            let neighbourTileNorth = tile.getNeighbourTileNorth(piece.colour);
+            if (neighbourTileNorth === undefined) {
+                this.awaitingPromotion = true;
+                this.scene.ui.createPromotionPrompt(piece);
+                this.removePiece(piece);
+                return true;
+            }
+        }
+    }
+
+    handlePieceMoveOnline = async function (tile) {
+        const prevTile = this.selectedTile;
+        const piece = prevTile.getPiece();
+        const game = JSON.parse(localStorage.getItem('game'));
+        const uat = localStorage.getItem('uat');
+
+        if (!this.checkPromotionOnline(game, piece, tile, uat)) {
+            const json = await this.sendMovementRequest(game, piece, tile, uat);
+        
+            // TODO: Should display an error here.
+            if (json.success === false)
+                return;
+        }
+
+        this.reloadOnline();
+    }
+
+    checkPromotionOnline = function (game, piece, tile, uat) {
+        if (piece.type === 'pawn') {
+            let neighbourTileNorth = tile.getNeighbourTileNorth(piece.colour);
+            if (neighbourTileNorth === undefined) {
+                this.awaitingPromotion = true;
+                this.scene.ui.createPromotionPrompt(piece, async function (promotionPiece) {
+                    const json = this.sendMovementRequest(game, piece, tile, uat, promotionPiece);
+                    
+                    // TODO: Should display an error here.
+                    if (json.success === false)
+                        return;
+                });
+                this.removePiece(piece);
+                return true;
+            }
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+
+    sendMovementRequest = async function (game, piece, tile, uat, promotionPiece = undefined) {
+        const response = await fetch("https://localhost:5501/Movement/", {
+            headers: {
+                'Accepts': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                'gameID': game.id,
+                'piece': {
+                    'colour': piece.colour,
+                    'coordinate': piece.coordinate,
+                    'type': piece.type
+                },
+                'destination': tile.coordinate,
+                'promotionPiece': promotionPiece,
+                'userAccessToken': uat
+            })
+        });
+        const json = await response.json();
+        return json;
     }
 
     logMove = function (prevTile, tile, enPassant, enPassantTile) {
@@ -744,5 +805,36 @@ export class Board
         this.loadFEN(game.fen, perspective);
         this.buildTiles();
         this.buildCoordinates();
+        this.populateNotationTray(game.pgn);
+    }
+
+    reloadOnline = async function () {
+        const gameID = JSON.parse(localStorage.getItem('game')).id;
+        const response = await fetch('https://localhost:5501/FetchGame/', {
+            headers: {
+                'Accepts': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({'gameID': gameID})
+        });
+        const json = await response.json();
+        const game = json.game;
+        localStorage.setItem('game', JSON.stringify(game));
+        this.loadOnline();
+    }
+
+    populateNotationTray = function (pgn) {
+        $('#tray #moves').empty();
+        const turns = pgn.match(/[1-9][0-9]*\. [a-zA-Z0-9 ]+/g);
+        if (turns == null)
+            return;
+        turns.forEach(turn => {
+            const splitTurn = turn.trim().split(' ');
+            if (splitTurn.length === 2)
+                $('#tray #moves').append(`<div class='move' id='${splitTurn[0]}'><div class='number'><p>${splitTurn[0]}</p></div><div class='white'><p>${splitTurn[1]}</p></div><div class='black'><p>-</p></div></div>`);
+            else if (splitTurn.length === 3)
+                $('#tray #moves').append(`<div class='move' id='${splitTurn[0]}'><div class='number'><p>${splitTurn[0]}</p></div><div class='white'><p>${splitTurn[1]}</p></div><div class='black'><p>${splitTurn[2]}</p></div></div>`);
+        });
     }
 }
