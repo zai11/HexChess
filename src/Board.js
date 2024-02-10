@@ -437,7 +437,7 @@ export class Board
         this.enPassant = undefined;
 
         // Check pawn double move:
-        this.checkDoublePawnMove();
+        this.checkDoublePawnMoveLocal(piece, tile, prevTile);
 
         // Check en passant:
         const [tookEnPassant, takenTile] = this.checkEnPassantLocal(piece, tile, prevTile);
@@ -492,6 +492,7 @@ export class Board
         if (piece.type === 'pawn') {
             switch (piece.colour) {
                 case 'white':
+                    console.log(tile.coordinate.charCodeAt(0) < prevTile.coordinate.charCodeAt(0) && !tile.hasPiece)
                     if (tile.coordinate.charCodeAt(0) < prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
                         this.hasEnPassant = false;
                         this.enPassant = undefined;
@@ -512,7 +513,7 @@ export class Board
                         }
                         return [true, takenTile];
                     }
-                    break;
+                    return [false, undefined];
                 case 'black':
                     if (tile.coordinate.charCodeAt(0) < prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
                         this.hasEnPassant = false;
@@ -534,7 +535,7 @@ export class Board
                         }
                         return [true, takenTile];
                     }
-                    break;
+                    return [false, undefined];
             }
         }
     }
@@ -792,7 +793,12 @@ export class Board
     }
 
     loadLocal = function () {
-
+        $('#tray #moves').empty();
+        if (localStorage.getItem('localGame') === 'false')
+            localStorage.setItem('localGame', 'true');
+        this.init();
+        this.buildTiles();
+        this.buildCoordinates();
     }
 
     loadOnline = function () {

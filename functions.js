@@ -284,6 +284,12 @@ $('#create-game-modal-button').click(async function () {
     }
 });
 
+$('#local-multiplayer-button').click(() => {
+    clearModals();
+    const board = window.game.scene.scenes[0].board;
+    board.loadLocal();
+});
+
 $('#completed-games-button').click(async function () {
     clearModals();
     if (localStorage.getItem('loggedIn') === 'false') {
