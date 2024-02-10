@@ -492,7 +492,6 @@ export class Board
         if (piece.type === 'pawn') {
             switch (piece.colour) {
                 case 'white':
-                    console.log(tile.coordinate.charCodeAt(0) < prevTile.coordinate.charCodeAt(0) && !tile.hasPiece)
                     if (tile.coordinate.charCodeAt(0) < prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
                         this.hasEnPassant = false;
                         this.enPassant = undefined;
