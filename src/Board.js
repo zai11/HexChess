@@ -563,9 +563,8 @@ export class Board
         if (!this.checkPromotionOnline(game, piece, tile, uat)) {
             const json = await this.sendMovementRequest(game, piece, tile, uat);
         
-            // TODO: Should display an error here.
             if (json.success === false)
-                return;
+                this.scene.ui.displayError(json.errorMessage);
         }
 
         this.reloadOnline();
@@ -579,9 +578,8 @@ export class Board
                 this.scene.ui.createPromotionPrompt(piece, async function (promotionPiece) {
                     const json = this.sendMovementRequest(game, piece, tile, uat, promotionPiece);
                     
-                    // TODO: Should display an error here.
                     if (json.success === false)
-                        return;
+                        this.scene.ui.displayError(json.errorMessage);
                 });
                 this.removePiece(piece);
                 return true;

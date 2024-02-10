@@ -23,6 +23,15 @@ export class UserInterfaceManager {
         this.scene.board.awaitingPromotion = false;
     }
 
+    displayError = function (error) {
+        $('#error-alert').css('visibility', 'visible');
+        $('#error-alert').text(error);
+        setTimeout(() => {
+            $('#error-alert').css('visibility', 'hidden');
+            $('#error-alert').text('This shouldn\'t be visible');
+        }, 3000);
+    }
+
     update = function () {
         if (this.DEVELOPMENT_BUILD)
             this.fps.setText(Math.round(this.scene.game.loop.actualFps) + ' FPS');
