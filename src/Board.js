@@ -513,7 +513,7 @@ export class Board
                         }
                         return [true, takenTile];
                     }
-                    return [false, undefined];
+                    break;
                 case 'black':
                     if (tile.coordinate.charCodeAt(0) < prevTile.coordinate.charCodeAt(0) && !tile.hasPiece()) {
                         this.hasEnPassant = false;
@@ -535,9 +535,12 @@ export class Board
                         }
                         return [true, takenTile];
                     }
-                    return [false, undefined];
+                    break;
+                default: 
+                    break;
             }
         }
+        return [false, undefined];
     }
 
     checkPromotionLocal = function (piece, tile) {
