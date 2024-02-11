@@ -246,6 +246,7 @@ $('#create-game-button').click(() => {
 });
 
 $('#create-game-modal-button').click(async function () {
+    clearModals();
     if (localStorage.getItem('loggedIn') === 'false') {
         $('#error-alert').css('visibility', 'visible');
         $('#error-alert').text('You must be logged in to create a game.');
