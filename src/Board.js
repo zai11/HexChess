@@ -568,6 +568,7 @@ export class Board
         }
 
         this.reloadOnline();
+        this.checkGameOverOnline();
     }
 
     checkPromotionOnline = function (game, piece, tile, uat) {
@@ -658,7 +659,7 @@ export class Board
         return notation;
     }
 
-    handleMate = function () {
+    handleMateLocal = function () {
         if (this.isMateWhite()) {
             $('#game-end-container').css('visibility', 'visible');
             $('#game-end-container').children('p').first().text('Black Won!');
@@ -666,6 +667,35 @@ export class Board
         else if (this.isMateBlack()) {
             $('#game-end-container').css('visibility', 'visible');
             $('#game-end-container').children('p').first().text('White Won!');
+        }
+    }
+
+    checkGameOverOnline = async function () {
+        const response = await fetch ('https://localhost:5501/FetchGameResult/', {
+            headers: {
+                'Accepts': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({ 'gameID': game.id })
+        });
+        const json = await response.json();
+        if (!json.success)
+            this.scene.ui.displayError(json.errorMessage);
+        if (!json.completed)
+            return;
+        switch (json.gameResult) {
+            case 'WHITE_WON':
+                $('#game-end-container').css('visibility', 'visible');
+                $('#game-end-container').children('p').first().text('White Won!');
+                break;
+            case 'BLACK_WON':
+                $('#game-end-container').css('visibility', 'visible');
+                $('#game-end-container').children('p').first().text('Black Won!');
+                break;
+            case 'DRAW':
+                $('#game-end-container').css('visibility', 'visible');
+                $('#game-end-container').children('p').first().text('Game Drawn!');
         }
     }
 
