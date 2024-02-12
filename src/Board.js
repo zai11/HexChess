@@ -22,6 +22,8 @@ export class Board
     awaitingPromotion = false;
     hasEnPassant = false;
     enPassant = '';
+    gameRunning = true;
+    drawOffer = undefined;
 
     previousBoards = [];
     
@@ -375,6 +377,10 @@ export class Board
     }
 
     tileSelected = function (tile) {
+        if (this.drawOffer !== undefined)
+            return;
+        if (!this.gameRunning)
+            return;
         if (this.awaitingPromotion)
             return;
         if (localStorage.getItem('localGame') === 'true')
@@ -463,7 +469,7 @@ export class Board
         this.buildTiles();
         this.buildCoordinates();
         this.handleStalemate();
-        this.handleMate();
+        this.handleMateLocal();
         this.handleRepetition();
         this.handle50Move();
         this.handleDeadPosition();
@@ -661,13 +667,53 @@ export class Board
 
     handleMateLocal = function () {
         if (this.isMateWhite()) {
-            $('#game-end-container').css('visibility', 'visible');
-            $('#game-end-container').children('p').first().text('Black Won!');
+            handleGameOver(1);
         }
         else if (this.isMateBlack()) {
-            $('#game-end-container').css('visibility', 'visible');
-            $('#game-end-container').children('p').first().text('White Won!');
+            handleGameOver(-1);
         }
+    }
+
+    handleGameOver = function (winner) {
+        if (!this.gameRunning)
+            return;
+        this.gameRunning = false;
+        const gameOverText = winner === 1 ? 'White Won!' : winner === -1 ? 'Black Won!' : 'Draw';
+        $('#game-end-container').css('visibility', 'visible');
+        $('#game-end-container').children('p').first().text(gameOverText);
+    }
+
+    handleDrawOfferLocal = function () {
+        if (!this.gameRunning)
+            return;
+        this.drawOffer = this.colour;
+        this.togglePlayer();
+        this.clearValidTiles();
+        this.buildTiles();
+        this.buildCoordinates();
+        $('#resign-button').css('display', 'none');
+        $('#offer-draw-button').css('display', 'none');
+        $('#accept-draw-button').css('display', 'block');
+        $('#decline-draw-button').css('display', 'block');
+    }
+
+    handleDrawAcceptLocal = function () {
+        this.handleGameOver(0);
+        $('#resign-button').css('display', 'block');
+        $('#offer-draw-button').css('display', 'block');
+        $('#accept-draw-button').css('display', 'none');
+        $('#decline-draw-button').css('display', 'none');
+    }
+
+    handleDrawDeclineLocal = function () {
+        this.drawOffer = undefined;
+        this.togglePlayer();
+        this.buildTiles();
+        this.buildCoordinates();
+        $('#resign-button').css('display', 'block');
+        $('#offer-draw-button').css('display', 'block');
+        $('#accept-draw-button').css('display', 'none');
+        $('#decline-draw-button').css('display', 'none');
     }
 
     checkGameOverOnline = async function () {
@@ -686,16 +732,13 @@ export class Board
             return;
         switch (json.gameResult) {
             case 'WHITE_WON':
-                $('#game-end-container').css('visibility', 'visible');
-                $('#game-end-container').children('p').first().text('White Won!');
+                handleGameOver(1);
                 break;
             case 'BLACK_WON':
-                $('#game-end-container').css('visibility', 'visible');
-                $('#game-end-container').children('p').first().text('Black Won!');
+                handleGameOver(-1);
                 break;
             case 'DRAW':
-                $('#game-end-container').css('visibility', 'visible');
-                $('#game-end-container').children('p').first().text('Game Drawn!');
+                handleGameOver(0);
         }
     }
 
@@ -708,15 +751,13 @@ export class Board
         });
 
         if (count >= 3) {
-            $('#game-end-container').css('visibility', 'visible');
-            $('#game-end-container').children('p').first().text('Game Drawn!');
+            handleGameOver(0);
         }
     }
 
     handle50Move = function () {
         if (this.halfMoveClock >= 100) {
-            $('#game-end-container').css('visibility', 'visible');
-            $('#game-end-container').children('p').first().text('Game Drawn!');
+            handleGameOver(0);
         }
     }
 
@@ -732,16 +773,14 @@ export class Board
         });
 
         if (!legalMovesExist && ((this.colour === 'white' && !this.isCheckWhite()) || (this.colour === 'black' && !this.isCheckBlack()))) {
-            $('#game-end-container').css('visibility', 'visible');
-            $('#game-end-container').children('p').first().text('Game Drawn!');
+            handleGameOver(0);
         }
     }
 
     handleDeadPosition = function () {
         if (this.pieces.length == 2) {
             if (this.pieces[0].type === 'king' && this.pieces[1].type === 'king') {
-                $('#game-end-container').css('visibility', 'visible');
-                $('#game-end-container').children('p').first().text('Game Drawn!');
+                handleGameOver(0);
             }
         }
     }
@@ -826,6 +865,8 @@ export class Board
         $('#tray #moves').empty();
         if (localStorage.getItem('localGame') === 'false')
             localStorage.setItem('localGame', 'true');
+        this.gameRunning = true;
+        this.drawOffer = undefined;
         this.init();
         this.buildTiles();
         this.buildCoordinates();
@@ -838,6 +879,8 @@ export class Board
         const playerID = localStorage.getItem('id');
         const game = JSON.parse(localStorage.getItem('game'));
         const perspective = game.whitePlayer.id == playerID ? 'w' : 'b';
+        this.gameRunning = true;
+        this.drawOffer = undefined;
         this.loadFEN(game.fen, perspective);
         this.buildTiles();
         this.buildCoordinates();

@@ -322,6 +322,26 @@ $('#completed-games-button').click(async function () {
     }
 });
 
+$('#resign-button').click(() => {
+    const board = window.game.scene.scenes[0].board;
+    const winner = board.colour === 'white' ? -1 : 1;
+    board.handleGameOver(winner);
+});
+
+$('#offer-draw-button').click(() => {
+    const board = window.game.scene.scenes[0].board;
+    board.handleDrawOfferLocal();
+});
+
+$('#accept-draw-button').click(() => {
+    const board = window.game.scene.scenes[0].board;
+    board.handleDrawAcceptLocal();
+});
+
+$('#decline-draw-button').click(() => {
+    const board = window.game.scene.scenes[0].board;
+    board.handleDrawDeclineLocal();
+});
 
 clearModals = function () {
     $('#login-container').css('visibility', 'hidden');
