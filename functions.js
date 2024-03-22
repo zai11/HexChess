@@ -324,23 +324,34 @@ $('#completed-games-button').click(async function () {
 
 $('#resign-button').click(() => {
     const board = window.game.scene.scenes[0].board;
-    const winner = board.colour === 'white' ? -1 : 1;
-    board.handleGameOver(winner);
+    if (localStorage.getItem('localGame') === 'true')
+        board.handleResignationLocal();
+    else
+        board.handleResignationOnline();
 });
 
 $('#offer-draw-button').click(() => {
     const board = window.game.scene.scenes[0].board;
-    board.handleDrawOfferLocal();
+    if (localStorage.getItem('localGame') === 'true')
+        board.handleDrawOfferLocal();
+    else
+        board.handleDrawOfferOnline();
 });
 
 $('#accept-draw-button').click(() => {
     const board = window.game.scene.scenes[0].board;
-    board.handleDrawAcceptLocal();
+    if (localStorage.getItem('localGame') === 'true')
+        board.handleDrawAcceptLocal();
+    else
+        board.handleDrawAcceptOnline();
 });
 
 $('#decline-draw-button').click(() => {
     const board = window.game.scene.scenes[0].board;
-    board.handleDrawDeclineLocal();
+    if (localStorage.getItem('localGame') === 'true')
+        board.handleDrawDeclineLocal();
+    else
+        board.handleDrawDeclineOnline();
 });
 
 clearModals = function () {

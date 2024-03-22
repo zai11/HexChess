@@ -683,6 +683,11 @@ export class Board
         $('#game-end-container').children('p').first().text(gameOverText);
     }
 
+    handleResignationLocal = function () {
+        const winner = this.colour === 'white' ? -1 : 1;
+        this.handleGameOVer(winner);
+    }
+
     handleDrawOfferLocal = function () {
         if (!this.gameRunning)
             return;
@@ -716,14 +721,105 @@ export class Board
         $('#decline-draw-button').css('display', 'none');
     }
 
+    handleResignationOnline = async function () {
+        const gameID = JSON.parse(localStorage.getItem('game')).id;
+        const playerID = localStorage.getItem('id');
+        const uat = localStorage.getItem('uat');
+        const response = await fetch ('https://localhost:5501/Resignation/', {
+            headers: {
+                'Accepts': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({ 
+                'gameID': gameID ,
+                'playerID': playerID,
+                'userAccessToken': uat
+            })
+        });
+        const json = await response.json();
+        if (!json.success)
+            this.scene.ui.displayError(json.errorMessage);
+        this.checkGameOverOnline();
+    }
+
+    handleDrawOfferOnline = async function () {
+        const gameID = JSON.parse(localStorage.getItem('game')).id;
+        const playerID = localStorage.getItem('id');
+        const uat = localStorage.getItem('uat');
+        const response = await fetch ('https://localhost:5501/DrawOffer/', {
+            headers: {
+                'Accepts': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({ 
+                'gameID': gameID ,
+                'playerID': playerID,
+                'userAccessToken': uat
+            })
+        });
+        const json = await response.json();
+        if (!json.success)
+            this.scene.ui.displayError(json.errorMessage);
+        this.checkGameOverOnline();
+    }
+
+    handleDrawAcceptOnline = async function () {
+        const gameID = JSON.parse(localStorage.getItem('game')).id;
+        const playerID = localStorage.getItem('id');
+        const uat = localStorage.getItem('uat');
+        const response = await fetch ('https://localhost:5501/DrawOfferResponse/', {
+            headers: {
+                'Accepts': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({ 
+                'gameID': gameID ,
+                'playerID': playerID,
+                'userAccessToken': uat,
+                'drawResponse': true
+            })
+        });
+        const json = await response.json();
+        if (!json.success)
+            this.scene.ui.displayError(json.errorMessage);
+        this.checkGameOverOnline();
+    }
+
+    handleDrawDeclineOnline = async function () {
+        const gameID = JSON.parse(localStorage.getItem('game')).id;
+        const playerID = localStorage.getItem('id');
+        const uat = localStorage.getItem('uat');
+        const response = await fetch ('https://localhost:5501/DrawOfferResponse/', {
+            headers: {
+                'Accepts': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({ 
+                'gameID': gameID ,
+                'playerID': playerID,
+                'userAccessToken': uat,
+                'drawResponse': false
+            })
+        });
+        const json = await response.json();
+        if (!json.success)
+            this.scene.ui.displayError(json.errorMessage);
+        this.checkGameOverOnline();
+    }
+
     checkGameOverOnline = async function () {
+        const gameID = JSON.parse(localStorage.getItem('game')).id;
         const response = await fetch ('https://localhost:5501/FetchGameResult/', {
             headers: {
                 'Accepts': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: 'POST',
-            body: JSON.stringify({ 'gameID': game.id })
+            body: JSON.stringify({ 'gameID': gameID })
         });
         const json = await response.json();
         if (!json.success)
@@ -732,13 +828,13 @@ export class Board
             return;
         switch (json.gameResult) {
             case 'WHITE_WON':
-                handleGameOver(1);
+                this.handleGameOver(1);
                 break;
             case 'BLACK_WON':
-                handleGameOver(-1);
+                this.handleGameOver(-1);
                 break;
             case 'DRAW':
-                handleGameOver(0);
+                this.handleGameOver(0);
         }
     }
 
@@ -885,10 +981,13 @@ export class Board
         this.buildTiles();
         this.buildCoordinates();
         this.populateNotationTray(game.pgn);
+        this.checkDrawOffer(game.drawOffer);
     }
 
     reloadOnline = async function () {
         const gameID = JSON.parse(localStorage.getItem('game')).id;
+        if (gameID === null)
+            return;
         const response = await fetch('https://localhost:5501/FetchGame/', {
             headers: {
                 'Accepts': 'application/json',
@@ -915,5 +1014,14 @@ export class Board
             else if (splitTurn.length === 3)
                 $('#tray #moves').append(`<div class='move' id='${splitTurn[0]}'><div class='number'><p>${splitTurn[0]}</p></div><div class='white'><p>${splitTurn[1]}</p></div><div class='black'><p>${splitTurn[2]}</p></div></div>`);
         });
+    }
+
+    checkDrawOffer = function (drawOffer) {
+        if (drawOffer !== undefined && drawOffer !== null) {
+            $('#resign-button').css('display', 'none');
+            $('#offer-draw-button').css('display', 'none');
+            $('#accept-draw-button').css('display', 'block');
+            $('#decline-draw-button').css('display', 'block');
+        }
     }
 }
