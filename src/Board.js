@@ -237,6 +237,7 @@ export class Board
         const pieceAtCoordinate = this.getPieceFromCoord(coordinate);
         piece.moveTo(coordinate);
         destinationTile.setPiece(piece);
+        originTile.removePiece();
         let resultsInCheck = false;
         if (this.isCheckWhite())
             resultsInCheck = true;
