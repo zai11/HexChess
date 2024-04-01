@@ -11,6 +11,7 @@ CREATE TABLE `hexchess_server`.`games` (
   `player_turn` INT NOT NULL,
   `clock_white` INT NOT NULL DEFAULT 0,
   `clock_black` INT NOT NULL DEFAULT 0,
+  `max_clock` INT NOT NULL,
   `last_tick_white` INT NULL,
   `last_tick_black` INT NULL,
   `draw_offer` INT NULL,
