@@ -210,6 +210,7 @@ function handleActiveGameSelection() {
         const board = window.game.scene.scenes[0].board;
         board.loadOnline();
         $('#active-games-container').css('visibility', 'hidden');
+        updateTray();
     });
 }
 
@@ -289,6 +290,7 @@ $('#local-multiplayer-button').click(() => {
     clearModals();
     const board = window.game.scene.scenes[0].board;
     board.loadLocal();
+    updateTray();
 });
 
 $('#completed-games-button').click(async function () {
@@ -314,7 +316,7 @@ $('#completed-games-button').click(async function () {
         const gamesJSON = await response.json();
         $('.games-container').empty();
         let games = gamesJSON.completedGames;
-        games.forEach(async function (game) {
+        games.forEach((game) => {
             const opponent = game.whitePlayer.id == localStorage.getItem('id') ? game.blackPlayer : game.whitePlayer;
             const result = game.result === 1 ? 'White Won' : game.result === -1 ? 'Black Won' : 'Draw';
             $('.games-container').append(`<div class='game' value='${game.id}'><p class='game-detail' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail' id='time-left'>${result}</p></div>`);
@@ -362,4 +364,14 @@ clearModals = function () {
     $('#create-game-container').css('visibility', 'hidden');
     $('#game-end-container').css('visibility', 'hidden');
     activeGamesModalOpen = false;
+}
+
+updateTray = function () {
+    if (localStorage.getItem('localGame') === 'true') {
+        $('.tray-offline').css('display', 'block');
+        $('.tray-online').css('display', 'none');
+    } else {
+        $('.tray-offline').css('display', 'none');
+        $('.tray-online').css('display', 'block');
+    }
 }

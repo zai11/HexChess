@@ -8,6 +8,7 @@ import { Rook } from "./pieces/Rook.js";
 import { Queen } from "./pieces/Queen.js";
 import { King } from "./pieces/King.js";
 import { Raycaster } from "./Raycaster.js";
+import { LocalClock, OnlineClock } from "./Clock.js";
 
 export class Board 
 {
@@ -24,6 +25,7 @@ export class Board
     enPassant = '';
     gameRunning = true;
     drawOffer = undefined;
+    firstMove = true;
 
     previousBoards = [];
     
@@ -31,11 +33,14 @@ export class Board
     constructor (scene, colour, tiles_data, coords_data) {
         this.colour = colour;
         this.scene = scene;
+        this.intervalManager = this.scene.intervalManager;
 
         if (this.scene === undefined && (tiles_data === undefined || coords_data === undefined)) {
             console.warn('The scene and either the tile or coordinate data is not provided to board constructor.');
             return undefined;
         }
+
+        this.clock = null;
 
         this.buildTiles();
 
@@ -435,6 +440,11 @@ export class Board
     }
 
     handlePieceMoveLocal = function (tile) {
+        if (this.firstMove) {
+            this.clock = new LocalClock();
+            this.intervalManager.addInterval('clockTick', setInterval(() => this.clock.tick(), 1000));
+            this.firstMove = false;
+        }
         this.halfMoveClock++;
         let prevTile = this.selectedTile;
         prevTile.setSelected(false);
@@ -574,6 +584,8 @@ export class Board
                 this.scene.ui.displayError(json.errorMessage);
         }
 
+        this.clock.syncTimes();
+
         this.reloadOnline();
         this.checkGameOverOnline();
     }
@@ -682,6 +694,8 @@ export class Board
         const gameOverText = winner === 1 ? 'White Won!' : winner === -1 ? 'Black Won!' : 'Draw';
         $('#game-end-container').css('visibility', 'visible');
         $('#game-end-container').children('p').first().text(gameOverText);
+        this.intervalManager.removeInterval('clockTick');
+        this.clock = null;
     }
 
     handleResignationLocal = function () {
@@ -967,6 +981,7 @@ export class Board
         this.init();
         this.buildTiles();
         this.buildCoordinates();
+        this.intervalManager.removeInterval('clockTick');
     }
 
     loadOnline = function () {
@@ -983,6 +998,11 @@ export class Board
         this.buildCoordinates();
         this.populateNotationTray(game.pgn);
         this.checkDrawOffer(game.drawOffer);
+        this.intervalManager.removeInterval('clockTick');
+        const playerTurnColour = game.playerTurn  === game.whitePlayer.id ? 'white' : 'black';
+        this.clock = new OnlineClock(this, playerTurnColour);
+        this.intervalManager.addInterval('clockTick', setInterval(() => this.clock.tick(), 1000));
+        this.intervalManager.addInterval('updateTick', setInterval(() => this.checkBoardUpdate(), 500));
     }
 
     reloadOnline = async function () {
@@ -1024,5 +1044,22 @@ export class Board
             $('#accept-draw-button').css('display', 'block');
             $('#decline-draw-button').css('display', 'block');
         }
+    }
+
+    checkBoardUpdate = async function () {
+        const gameID = JSON.parse(localStorage.getItem('game')).id;
+        const response = await fetch('https://localhost:5501/FetchGame/', {
+            headers: {
+                'Accepts': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({'gameID': gameID})
+        });
+        const json = await response.json();
+        const updatedGame = json.game;
+        const currentGame = JSON.parse(localStorage.getItem('game'));
+        if (currentGame.playerTurn !== updatedGame.playerTurn)
+            this.reloadOnline();
     }
 }

@@ -122,17 +122,51 @@ a:hover {
     background-image: linear-gradient(var(--primary-colour), var(--secondary-colour), var(--primary-colour));
 }
 
-#tray {
+.tray-offline {
     flex-grow: 2;
     background-color: rgba(0,0,0,0.5);
     padding: 3px;
     margin: 65px 65px 65px 0px;
 }
 
+.tray-online {
+    display: none;
+    flex-grow: 2;
+    background-color: rgba(0,0,0,0.5);
+    padding: 3px;
+    margin: 65px 65px 65px 0px;
+}
+
+#players {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#players > div {
+    width: 50%;
+    display: flex;
+}
+
+#players img {
+    height: 100%;
+    background-color: gray;
+}
+
+#players p {
+    line-height: 40px;
+    padding-left: 10px;
+    font-size: 10pt;
+}
+
 #moves {
     width: 100%;
     height: calc(100% - 50px);
     overflow: scroll;
+}
+
+.tray-online #moves {
+    height: calc(100% - 140px);
 }
 
 .move {
@@ -162,6 +196,28 @@ a:hover {
     width: calc((100% - 40px) / 2);
     background-color: var(--primary-colour);
     padding-left: 10px;
+}
+
+#clocks {
+    display: flex;
+    height: 50px;
+    line-height: 50px;
+    background-color: var(--primary-colour);
+
+}
+
+#clocks p {
+    text-align: center;
+    width: 50%;
+    border: 1px solid rgba(0,0,0, 0.5);
+}
+
+#white-clock {
+    background-color: #777;
+}
+
+#black-clock {
+    background-color: #333;
 }
 
 .my-modal {

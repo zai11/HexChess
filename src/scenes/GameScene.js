@@ -1,7 +1,7 @@
 import { Board } from '../Board.js'
 import { MouseInputManager } from '../MouseInputManager.js';
-import { Raycaster } from '../Raycaster.js';
 import { UserInterfaceManager } from '../UserInterfaceManager.js';
+import { IntervalManager } from '../IntervalManager.js';
 
 export default class GameScene extends Phaser.Scene
 {
@@ -46,6 +46,7 @@ export default class GameScene extends Phaser.Scene
     }
 
     create = function () {
+        this.intervalManager = new IntervalManager(this);
         this.board = new Board(this, 'white', undefined, undefined);
 
         this.mouseInputManager = new MouseInputManager(this);
