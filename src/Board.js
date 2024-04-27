@@ -572,6 +572,7 @@ export class Board
     }
 
     handlePieceMoveOnline = async function (tile) {
+        console.time("PieceMove");
         const prevTile = this.selectedTile;
         const piece = prevTile.getPiece();
         const game = JSON.parse(localStorage.getItem('game'));
@@ -588,6 +589,7 @@ export class Board
 
         this.reloadOnline();
         this.checkGameOverOnline();
+        console.timeEnd("PieceMove");
     }
 
     checkPromotionOnline = function (game, piece, tile, uat) {
