@@ -40,5 +40,7 @@ CREATE TABLE IF NOT EXISTS public.games
         NOT VALID
 );
 
-ALTER TABLE IF EXISTS public.games
+ALTER TABLE IF EXISTS games
     OWNER to postgres;
+	
+GRANT ALL ON TABLE games TO postgres;
