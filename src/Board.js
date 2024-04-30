@@ -984,6 +984,7 @@ export class Board
         this.buildTiles();
         this.buildCoordinates();
         this.intervalManager.removeInterval('clockTick');
+        this.intervalManager.removeInterval('updateTick');
     }
 
     loadOnline = function () {
