@@ -16,7 +16,10 @@ export class Raycaster {
         if (originTile === undefined)
             throw new Error("Couldn't find tile at " + origin);
 
+        console.log(originTile);
+
         let nextTile = originTile.getNeighbourTileNorth();
+        console.log(nextTile)
 
         while (nextTile !== undefined) {
             if (nextTile.coordinate === destination)
@@ -212,6 +215,198 @@ export class Raycaster {
                 return nextTile.getPiece();
             nextTile = nextTile.getNeighbourTileDiagonalNorthWest();
         }
+    }
+
+    getRayNorth = function (origin) {
+        let ray = [];
+        const originTile = this.board.getTileFromCoord(origin);
+
+        if (originTile === undefined)
+            throw new Error("Couldn't find tile at " + origin);
+
+        let nextTile = originTile.getNeighbourTileNorth();
+
+        while (nextTile !== undefined) {
+            ray.push(nextTile.coordinate);
+            nextTile = nextTile.getNeighbourTileNorth();
+        }
+        return ray
+    }
+
+    getRayDiagonalNorthEast = function (origin) {
+        let ray = [];
+        const originTile = this.board.getTileFromCoord(origin);
+
+        if (originTile === undefined)
+            throw new Error("Couldn't find tile at " + origin);
+
+        let nextTile = originTile.getNeighbourTileDiagonalNorthEast();
+
+        while (nextTile !== undefined) {
+            ray.push(nextTile.coordinate);
+            nextTile = nextTile.getNeighbourTileDiagonalNorthEast();
+        }
+        return ray
+    }
+
+    getRayNorthEast = function (origin) {
+        let ray = [];
+        const originTile = this.board.getTileFromCoord(origin);
+
+        if (originTile === undefined)
+            throw new Error("Couldn't find tile at " + origin);
+
+        let nextTile = originTile.getNeighbourTileNorthEast();
+
+        while (nextTile !== undefined) {
+            ray.push(nextTile.coordinate);
+            nextTile = nextTile.getNeighbourTileNorthEast();
+        }
+        return ray
+    }
+
+    getRayDiagonalEast = function (origin) {
+        let ray = [];
+        const originTile = this.board.getTileFromCoord(origin);
+
+        if (originTile === undefined)
+            throw new Error("Couldn't find tile at " + origin);
+
+        let nextTile = originTile.getNeighbourTileDiagonalEast();
+
+        while (nextTile !== undefined) {
+            ray.push(nextTile.coordinate);
+            nextTile = nextTile.getNeighbourTileDiagonalEast();
+        }
+        return ray
+    }
+
+    getRaySouthEast = function (origin) {
+        let ray = [];
+        const originTile = this.board.getTileFromCoord(origin);
+
+        if (originTile === undefined)
+            throw new Error("Couldn't find tile at " + origin);
+
+        let nextTile = originTile.getNeighbourTileSouthEast();
+
+        while (nextTile !== undefined) {
+            ray.push(nextTile.coordinate);
+            nextTile = nextTile.getNeighbourTileSouthEast();
+        }
+        return ray
+    }
+
+    getRayDiagonalSouthEast = function (origin) {
+        let ray = [];
+        const originTile = this.board.getTileFromCoord(origin);
+
+        if (originTile === undefined)
+            throw new Error("Couldn't find tile at " + origin);
+
+        let nextTile = originTile.getNeighbourTileDiagonalSouthEast();
+
+        while (nextTile !== undefined) {
+            ray.push(nextTile.coordinate);
+            nextTile = nextTile.getNeighbourTileDiagonalSouthEast();
+        }
+        return ray
+    }
+
+    getRaySouth = function (origin) {
+        let ray = [];
+        const originTile = this.board.getTileFromCoord(origin);
+
+        if (originTile === undefined)
+            throw new Error("Couldn't find tile at " + origin);
+
+        let nextTile = originTile.getNeighbourTileSouth();
+
+        while (nextTile !== undefined) {
+            ray.push(nextTile.coordinate);
+            nextTile = nextTile.getNeighbourTileSouth();
+        }
+        return ray
+    }
+
+    getRayDiagonalSouthWest = function (origin) {
+        let ray = [];
+        const originTile = this.board.getTileFromCoord(origin);
+
+        if (originTile === undefined)
+            throw new Error("Couldn't find tile at " + origin);
+
+        let nextTile = originTile.getNeighbourTileDiagonalSouthWest();
+
+        while (nextTile !== undefined) {
+            ray.push(nextTile.coordinate);
+            nextTile = nextTile.getNeighbourTileDiagonalSouthWest();
+        }
+        return ray
+    }
+
+    getRaySouthWest = function (origin) {
+        let ray = [];
+        const originTile = this.board.getTileFromCoord(origin);
+
+        if (originTile === undefined)
+            throw new Error("Couldn't find tile at " + origin);
+
+        let nextTile = originTile.getNeighbourTileSouthWest();
+
+        while (nextTile !== undefined) {
+            ray.push(nextTile.coordinate);
+            nextTile = nextTile.getNeighbourTileSouthWest();
+        }
+        return ray
+    }
+
+    getRayDiagonalWest = function (origin) {
+        let ray = [];
+        const originTile = this.board.getTileFromCoord(origin);
+
+        if (originTile === undefined)
+            throw new Error("Couldn't find tile at " + origin);
+
+        let nextTile = originTile.getNeighbourTileDiagonalWest();
+
+        while (nextTile !== undefined) {
+            ray.push(nextTile.coordinate);
+            nextTile = nextTile.getNeighbourTileDiagonalWest();
+        }
+        return ray
+    }
+
+    getRayNorthWest = function (origin) {
+        let ray = [];
+        const originTile = this.board.getTileFromCoord(origin);
+
+        if (originTile === undefined)
+            throw new Error("Couldn't find tile at " + origin);
+
+        let nextTile = originTile.getNeighbourTileNorthWest();
+
+        while (nextTile !== undefined) {
+            ray.push(nextTile.coordinate);
+            nextTile = nextTile.getNeighbourTileNorthWest();
+        }
+        return ray
+    }
+
+    getRayDiagonalNorthWest = function (origin) {
+        let ray = [];
+        const originTile = this.board.getTileFromCoord(origin);
+
+        if (originTile === undefined)
+            throw new Error("Couldn't find tile at " + origin);
+
+        let nextTile = originTile.getNeighbourTileDiagonalNorthWest();
+
+        while (nextTile !== undefined) {
+            ray.push(nextTile.coordinate);
+            nextTile = nextTile.getNeighbourTileDiagonalNorthWest();
+        }
+        return ray
     }
 
     findTrapezoidOfCoordinate = function (coordinate) {

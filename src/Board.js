@@ -29,7 +29,6 @@ export class Board
 
     previousBoards = [];
     
-
     constructor (scene, colour, tiles_data, coords_data) {
         this.colour = colour;
         this.scene = scene;

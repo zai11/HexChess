@@ -2,6 +2,13 @@ import { Board } from '../Board.js'
 import { MouseInputManager } from '../MouseInputManager.js';
 import { UserInterfaceManager } from '../UserInterfaceManager.js';
 import { IntervalManager } from '../IntervalManager.js';
+import { Pawn } from '../pieces/Pawn.js';
+import { Knight } from '../pieces/Knight.js';
+import { Bishop } from '../pieces/Bishop.js';
+import { Rook } from '../pieces/Rook.js';
+import { Queen } from '../pieces/Queen.js';
+import { King } from '../pieces/King.js';
+import BitboardBuilder from '../BitboardBuilder.js';
 
 export default class GameScene extends Phaser.Scene
 {
@@ -48,6 +55,11 @@ export default class GameScene extends Phaser.Scene
     create = function () {
         this.intervalManager = new IntervalManager(this);
         this.board = new Board(this, 'white', undefined, undefined);
+
+        //let piece = new Bishop(this.board, "I4", "white", this);
+
+        //let bitboardBuilder = new BitboardBuilder(this.board, piece, "attacks");
+        //console.log(bitboardBuilder.getBitboard());
 
         this.mouseInputManager = new MouseInputManager(this);
 

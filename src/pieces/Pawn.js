@@ -51,4 +51,19 @@ export class Pawn extends Piece {
 
         return pseudolegalMoves;
     }
+
+    getAttacks = function () {
+        const attacks = [];
+        const currentTile = this.board.getTileFromCoord(this.coordinate);
+
+        const neighbourTileNorthEast = currentTile.getNeighbourTileNorthEast();
+        if (neighbourTileNorthEast !== undefined)
+            attacks.push(neighbourTileNorthEast.coordinate);
+
+        const neighbourTileNorthWest = currentTile.getNeighbourTileNorthWest();
+        if (neighbourTileNorthWest !== undefined)
+            attacks.push(neighbourTileNorthWest.coordinate);
+
+        return attacks;
+    }
 }

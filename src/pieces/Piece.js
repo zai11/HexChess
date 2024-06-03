@@ -83,4 +83,8 @@ export class Piece {
 
         return true;
     }
+
+    getAttacks = function() {
+        return this.getPseudolegalMoves();
+    }
 }
