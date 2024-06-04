@@ -186,7 +186,6 @@ async function updateActiveGames() {
         const turn = games[i].playerTurn == localStorage.getItem('id') ? 'my-turn' : 'opponent-turn';
         const opponent = games[i].whitePlayer.id == localStorage.getItem('id') ? games[i].blackPlayer : games[i].whitePlayer;
         const clock = await fetchTime(games[i], turn, opponent);
-        console.log(games[i]);
         gameStrings.push(`<div class='game' value='${games[i].id}'><p class='game-detail ${turn}' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail ${turn}'>${games[i].timeControl.time + games[i].timeControl.timeUnit.slice(0,1).toLowerCase()}:${games[i].timeControl.increment + games[i].timeControl.incrementUnit.slice(0,1).toLowerCase()}</p><p class='game-detail ${turn}' id='time-left'>~${clock} Left</p></div>`);
     }
 
@@ -217,7 +216,6 @@ async function fetchTime(game, turn, opponent) {
         body: JSON.stringify({'gameID': gameID, 'userID': playerID})
     });
     let json = await response.json();
-    console.log(json.clockTimeLeft);
     return formatClock(parseInt(json.clockTimeLeft));
 }
 
@@ -287,7 +285,7 @@ function getClockAndUnit(game) {
     return [clock, unit];
 }
 
-$('#create-game-button').click(() => {
+$('#create-online-game-button').click(() => {
     clearModals();
     if (localStorage.getItem('loggedIn') === 'false') {
         $('#error-alert').css('visibility', 'visible');
@@ -298,7 +296,7 @@ $('#create-game-button').click(() => {
         }, 3000);
     } 
     else
-        $('#create-game-container').css('visibility', 'visible');
+        $('#create-online-game-container').css('visibility', 'visible');
 });
 
 $('#create-game-modal-button').click(async function () {
@@ -342,6 +340,11 @@ $('#create-game-modal-button').click(async function () {
 });
 
 $('#local-multiplayer-button').click(() => {
+    clearModals();
+    $('#create-local-multiplayer-game-container').css('visibility', 'visible');
+});
+
+$('#local-multiplayer-modal-button').click(() => {
     clearModals();
     const board = window.game.scene.scenes[0].board;
     board.loadLocal();
@@ -416,7 +419,8 @@ clearModals = function () {
     $('#register-container').css('visibility', 'hidden');
     $('#active-games-container').css('visibility', 'hidden');
     $('#completed-games-container').css('visibility', 'hidden');
-    $('#create-game-container').css('visibility', 'hidden');
+    $('#create-online-game-container').css('visibility', 'hidden');
+    $('#create-local-multiplayer-game-container').css('visibility', 'hidden');
     $('#game-end-container').css('visibility', 'hidden');
     activeGamesModalOpen = false;
 }

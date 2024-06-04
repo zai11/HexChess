@@ -16,10 +16,7 @@ export class Raycaster {
         if (originTile === undefined)
             throw new Error("Couldn't find tile at " + origin);
 
-        console.log(originTile);
-
         let nextTile = originTile.getNeighbourTileNorth();
-        console.log(nextTile)
 
         while (nextTile !== undefined) {
             if (nextTile.coordinate === destination)

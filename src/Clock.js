@@ -36,13 +36,23 @@ export class LocalClock {
     }
 
     tick = function () {
-        if (this.playerTurn === 'white')
-            this.whiteTime--;
-        else
-            this.blackTime--;
-        this.whiteClock = this.formatClock(this.whiteTime);
-        this.blackClock = this.formatClock(this.blackTime);
-        this.updateUI();
+        if (this.board.gameRunning === true) {
+            if (this.playerTurn === 'white')
+                this.whiteTime--;
+            else
+                this.blackTime--;
+            this.whiteClock = this.formatClock(this.whiteTime);
+            this.blackClock = this.formatClock(this.blackTime);
+            this.updateUI();
+            if (this.whiteTime <= 0) {
+                this.whiteTime = 0;
+                this.board.handleGameOver(-1);
+            }
+            if (this.blackTime <= 0) {
+                this.blackTime = 0;
+                this.board.handleGameOver(1);
+            }
+        }
     }
 
     updateUI = function () {

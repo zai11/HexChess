@@ -37,7 +37,7 @@
 					<a id="social-button" class="menu-item" href="#">Social</a>
 					<div class="sub-menu" id="play-sub-menu">
 						<a id="active-games-button" class="sub-menu-item" href="#">Active games</a>
-						<a id="create-game-button" class="sub-menu-item" href="#">Create a game</a>
+						<a id="create-online-game-button" class="sub-menu-item" href="#">Create a game</a>
 						<a id="join-game-button" class="sub-menu-item" href="#">Join a game</a>
 						<a id="local-multiplayer-button" class="sub-menu-item" href="#">Local Multiplayer</a>
 						<a id="play-ai-button" class="sub-menu-item" href="#">Play against AI</a>
@@ -58,9 +58,13 @@
 			<div id="canvas-container">
 				
 			</div>
-			<div class="tray-offline">
+			<div class="tray-local">
 				<div id="moves">
 					
+				</div>
+				<div id="clocks">
+					<p id="white-clock">3:00</p>
+					<p id="black-clock">3:00</p>
 				</div>
 				<div id="game-controls">
 					<a id="resign-button" href="#">Resign</a>
@@ -140,7 +144,7 @@
 
 				</div>
 			</div>
-			<div id="create-game-container" class="my-modal">
+			<div id="create-online-game-container" class="my-modal">
 				<a class="modal-close" href="#">×</a>
 				<p id="time-control-label">Select Time Control</p>
 				<select class="form-select form-select-med" id="time-control-select">
@@ -148,6 +152,15 @@
 
 				</select>
 				<a href="#" id="create-game-modal-button">Create Game</a>
+			</div>
+			<div id="create-local-multiplayer-game-container" class="my-modal">
+				<a class="modal-close" href="#">×</a>
+				<p id="time-control-label">Select Time Control</p>
+				<select class="form-select form-select-med" id="time-control-select">
+					<option value="1" selected>3 mins | 0</option>
+
+				</select>
+				<a href="#" id="local-multiplayer-modal-button">Create Game</a>
 			</div>
 			<div id="game-end-container" class="my-modal">
 				<a class="modal-close" href="#">x</a>

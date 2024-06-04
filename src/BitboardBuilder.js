@@ -25,7 +25,6 @@ export default class BitboardBuilder {
         let bitboard = '0'.repeat(37);
         let linearIDs = [];
         coordinates.forEach((coord) => linearIDs.push(this.coordinateToLinearID(coord)));
-        console.log(coordinates);
         linearIDs.sort((a, b) => (a - b));
         linearIDs.forEach((linearID) => {
             bitboard += '0'.repeat(linearID - (bitboard.length - 37));

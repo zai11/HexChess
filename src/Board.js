@@ -440,7 +440,7 @@ export class Board
 
     handlePieceMoveLocal = function (tile) {
         if (this.firstMove) {
-            this.clock = new LocalClock();
+            this.clock = new LocalClock(this);
             this.intervalManager.addInterval('clockTick', setInterval(() => this.clock.tick(), 1000));
             this.firstMove = false;
         }
@@ -472,6 +472,8 @@ export class Board
 
         if (!promoted)
             this.togglePlayer();
+
+        this.clock.togglePlayer();
 
         piece.moveTo(tile.coordinate);
         tile.setPiece(piece);
