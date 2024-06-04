@@ -179,14 +179,15 @@ async function updateActiveGames() {
     });
     const gamesJSON = await response.json();
     let games = gamesJSON.activeGames;
-    
+
     const gameStrings = [];
 
     for (let i = 0; i < games.length; i++) {
         const turn = games[i].playerTurn == localStorage.getItem('id') ? 'my-turn' : 'opponent-turn';
         const opponent = games[i].whitePlayer.id == localStorage.getItem('id') ? games[i].blackPlayer : games[i].whitePlayer;
         const clock = await fetchTime(games[i], turn, opponent);
-        gameStrings.push(`<div class='game' value='${games[i].id}'><p class='game-detail ${turn}' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail ${turn}' id='time-left'>~${clock} Left</p></div>`);
+        console.log(games[i]);
+        gameStrings.push(`<div class='game' value='${games[i].id}'><p class='game-detail ${turn}' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail ${turn}'>${games[i].timeControl.time + games[i].timeControl.timeUnit.slice(0,1).toLowerCase()}:${games[i].timeControl.increment + games[i].timeControl.incrementUnit.slice(0,1).toLowerCase()}</p><p class='game-detail ${turn}' id='time-left'>~${clock} Left</p></div>`);
     }
 
     $('.games-container').empty();
