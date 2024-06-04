@@ -1,5 +1,6 @@
 const buttons = ['play', 'puzzles', 'learn', 'social']
 let activeGamesModalOpen = false;
+let activeGamesFirstLoad = false;
 localStorage.setItem('localGame', 'true');
 
 buttons.forEach((button) => {
@@ -162,6 +163,7 @@ $('#active-games-button').click(async function () {
     else {
         $('#active-games-container').css('visibility', 'visible');
         activeGamesModalOpen = true;
+        activeGamesFirstLoad = true;
         updateActiveGames();
     }
 });
@@ -176,13 +178,20 @@ async function updateActiveGames() {
         body: JSON.stringify({'userID': localStorage.getItem('id')})
     });
     const gamesJSON = await response.json();
-    $('.games-container').empty();
     let games = gamesJSON.activeGames;
-    games.forEach(async function (game) {
-        const turn = game.playerTurn == localStorage.getItem('id') ? 'my-turn' : 'opponent-turn';
-        const opponent = game.whitePlayer.id == localStorage.getItem('id') ? game.blackPlayer : game.whitePlayer;
-        const [clock, unit] = getClockAndUnit(game);
-        $('.games-container').append(`<div class='game' value='${game.id}'><p class='game-detail ${turn}' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail ${turn}' id='time-left'>~${clock} ${unit} Left</p></div>`);
+    
+    const gameStrings = [];
+
+    for (let i = 0; i < games.length; i++) {
+        const turn = games[i].playerTurn == localStorage.getItem('id') ? 'my-turn' : 'opponent-turn';
+        const opponent = games[i].whitePlayer.id == localStorage.getItem('id') ? games[i].blackPlayer : games[i].whitePlayer;
+        const clock = await fetchTime(games[i], turn, opponent);
+        gameStrings.push(`<div class='game' value='${games[i].id}'><p class='game-detail ${turn}' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail ${turn}' id='time-left'>~${clock} Left</p></div>`);
+    }
+
+    $('.games-container').empty();
+    gameStrings.forEach(gameString => {
+        $('.games-container').append(gameString);
     });
 
     handleActiveGameSelection();
@@ -190,7 +199,52 @@ async function updateActiveGames() {
     setTimeout(async function () {
         if (activeGamesModalOpen)
             updateActiveGames();
-    }, 10000);
+    }, 1000);
+}
+
+async function fetchTime(game, turn, opponent) {
+    const gameID = game.id;
+    const playerID = turn === 'my-turn' ? localStorage.getItem('id') : opponent.id;
+    if (gameID === null || playerID === null)
+        return;
+    let response = await fetch('https://localhost:5501/FetchClockTimeLeft/', {
+        headers: {
+            'Accepts': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({'gameID': gameID, 'userID': playerID})
+    });
+    let json = await response.json();
+    console.log(json.clockTimeLeft);
+    return formatClock(parseInt(json.clockTimeLeft));
+}
+
+formatClock = function (time) {
+    const seconds = time;
+    const minutes = time / 60;
+    const hours = time / 3600;
+    const days = time / 86400;
+    if (days >= 1)
+        return round(days) + " days";
+    else if (hours >= 1)
+        return Math.floor(hours) + ":" + (Math.floor(minutes) - Math.floor(hours) * 60).toLocaleString('en-US', 
+        {
+            minimumIntegerDigits: 2,
+            useGrouping: false
+        }) + ":" + (Math.floor(seconds) - Math.floor(hours) * 60 - Math.floor(minuts) * 3600).toLocaleString('en-US', 
+        {
+            minimumIntegerDigits: 2,
+            useGrouping: false
+        });
+    else if (minutes >= 1)
+        return Math.floor(minutes) + ":" + (Math.floor(seconds) - Math.floor(minutes) * 60).toLocaleString('en-US', 
+        {
+            minimumIntegerDigits: 2,
+            useGrouping: false
+        });
+    else
+        return "" + seconds;
 }
 
 function handleActiveGameSelection() {
