@@ -427,10 +427,10 @@ clearModals = function () {
 
 updateTray = function () {
     if (localStorage.getItem('localGame') === 'true') {
-        $('.tray-offline').css('display', 'block');
+        $('.tray-local').css('display', 'block');
         $('.tray-online').css('display', 'none');
     } else {
-        $('.tray-offline').css('display', 'none');
+        $('.tray-local').css('display', 'none');
         $('.tray-online').css('display', 'block');
     }
 }
