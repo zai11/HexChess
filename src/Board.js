@@ -1001,6 +1001,7 @@ export class Board
         this.populateNotationTray(game.pgn);
         this.checkDrawOffer(game.drawOffer);
         this.intervalManager.removeInterval('clockTick');
+        this.intervalManager.removeInterval('updateTick');
         const playerTurnColour = game.playerTurn  === game.whitePlayer.id ? 'white' : 'black';
         this.clock = new OnlineClock(this, playerTurnColour);
         this.intervalManager.addInterval('clockTick', setInterval(() => this.clock.tick(), 1000));
