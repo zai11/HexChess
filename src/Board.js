@@ -701,7 +701,7 @@ export class Board
 
     handleResignationLocal = function () {
         const winner = this.colour === 'white' ? -1 : 1;
-        this.handleGameOVer(winner);
+        this.handleGameOver(winner);
     }
 
     handleDrawOfferLocal = function () {
