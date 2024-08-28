@@ -122,6 +122,6 @@ export class OnlineClock extends LocalClock {
         this.whiteClock = this.formatClock(this.whiteTime);
         this.blackClock = this.formatClock(this.blackTime);
         this.updateUI();
-        this.board.checkGameOverOnline();
+        this.board.checkGameOver();
     }
 }

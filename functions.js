@@ -260,8 +260,7 @@ function handleActiveGameSelection() {
         const json = await response.json();
         const game = json.game;
         localStorage.setItem('game', JSON.stringify(game));
-        const board = window.game.scene.scenes[0].board;
-        board.loadOnline();
+        window.game.scene.scenes[0].createOnlineBoard();
         $('#active-games-container').css('visibility', 'hidden');
         updateTray();
     });
@@ -346,8 +345,8 @@ $('#local-multiplayer-button').click(() => {
 
 $('#local-multiplayer-modal-button').click(() => {
     clearModals();
-    const board = window.game.scene.scenes[0].board;
-    board.loadLocal();
+    const board = window.game.scene.scenes[0].createLocalMultiplayerBoard();
+    board.load();
     updateTray();
 });
 
@@ -384,34 +383,22 @@ $('#completed-games-button').click(async function () {
 
 $('#resign-button').click(() => {
     const board = window.game.scene.scenes[0].board;
-    if (localStorage.getItem('localGame') === 'true')
-        board.handleResignationLocal();
-    else
-        board.handleResignationOnline();
+    board.handleResignation();
 });
 
 $('#offer-draw-button').click(() => {
     const board = window.game.scene.scenes[0].board;
-    if (localStorage.getItem('localGame') === 'true')
-        board.handleDrawOfferLocal();
-    else
-        board.handleDrawOfferOnline();
+    board.handleDrawOffer();
 });
 
 $('#accept-draw-button').click(() => {
     const board = window.game.scene.scenes[0].board;
-    if (localStorage.getItem('localGame') === 'true')
-        board.handleDrawAcceptLocal();
-    else
-        board.handleDrawAcceptOnline();
+    board.handleDrawAccept();
 });
 
 $('#decline-draw-button').click(() => {
     const board = window.game.scene.scenes[0].board;
-    if (localStorage.getItem('localGame') === 'true')
-        board.handleDrawDeclineLocal();
-    else
-        board.handleDrawDeclineOnline();
+    board.handleDrawDecline();
 });
 
 clearModals = function () {

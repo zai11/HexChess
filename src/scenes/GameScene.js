@@ -1,4 +1,4 @@
-import { Board } from '../Board.js'
+
 import { MouseInputManager } from '../MouseInputManager.js';
 import { UserInterfaceManager } from '../UserInterfaceManager.js';
 import { IntervalManager } from '../IntervalManager.js';
@@ -9,6 +9,9 @@ import { Rook } from '../pieces/Rook.js';
 import { Queen } from '../pieces/Queen.js';
 import { King } from '../pieces/King.js';
 import BitboardBuilder from '../BitboardBuilder.js';
+import LocalMultiplayerBoard from '../boards/LocalMultiplayerBoard.js';
+import OnlineBoard from '../boards/OnlineBoard.js'
+import LocalAIBoard from '../boards/LocalAIBoard.js';
 
 export default class GameScene extends Phaser.Scene
 {
@@ -54,7 +57,7 @@ export default class GameScene extends Phaser.Scene
 
     create = function () {
         this.intervalManager = new IntervalManager(this);
-        this.board = new Board(this, 'white', undefined, undefined);
+        this.board = new LocalMultiplayerBoard(this, 'white', undefined, undefined);
 
         //let piece = new Bishop(this.board, "I4", "white", this);
 
@@ -63,9 +66,27 @@ export default class GameScene extends Phaser.Scene
 
         this.mouseInputManager = new MouseInputManager(this);
 
-        this.board.init(this);
+        this.board.init();
 
         this.ui = new UserInterfaceManager(this);
+    }
+
+    createOnlineBoard = function () {
+        this.board.destroy();
+        this.board = new OnlineBoard(this, 'white', undefined, undefined);
+        return this.board;
+    }
+
+    createLocalMultiplayerBoard = function () {
+        this.board.destroy();
+        this.board = new LocalMultiplayerBoard(this, 'white', undefined, undefined);
+        return this.board;
+    }
+
+    createLocalAIBoard = function () {
+        this.board.destroy();
+        this.board = new LocalAIBoard(this, 'white', undefined, undefined);
+        return this.board;
     }
 
     update = function () {
