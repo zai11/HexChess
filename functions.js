@@ -376,7 +376,7 @@ $('#completed-games-button').click(async function () {
         games.forEach((game) => {
             const opponent = game.whitePlayer.id == localStorage.getItem('id') ? game.blackPlayer : game.whitePlayer;
             const result = game.result === 1 ? 'White Won' : game.result === -1 ? 'Black Won' : 'Draw';
-            $('.games-container').append(`<div class='game' value='${game.id}'><p class='game-detail' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail' id='time-left'>${result}</p></div>`);
+            $('.games-container').append(`<div class='game' value='${game.id}'><p class='game-detail' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail' id='result'>${result}</p><p class='game-detail' id='time-control'>${game.timeControl.time + game.timeControl.timeUnit.slice(0,1).toLowerCase()}:${game.timeControl.increment + game.timeControl.incrementUnit.slice(0,1).toLowerCase()}</p></div>`);
         });
     }
 });
