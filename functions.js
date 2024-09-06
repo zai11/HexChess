@@ -373,10 +373,12 @@ $('#completed-games-button').click(async function () {
         const gamesJSON = await response.json();
         $('.games-container').empty();
         let games = gamesJSON.completedGames;
+        games = games.sort((a, b) => Date.parse(b.dateCompleted) - Date.parse(a.dateCompleted));
         games.forEach((game) => {
             const opponent = game.whitePlayer.id == localStorage.getItem('id') ? game.blackPlayer : game.whitePlayer;
+            const opponentEndElo = game.whitePlayer.id == localStorage.getItem('id') ? game.blackEndElo : game.whiteEndElo;
             const result = game.result === 1 ? 'White Won' : game.result === -1 ? 'Black Won' : 'Draw';
-            $('.games-container').append(`<div class='game' value='${game.id}'><p class='game-detail' id='opponent'>${opponent.username} (${opponent.elo})</p><p class='game-detail' id='result'>${result}</p><p class='game-detail' id='time-control'>${game.timeControl.time + game.timeControl.timeUnit.slice(0,1).toLowerCase()}:${game.timeControl.increment + game.timeControl.incrementUnit.slice(0,1).toLowerCase()}</p></div>`);
+            $('.games-container').append(`<div class='game' value='${game.id}'><p class='game-detail' id='opponent'>${opponent.username} (${opponentEndElo})</p><p class='game-detail' id='result'>${result}</p><p class='game-detail' id='time-control'>${game.timeControl.time + game.timeControl.timeUnit.slice(0,1).toLowerCase()}:${game.timeControl.increment + game.timeControl.incrementUnit.slice(0,1).toLowerCase()}</p></div>`);
         });
     }
 });

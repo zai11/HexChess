@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS public.games
     draw_offer integer,
     white_end_elo integer,
     black_end_elo integer,
+    date_completed varchar(32),
     PRIMARY KEY (game_id),
     CONSTRAINT "game_id_UNIQUE" UNIQUE (game_id),
     CONSTRAINT "games.black_player" FOREIGN KEY (black_player)
