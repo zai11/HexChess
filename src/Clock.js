@@ -9,10 +9,10 @@ export class LocalClock {
     }
 
     formatClock = function (time) {
-        const seconds = time;
-        const minutes = time / 60;
-        const hours = time / 3600;
-        const days = time / 86400;
+        const seconds = time / 1000;
+        const minutes = time / 60000;
+        const hours = time / 3600000;
+        const days = time / 86400000;
         if (days >= 1)
             return round(days) + " days";
         else if (hours >= 1)
@@ -38,9 +38,9 @@ export class LocalClock {
     tick = function () {
         if (this.board.gameRunning === true) {
             if (this.playerTurn === 'white')
-                this.whiteTime--;
+                this.whiteTime -= 1000;
             else
-                this.blackTime--;
+                this.blackTime -= 1000;
             this.whiteClock = this.formatClock(this.whiteTime);
             this.blackClock = this.formatClock(this.blackTime);
             this.updateUI();
@@ -116,9 +116,9 @@ export class OnlineClock extends LocalClock {
 
     tick = function () {
         if (this.playerTurn === 'white')
-            this.whiteTime--;
+            this.whiteTime -= 1000;
         else
-            this.blackTime--;
+            this.blackTime -= 1000;
         this.whiteClock = this.formatClock(this.whiteTime);
         this.blackClock = this.formatClock(this.blackTime);
         this.updateUI();

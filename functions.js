@@ -169,6 +169,7 @@ $('#active-games-button').click(async function () {
 });
 
 async function updateActiveGames() {
+    const start = performance.now();
     let response = await fetch('https://localhost:5501/FetchActiveGames/', {
         headers: {
             'Accept': 'application/json',
@@ -199,7 +200,7 @@ async function updateActiveGames() {
     setTimeout(async function () {
         if (activeGamesModalOpen)
             updateActiveGames();
-    }, 1000);
+    }, 100);
 }
 
 async function fetchTime(game, turn, opponent) {
@@ -220,10 +221,10 @@ async function fetchTime(game, turn, opponent) {
 }
 
 formatClock = function (time) {
-    const seconds = time;
-    const minutes = time / 60;
-    const hours = time / 3600;
-    const days = time / 86400;
+    const seconds = time / 1000;
+    const minutes = time / 60000;
+    const hours = time / 3600000;
+    const days = time / 86400000;
     if (days >= 1)
         return round(days) + " days";
     else if (hours >= 1)
@@ -243,7 +244,7 @@ formatClock = function (time) {
             useGrouping: false
         });
     else
-        return "" + seconds;
+        return "" + Math.floor(seconds);
 }
 
 function handleActiveGameSelection() {
