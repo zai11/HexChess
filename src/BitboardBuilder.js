@@ -18,6 +18,10 @@ export default class BitboardBuilder {
             pseudolegalMoves = [...new Set(this.piece.getAttacks())];
         else if (this.type === "rays")
             return this.constructRaycastBitboards();
+        else if (this.type === "enpassant-conditional")
+            return this.constructEnPassantConditionalBitboards();
+        else if (this.type === "enpassant-movement")
+            return this.constructEnPassantMovementBitboards();
         return this.constructBitboard(pseudolegalMoves);
     }
 
@@ -43,6 +47,30 @@ export default class BitboardBuilder {
             bitboards.push(this.constructBitboard(ray));
         });
         return bitboards;
+    }
+
+    constructEnPassantConditionalBitboards = function () {
+        let coords = [];
+        const currentTile = this.board.getTileFromCoord(this.piece.coordinate);
+        const leftTile = currentTile.getNeighbourTileSouthWest();
+        if (leftTile !== undefined)
+            coords.push(leftTile.coordinate)
+        const rightTile = currentTile.getNeighbourTileSouthEast();
+        if (rightTile !== undefined)
+            coords.push(rightTile.coordinate);
+        return this.constructBitboard(coords);
+    }
+
+    constructEnPassantMovementBitboards = function () {
+        let coords = [];
+        const currentTile = this.board.getTileFromCoord(this.piece.coordinate);
+        const leftTile = currentTile.getNeighbourTileNorthWest();
+        if (leftTile !== undefined)
+            coords.push(leftTile.coordinate)
+        const rightTile = currentTile.getNeighbourTileNorthEast();
+        if (rightTile !== undefined)
+            coords.push(rightTile.coordinate);
+        return this.constructBitboard(coords);
     }
 
     getRaycasts = function () {

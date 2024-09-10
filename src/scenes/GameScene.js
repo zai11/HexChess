@@ -57,11 +57,11 @@ export default class GameScene extends Phaser.Scene
 
     create = function () {
         this.intervalManager = new IntervalManager(this);
-        this.board = new LocalMultiplayerBoard(this, 'white', undefined, undefined);
+        this.board = this.createLocalMultiplayerBoard();
 
-        //let piece = new Bishop(this.board, "I4", "white", this);
+        //let piece = new Pawn(this.board, "K6", "black", this);
 
-        //let bitboardBuilder = new BitboardBuilder(this.board, piece, "attacks");
+        //let bitboardBuilder = new BitboardBuilder(this.board, piece, "enpassant-movement");
         //console.log(bitboardBuilder.getBitboard());
 
         this.mouseInputManager = new MouseInputManager(this);
@@ -72,19 +72,22 @@ export default class GameScene extends Phaser.Scene
     }
 
     createOnlineBoard = function () {
-        this.board.destroy();
+        if (this.board !== undefined)
+            this.board.destroy();
         this.board = new OnlineBoard(this, 'white', undefined, undefined);
         return this.board;
     }
 
     createLocalMultiplayerBoard = function () {
-        this.board.destroy();
+        if (this.board !== undefined)
+            this.board.destroy();
         this.board = new LocalMultiplayerBoard(this, 'white', undefined, undefined);
         return this.board;
     }
 
     createLocalAIBoard = function () {
-        this.board.destroy();
+        if (this.board !== undefined)
+            this.board.destroy();
         this.board = new LocalAIBoard(this, 'white', undefined, undefined);
         return this.board;
     }
