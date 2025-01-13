@@ -45,7 +45,7 @@ if (localStorage.getItem('username') !== undefined && localStorage.getItem('user
 $('#login-submit').click(async function () {
     let username = $('#login-username').val();
     let password = $('#login-password').val();
-    const response = await fetch("https://localhost:5501/LogIn/",
+    const response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}/LogIn/`,
     {
         headers: {
           'Accept': 'application/json',
@@ -87,7 +87,7 @@ $('#register-submit').click(async function () {
     let username = $('#register-username').val();
     let email = $('#register-email').val();
     let password = $('#register-password').val();
-    const response = await fetch("https://localhost:5501/AddUser/",
+    const response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}/AddUser/`,
     {
         headers: {
           'Accept': 'application/json',
@@ -125,7 +125,7 @@ $('#register-submit').click(async function () {
 });
 
 $('#logout-button').click(async function () {
-    await fetch("https://localhost:5501/LogOut/",
+    await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}/LogOut/`,
     {
         headers: {
           'Accept': 'application/json',
@@ -170,7 +170,7 @@ $('#active-games-button').click(async function () {
 
 async function updateActiveGames() {
     const start = performance.now();
-    let response = await fetch('https://localhost:5501/FetchActiveGames/', {
+    let response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}/FetchActiveGames/`, {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -208,7 +208,7 @@ async function fetchTime(game, turn, opponent) {
     const playerID = turn === 'my-turn' ? localStorage.getItem('id') : opponent.id;
     if (gameID === null || playerID === null)
         return;
-    let response = await fetch('https://localhost:5501/FetchClockTimeLeft/', {
+    let response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}}/FetchClockTimeLeft/`, {
         headers: {
             'Accepts': 'application/json',
             'Content-Type': 'application/json'
@@ -250,7 +250,7 @@ formatClock = function (time) {
 function handleActiveGameSelection() {
     $('div.game').click(async function (eventData) {
         const gameID = eventData.currentTarget.attributes['value'].value;
-        const response = await fetch('https://localhost:5501/FetchGame/', {
+        const response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}/FetchGame/`, {
             headers: {
                 'Accepts': 'application/json',
                 'Content-Type': 'application/json'
@@ -312,7 +312,7 @@ $('#create-game-modal-button').click(async function () {
     const id = localStorage.getItem('id');
     const uat = localStorage.getItem('uat');
     const timeControl = $('#time-control-select').val();
-    const response = await fetch("https://localhost:5501/CreateGameRequest/",
+    const response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}/CreateGameRequest/`,
     {
         headers: {
           'Accept': 'application/json',
@@ -363,7 +363,7 @@ $('#completed-games-button').click(async function () {
     } 
     else {
         $('#completed-games-container').css('visibility', 'visible');
-        let response = await fetch('https://localhost:5501/FetchCompletedGames/', {
+        let response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}/FetchCompletedGames/`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

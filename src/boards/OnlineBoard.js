@@ -69,7 +69,7 @@ export default class OnlineBoard extends LocalMultiplayerBoard {
     }
 
     sendMovementRequest = async function (game, piece, tile, uat, promotionPiece = undefined) {
-        const response = await fetch("https://localhost:5501/Movement/", {
+        const response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}/Movement/`, {
             headers: {
                 'Accepts': 'application/json',
                 'Content-Type': 'application/json'
@@ -95,7 +95,7 @@ export default class OnlineBoard extends LocalMultiplayerBoard {
         const gameID = JSON.parse(localStorage.getItem('game')).id;
         const playerID = localStorage.getItem('id');
         const uat = localStorage.getItem('uat');
-        const response = await fetch ('https://localhost:5501/Resignation/', {
+        const response = await fetch (`https://${SERVER_ADDRESS}:${SERVER_PORT}/Resignation/`, {
             headers: {
                 'Accepts': 'application/json',
                 'Content-Type': 'application/json'
@@ -117,7 +117,7 @@ export default class OnlineBoard extends LocalMultiplayerBoard {
         const gameID = JSON.parse(localStorage.getItem('game')).id;
         const playerID = localStorage.getItem('id');
         const uat = localStorage.getItem('uat');
-        const response = await fetch ('https://localhost:5501/DrawOffer/', {
+        const response = await fetch (`https://${SERVER_ADDRESS}:${SERVER_PORT}/DrawOffer/`, {
             headers: {
                 'Accepts': 'application/json',
                 'Content-Type': 'application/json'
@@ -139,7 +139,7 @@ export default class OnlineBoard extends LocalMultiplayerBoard {
         const gameID = JSON.parse(localStorage.getItem('game')).id;
         const playerID = localStorage.getItem('id');
         const uat = localStorage.getItem('uat');
-        const response = await fetch ('https://localhost:5501/DrawOfferResponse/', {
+        const response = await fetch (`https://${SERVER_ADDRESS}:${SERVER_PORT}/DrawOfferResponse/`, {
             headers: {
                 'Accepts': 'application/json',
                 'Content-Type': 'application/json'
@@ -162,7 +162,7 @@ export default class OnlineBoard extends LocalMultiplayerBoard {
         const gameID = JSON.parse(localStorage.getItem('game')).id;
         const playerID = localStorage.getItem('id');
         const uat = localStorage.getItem('uat');
-        const response = await fetch ('https://localhost:5501/DrawOfferResponse/', {
+        const response = await fetch (`https://${SERVER_ADDRESS}:${SERVER_PORT}/DrawOfferResponse/`, {
             headers: {
                 'Accepts': 'application/json',
                 'Content-Type': 'application/json'
@@ -183,7 +183,7 @@ export default class OnlineBoard extends LocalMultiplayerBoard {
 
     checkGameOver = async function () {
         const gameID = JSON.parse(localStorage.getItem('game')).id;
-        const response = await fetch ('https://localhost:5501/FetchGameResult/', {
+        const response = await fetch (`https://${SERVER_ADDRESS}:${SERVER_PORT}/FetchGameResult/`, {
             headers: {
                 'Accepts': 'application/json',
                 'Content-Type': 'application/json'
@@ -234,7 +234,7 @@ export default class OnlineBoard extends LocalMultiplayerBoard {
         const gameID = JSON.parse(localStorage.getItem('game')).id;
         if (gameID === null)
             return;
-        const response = await fetch('https://localhost:5501/FetchGame/', {
+        const response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}/FetchGame/`, {
             headers: {
                 'Accepts': 'application/json',
                 'Content-Type': 'application/json'
@@ -250,7 +250,7 @@ export default class OnlineBoard extends LocalMultiplayerBoard {
 
     checkBoardUpdate = async function () {
         const gameID = JSON.parse(localStorage.getItem('game')).id;
-        const response = await fetch('https://localhost:5501/FetchGame/', {
+        const response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}/FetchGame/`, {
             headers: {
                 'Accepts': 'application/json',
                 'Content-Type': 'application/json'

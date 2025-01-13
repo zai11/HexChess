@@ -87,7 +87,7 @@ export class OnlineClock extends LocalClock {
         const blackID = JSON.parse(localStorage.getItem('game')).blackPlayer.id;
         if (gameID === null || whiteID === null || blackID === null)
             return;
-        let response = await fetch('https://localhost:5501/FetchClockTimeLeft/', {
+        let response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}/FetchClockTimeLeft/`, {
             headers: {
                 'Accepts': 'application/json',
                 'Content-Type': 'application/json'
@@ -97,7 +97,7 @@ export class OnlineClock extends LocalClock {
         });
         let json = await response.json();
         const timeWhite = parseInt(json.clockTimeLeft);
-        response = await fetch('https://localhost:5501/FetchClockTimeLeft/', {
+        response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}/FetchClockTimeLeft/`, {
             headers: {
                 'Accepts': 'application/json',
                 'Content-Type': 'application/json'
