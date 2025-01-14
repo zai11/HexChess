@@ -208,7 +208,7 @@ async function fetchTime(game, turn, opponent) {
     const playerID = turn === 'my-turn' ? localStorage.getItem('id') : opponent.id;
     if (gameID === null || playerID === null)
         return;
-    let response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}}/FetchClockTimeLeft/`, {
+    let response = await fetch(`https://${SERVER_ADDRESS}:${SERVER_PORT}/FetchClockTimeLeft/`, {
         headers: {
             'Accepts': 'application/json',
             'Content-Type': 'application/json'
