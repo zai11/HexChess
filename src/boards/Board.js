@@ -207,10 +207,10 @@ export class Board
         this.handleTileSelectedParent(tile);
     }
 
-    logMove = function (prevTile, tile, enPassant, enPassantTile) {
+    logMove = function (prevTile, tile, colourMoved, taking, enPassant, enPassantTile, isMate, promotion) {
         const prevMoveCount = $('#moves').children().length + 1;
-        const algebraicNotation = this.getAlgebraicNotation(prevTile, tile, enPassant, enPassantTile);
-        switch (this.colour) {
+        const algebraicNotation = this.getAlgebraicNotation(prevTile, tile, taking, enPassant, enPassantTile, isMate, promotion);
+        switch (colourMoved) {
             case 'white':
                 $('#moves').append(`<div class='move' id='${prevMoveCount}'><div class='number'><p>${prevMoveCount}</p></div><div class='white'><p>${algebraicNotation}</p></div><div class='black'><p>-</p></div></div>`)
                 break;
@@ -220,14 +220,14 @@ export class Board
         }
     }
 
-    getAlgebraicNotation = function (prevTile, tile, enPassant, enPassantTile) {
+    getAlgebraicNotation = function (prevTile, tile, taking, enPassant, enPassantTile, isMate, promotion) {
         let notation = '';
-        const movingPiece = prevTile.getPiece();
-        const attacking = tile.hasPiece() || enPassant;
-        if (movingPiece.type !== 'pawn')
+        const attacking = taking || enPassant;
+        let movingPiece = tile.getPiece();
+        if (movingPiece.type !== 'pawn' && !promotion)
             notation += movingPiece.getFENChar().toUpperCase();
 
-        if (attacking && movingPiece.type === 'pawn')
+        if (attacking && (movingPiece.type === 'pawn' || promotion))
             notation += prevTile.coordinate.toLowerCase()[0] + 'x';
         else if (attacking && movingPiece.type !== 'pawn')
             notation += 'x';
@@ -247,6 +247,9 @@ export class Board
                 else if (this.resultsInCheckWhite(movingPiece, tile.coordinate))
                     notation += '+';
         }
+
+        if (promotion !== undefined)
+            notation += `=${promotion}`
 
         return notation;
     }

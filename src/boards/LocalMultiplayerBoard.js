@@ -230,39 +230,49 @@ export default class LocalMultiplayerBoard extends Board {
         this.hasEnPassant = false;
         this.enPassant = undefined;
 
+        let taking = tile.hasPiece();
+        let colourMoved = this.colour;
+
         // Check pawn double move:
         this.checkDoublePawnMove(piece, tile, prevTile);
 
         // Check en passant:
         const [tookEnPassant, takenTile] = this.checkEnPassant(piece, tile, prevTile);
 
-        // Check promotion:
-        const promoted = this.checkPromotion(piece, tile);
-
         // Check half move clock reset:
         if (piece.type === 'pawn' || tile.hasPiece() || tookEnPassant)
             this.halfMoveClock = 0;
 
-        this.logMove(prevTile, tile, tookEnPassant, takenTile);
+        const isPromotion = this.checkPromotion(piece, tile);
 
-        if (tile.hasPiece())
-            this.removePiece(tile.getPiece());
-
-        if (!promoted) {
+        if (!isPromotion) {
             this.togglePlayer();
             this.clock.togglePlayer();
 
+            if (tile.hasPiece(taking))
+                this.removePiece(tile.getPiece());
+
             piece.moveTo(tile.coordinate);
             tile.setPiece(piece);
+            
             this.clearValidTiles();
     
             this.buildTiles();
             this.buildCoordinates();
             this.handleStalemate();
-            this.handleMate();
+            let isMate = this.handleMate();
             this.handleRepetition();
             this.handle50Move();
             this.handleDeadPosition();
+
+            this.logMove(prevTile, tile, colourMoved, taking, tookEnPassant, takenTile, isMate);
+        }
+        else {
+
+            if (taking)
+                this.removePiece(tile.getPiece());
+
+            this.handlePromotion(piece, prevTile, tile, colourMoved, taking, tookEnPassant, takenTile);
         }
     }
 
@@ -343,20 +353,38 @@ export default class LocalMultiplayerBoard extends Board {
         if (piece.type === 'pawn') {
             let neighbourTileNorth = tile.getNeighbourTileNorth(piece.colour);
             if (neighbourTileNorth === undefined) {
-                this.awaitingPromotion = true;
-                this.scene.ui.createPromotionPrompt(piece, tile);
                 return true;
             }
         }
+        return false;
+    }
+
+    handlePromotion = function (piece, prevTile, tile, colourMoved, taking, tookEnPassant, takenTile, isMate) {
+        this.awaitingPromotion = true;
+        this.scene.ui.createPromotionPrompt(piece, tile, (piece) => {
+            this.clearValidTiles();
+            this.buildTiles();
+            this.buildCoordinates();
+            this.handleStalemate();
+            let isMate = this.handleMate();
+            this.handleRepetition();
+            this.handle50Move();
+            this.handleDeadPosition();
+            this.logMove(prevTile, tile, colourMoved, taking, tookEnPassant, takenTile, isMate, piece[0]);
+        });
+        return true;
     }
 
     handleMate = function () {
         if (this.isMateWhite()) {
             handleGameOver(1);
+            return true;
         }
         else if (this.isMateBlack()) {
             handleGameOver(-1);
+            return true;
         }
+        return false;
     }
 
     handleResignation = function () {
