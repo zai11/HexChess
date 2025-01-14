@@ -2,8 +2,8 @@ export class LocalClock {
     constructor(board, playerTurn = 'white') {
         this.board = board;
         this.playerTurn = playerTurn;
-        this.whiteTime = 180;
-        this.blackTime = 180;
+        this.whiteTime = 180000;
+        this.blackTime = 180000;
         this.whiteClock = this.formatClock(this.whiteTime);
         this.blackClock = this.formatClock(this.blackTime);
     }

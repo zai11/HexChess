@@ -4,9 +4,10 @@ import { Rook } from "./pieces/Rook.js";
 import { Queen } from "./pieces/Queen.js";
 
 export class PromotionPrompt {
-    constructor(scene, piece, callback) {
+    constructor(scene, piece, destination, callback) {
         this.piece = piece;
         this.scene = scene;
+        this.destination = destination;
         this.callback = callback;
         const style_black = {color: '#000', fontSize: 15};
         this.background = this.scene.add.sprite(0, 810, 'spr_promotion_prompt').setOrigin(0,1).setDepth(1000);
@@ -36,7 +37,8 @@ export class PromotionPrompt {
         this.scene.board.togglePlayer();
         this.scene.board.buildTiles();
         this.scene.board.buildCoordinates();
-        this.callback('Knight');
+        if (this.callback !== undefined)
+            this.callback('Knight');
     }
 
     bishopSelected = function () {
@@ -45,7 +47,8 @@ export class PromotionPrompt {
         this.scene.board.togglePlayer();
         this.scene.board.buildTiles();
         this.scene.board.buildCoordinates();
-        this.callback('Bishop');
+        if (this.callback !== undefined)
+            this.callback('Bishop');
     }
 
     rookSelected = function () {
@@ -54,15 +57,20 @@ export class PromotionPrompt {
         this.scene.board.togglePlayer();
         this.scene.board.buildTiles();
         this.scene.board.buildCoordinates();
-        this.callback('Rook');
+        if (this.callback !== undefined)
+            this.callback('Rook');
     }
 
     queenSelected = function () {
-        this.piece = this.scene.board.addPiece(new Queen(this.piece.board, this.piece.coordinate, this.piece.colour, this.scene));
+        this.piece.take();
+        this.scene.board.removePiece(this.piece);
+        this.piece = this.scene.board.addPiece(new Queen(this.piece.board, this.destination.coordinate, this.piece.colour, this.scene));
         this.scene.ui.destroyPromotionPrompt();
         this.scene.board.togglePlayer();
+        this.scene.board.clock.togglePlayer();
         this.scene.board.buildTiles();
         this.scene.board.buildCoordinates();
-        this.callback('Queen');
+        if (this.callback !== undefined)
+            this.callback('Queen');
     }
 }

@@ -248,21 +248,22 @@ export default class LocalMultiplayerBoard extends Board {
         if (tile.hasPiece())
             this.removePiece(tile.getPiece());
 
-        if (!promoted)
+        if (!promoted) {
             this.togglePlayer();
+            this.clock.togglePlayer();
 
-        this.clock.togglePlayer();
-
-        piece.moveTo(tile.coordinate);
-        tile.setPiece(piece);
-        this.clearValidTiles();
-        this.buildTiles();
-        this.buildCoordinates();
-        this.handleStalemate();
-        this.handleMate();
-        this.handleRepetition();
-        this.handle50Move();
-        this.handleDeadPosition();
+            piece.moveTo(tile.coordinate);
+            tile.setPiece(piece);
+            this.clearValidTiles();
+    
+            this.buildTiles();
+            this.buildCoordinates();
+            this.handleStalemate();
+            this.handleMate();
+            this.handleRepetition();
+            this.handle50Move();
+            this.handleDeadPosition();
+        }
     }
 
     checkDoublePawnMove = function (piece, tile, prevTile) {
@@ -343,8 +344,7 @@ export default class LocalMultiplayerBoard extends Board {
             let neighbourTileNorth = tile.getNeighbourTileNorth(piece.colour);
             if (neighbourTileNorth === undefined) {
                 this.awaitingPromotion = true;
-                this.scene.ui.createPromotionPrompt(piece);
-                this.removePiece(piece);
+                this.scene.ui.createPromotionPrompt(piece, tile);
                 return true;
             }
         }
