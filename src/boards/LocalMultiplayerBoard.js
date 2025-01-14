@@ -13,9 +13,9 @@ export default class LocalMultiplayerBoard extends Board {
     constructor(scene, colour, tiles_data, coords_data) {
         super(scene, colour, tiles_data, coords_data);
         this.clear();
+        this.load();
 
         this.previousBoards.push(this.toFEN().split(' ')[0]);
-        this.load();
     }
 
     resultsInMateWhite = function (piece, coordinate) {
@@ -361,8 +361,8 @@ export default class LocalMultiplayerBoard extends Board {
 
     handlePromotion = function (piece, prevTile, tile, colourMoved, taking, tookEnPassant, takenTile, isMate) {
         this.awaitingPromotion = true;
+        this.clearValidTiles();
         this.scene.ui.createPromotionPrompt(piece, tile, (piece) => {
-            this.clearValidTiles();
             this.buildTiles();
             this.buildCoordinates();
             this.handleStalemate();
@@ -377,11 +377,11 @@ export default class LocalMultiplayerBoard extends Board {
 
     handleMate = function () {
         if (this.isMateWhite()) {
-            handleGameOver(1);
+            this.handleGameOver(1);
             return true;
         }
         else if (this.isMateBlack()) {
-            handleGameOver(-1);
+            this.handleGameOver(-1);
             return true;
         }
         return false;
@@ -427,6 +427,7 @@ export default class LocalMultiplayerBoard extends Board {
 
     handleRepetition = function () {
         const currentFEN = this.toFEN().split(' ')[0];
+        this.previousBoards.push(currentFEN);
         let count = 0;
         this.previousBoards.forEach(fen => {
             if (fen === currentFEN)
@@ -434,13 +435,13 @@ export default class LocalMultiplayerBoard extends Board {
         });
 
         if (count >= 3) {
-            handleGameOver(0);
+            this.handleGameOver(0);
         }
     }
 
     handle50Move = function () {
         if (this.halfMoveClock >= 100) {
-            handleGameOver(0);
+            this.handleGameOver(0);
         }
     }
 
@@ -456,14 +457,14 @@ export default class LocalMultiplayerBoard extends Board {
         });
 
         if (!legalMovesExist && ((this.colour === 'white' && !this.isCheckWhite()) || (this.colour === 'black' && !this.isCheckBlack()))) {
-            handleGameOver(0);
+            this.handleGameOver(0);
         }
     }
 
     handleDeadPosition = function () {
         if (this.pieces.length == 2) {
             if (this.pieces[0].type === 'king' && this.pieces[1].type === 'king') {
-                handleGameOver(0);
+                this.handleGameOver(0);
             }
         }
     }
