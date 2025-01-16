@@ -212,7 +212,7 @@ export default class LocalMultiplayerBoard extends Board {
         return isCheck;
     }
 
-    handleTileSeleted = function (tile) {
+    handleTileSelected = function (tile) {
         this.handleTileSelectedParent(tile);
     }
 

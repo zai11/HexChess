@@ -369,7 +369,7 @@ export class Board
         }
 
         // Selected tile is not valid, has piece: set current tile to selected, set valid tiles to piece's valid moves
-        if (!this.validTiles.includes(tile.coordinate) && tile.hasPiece()) {
+        else if (!this.validTiles.includes(tile.coordinate) && tile.hasPiece()) {
             tile.setSelected();
             this.selectedTile = tile;
             let piece = tile.getPiece();
@@ -384,7 +384,8 @@ export class Board
         }
 
         // Tile selected is valid: move piece from previously selected tile to newly selected tile.
-        if (this.validTiles.includes(tile.coordinate))
+        else if (this.validTiles.includes(tile.coordinate)) {
             this.handlePieceMove(tile);
+        }
     }
 }

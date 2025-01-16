@@ -6,7 +6,7 @@ export class MouseInputManager {
 
     click (pointer) {
         let clickedTile = this.getClickedTile(pointer);
-        this.scene.board.tileSelected(clickedTile);
+        this.scene.board.handleTileSelected(clickedTile);
     }
 
     getClickedTile (pointer) {
